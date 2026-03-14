@@ -1,0 +1,6 @@
+@ElEspirituDeLaTormenta.Server_HostAddress = http://localhost:5028
+
+GET {{ElEspirituDeLaTormenta.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
