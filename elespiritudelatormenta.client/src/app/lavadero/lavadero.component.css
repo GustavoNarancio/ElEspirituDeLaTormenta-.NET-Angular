@@ -1,0 +1,152 @@
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Volvemos al centro para que nada se rompa */
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  /* Quitamos el background-image de aquí para que no choque */
+}
+
+/* Efecto que ya te gustaba */
+.efecto-hover {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+  .efecto-hover:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.8));
+  }
+
+.mochila-icon {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 80px;
+}
+
+.menu-opciones {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.opcion-amarilla {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 26px;
+  text-shadow: 2px 2px 4px black;
+}
+/* Heredamos tus estilos anteriores y agregamos estos específicos */
+
+.lavadero-fondo {
+  background-image: url('/assets/lavadero.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.titulo-habitacion {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36; /* Tu color amarillo exacto */
+  font-size: 32px;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+}
+
+/* --- PANEL INFERIOR (Contenedor del Marco) --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%; /* Separación pequeña del borde inferior */
+  left: 5%; /* Centrado horizontal relativo */
+  width: 90%; /* Ocupa casi todo el ancho */
+  height: 30%; /* Altura proporcional a la pantalla */
+  z-index: 100; /* Asegura que esté por encima de la mochila y el fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- LA IMAGEN DEL MARCO --- */
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Estira la imagen para que llene el rectángulo */
+  pointer-events: none; /* Los clics pasan a través de la imagen hacia los textos */
+}
+
+/* --- BOTÓN CERRAR (Dentro del Panel) --- */
+.boton-cerrar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 110;
+}
+
+/* --- CONTENEDOR DE TEXTOS (Donde irán el Hacha y el Cuadro) --- */
+.contenedor-lista {
+  position: relative;
+  width: 80%;
+  height: 60%;
+  z-index: 110;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.texto-instruccion {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 22px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Contenedor que alinea los objetos verticalmente */
+.grid-objetos {
+  display: flex;
+  flex-direction: column; /* Esto los pone uno debajo del otro */
+  align-items: flex-start; /* Los alinea a la izquierda dentro del marco */
+  padding-left: 20%; /* Ajusta esto para centrarlos visualmente en el marco */
+  gap: 15px; /* Espacio entre cada objeto */
+  margin-top: 20px;
+}
+
+/* Estilo para los nombres de los objetos */
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 32px; /* Más grandes como en la foto */
+  text-shadow: 2px 2px 4px black;
+  text-decoration: none;
+  display: block;
+}
+
+  /* Efecto para cuando el objeto está seleccionado o pasas el mouse */
+  .objeto-lista:hover {
+    color: #00ff00; /* Verde como en tu imagen */
+    transform: scale(1.05);
+  }

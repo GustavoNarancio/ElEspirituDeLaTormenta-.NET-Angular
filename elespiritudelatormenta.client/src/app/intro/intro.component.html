@@ -1,0 +1,28 @@
+<div class="pantalla-completa" [class.fondo-bosque]="escena === 1" [class.fondo-cabania]="escena === 2">
+
+  <h1 *ngIf="mostrarTitulo && escena === 1" class="titulo-juego" [class.visible]="tituloVisible">
+    El Espiritu de la Tormenta
+  </h1>
+
+  <div *ngIf="mostrarMarco" class="marco-narrativo">
+    <p class="textoDelMarco">
+      {{ textoMostrado }}
+    </p>
+
+    <div class="contenedor-acciones">
+      <img *ngIf="mostrarFlecha && escena === 1"
+           src="/assets/flecha3.png"
+           (click)="irACabania()"
+           class="flecha-img" alt="Siguiente">
+
+    
+      <img *ngIf="mostrarBotonJuego && escena === 2"
+           src="/assets/iniciarJuego.png"
+           class="btn-iniciar"
+           (click)="finalizarIntro()"
+           alt="Iniciar Juego">
+
+    </div>
+  </div>
+
+</div>

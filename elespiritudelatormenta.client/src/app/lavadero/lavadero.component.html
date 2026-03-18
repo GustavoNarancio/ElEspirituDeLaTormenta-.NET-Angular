@@ -1,0 +1,42 @@
+<div class="contenedor-juego">
+  <!-- Fijate que aquí agregué la clase lavadero-fondo -->
+  <div class="area-interactiva lavadero-fondo">
+
+    <h1 class="titulo-habitacion">Lavadero</h1>
+
+    <!-- La mochila que se te había perdido -->
+    <img src="/assets/mochila.png" class="mochila-icon efecto-hover">
+
+    <!-- Menú de opciones principal -->
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover">Descripción del ambiente</span>
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">
+        Inspeccionar Objetos
+      </span>
+      <span class="opcion-amarilla efecto-hover" (click)="volver()">Volver atrás</span>
+    </div>
+
+    <!-- El Panel Inferior -->
+    <div *ngIf="mostrarMenuInspeccion" class="panel-inferior">
+      <!-- Corregí el nombre a MarcoDeTextoRectangular según tu última imagen -->
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <span class="boton-cerrar efecto-hover" (click)="alternarInspeccion()">
+        [ X ] CERRAR
+      </span>
+
+      <div class="contenedor-lista">
+        <p class="texto-instruccion" *ngIf="listaDeObjetosDB.length === 0">Cargando objetos...</p>
+
+        <!-- Este es el bucle que recorre tu tabla de Objetos de SQL -->
+        <div class="grid-objetos">
+          <span *ngFor="let obj of listaDeObjetosDB"
+                class="objeto-lista efecto-hover"
+                (click)="seleccionarObjeto(obj)">
+            - {{ obj.nombre }}
+          </span>
+        </div>
+      </div>
+
+  </div>
+</div>

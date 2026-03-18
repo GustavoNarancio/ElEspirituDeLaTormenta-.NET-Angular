@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* En src/styles.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black; /* Esto mata cualquier línea blanca de fondo */
+  overflow: hidden; /* Evita que aparezcan barras de scroll que pueden verse blancas */
+  border: none;
+  outline: none;
+}

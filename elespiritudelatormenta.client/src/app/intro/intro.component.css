@@ -1,0 +1,96 @@
+/* Contenedor principal para el fondo dinámico */
+.pantalla-completa {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 0;
+}
+
+/* Clases que el "camaleón" va a intercambiar */
+.fondo-bosque {
+  background-image: url('/assets/bosque.png');
+}
+
+.fondo-cabania {
+  background-image: url('/assets/cabania.png');
+}
+
+.titulo-juego {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 4em;
+  opacity: 0;
+  transition: opacity 4s ease-in-out;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  width: 100%;
+}
+
+  .titulo-juego.visible {
+    opacity: 1;
+  }
+
+.marco-narrativo {
+  background-image: url('/assets/marcoSinFondoNuevo.png');
+  height: 90vh;
+  width: 90vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 110px 85px; /* Ajuste para que el texto no toque el borde dorado */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.textoDelMarco {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 28px;
+  text-align: justify;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 1px 1px 2px black;
+}
+
+/* El botón y la flecha ahora viven en este contenedor fijo abajo a la derecha */
+.contenedor-acciones {
+  position: absolute;
+  bottom: 85px;
+  right: 85px;
+}
+
+.flecha-img {
+  height: 60px;
+  width: 60px;
+  cursor: pointer;
+}
+
+.btn-iniciar {
+  height: 70px;
+  width: auto;
+  cursor: pointer;
+}
+
+.flecha-img, .btn-iniciar {
+  cursor: pointer;
+  height: 60px;
+  transition: transform 0.3s ease, filter 0.3s ease; /* Transición suave */
+}
+
+  .flecha-img:hover, .btn-iniciar:hover {
+    transform: scale(1.15); /* Crece un 15% */
+    filter: brightness(1.4) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.5)); /* Brilla y da sombra dorada */
+  }

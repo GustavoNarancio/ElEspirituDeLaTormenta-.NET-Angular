@@ -1,0 +1,24 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva">
+
+    <img src="/assets/mochila.png" class="mochila-icon efecto-hover">
+
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover" (click)="abrirMapa()">
+        Moverse
+      </span>
+      <span class="opcion-amarilla efecto-hover">
+        Descripción del ambiente
+      </span>
+    </div>
+
+    <div *ngIf="mostrarMapa" class="overlay-mapa">
+      <div class="mapa-pergamino">
+        <span class="boton-cerrar efecto-hover" (click)="cerrarMapa()">
+          [ X ] CERRAR
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>
