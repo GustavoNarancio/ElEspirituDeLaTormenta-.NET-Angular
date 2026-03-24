@@ -1,0 +1,214 @@
+/* --- 1. EL ÍCONO CHIQUITO (Este evita que sea gigante) --- */
+.mochila-icon {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 80px;
+  z-index: 50;
+  cursor: pointer;
+}
+
+.efecto-hover {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+  .efecto-hover:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.8));
+  }
+
+/* --- 2. LA PANTALLA GIGANTE (Al tocar el ícono) --- */
+.pantalla-mochila {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 600;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.contenedor-mochila-abierta {
+  position: relative;
+  width: 700px;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-mochila-fondo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- 3. EL MARCO TRANSPARENTE CON EL INVENTARIO --- */
+.marco-inventario {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  margin-top: 60px;
+  z-index: 610;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.85;
+  object-fit: fill;
+}
+
+.contenido-inventario {
+  position: relative;
+  z-index: 620;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.titulo-inventario {
+  font-family: 'Crimson Pro', Serif !important;
+  color: #9b8b36 !important;
+  font-size: 34px;
+  margin-top: 0;
+  margin-bottom: 25px;
+  text-shadow: 2px 2px 4px black;
+}
+
+.lista-items-mochila {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.texto-mochila-item {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 26px;
+  margin: 5px 0;
+  text-shadow: 1px 1px 3px black;
+  cursor: pointer;
+}
+
+  .texto-mochila-item:hover {
+    color: #f5f5dc;
+  }
+
+.boton-cerrar-mochila {
+  font-family: 'Crimson Pro', Serif;
+  color: #f5f5dc;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+/* --- 4. MINI MENÚ DE ACCIONES (Devolver / Leer) --- */
+
+.mini-menu-acciones {
+  position: absolute;
+  bottom: 102%; /* Lo sube arriba del marco principal */
+  left: 50px;
+  width: 220px;
+  height: 140px;
+  z-index: 650;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenido-acciones {
+  position: relative;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  z-index: 660;
+}
+
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 20px;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px black;
+}
+
+  .opcion-accion:hover {
+    color: #f5f5dc;
+  }
+
+.cerrar-mini {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  color: #9b8b36;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* --- 5. PANTALLA DE LECTURA (Descripción) --- */
+.pantalla-lectura {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 700; /* Superpone a la mochila */
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #9b8b36;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.boton-volver-lectura {
+  margin-top: 30px;
+  color: #f5f5dc;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: 'Crimson Pro', Serif;
+}

@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
 import { JuegoComponent } from './juego/juego.component';
 import { LavaderoComponent } from './lavadero/lavadero.component';
+import { MochilaComponent } from './mochila/mochila.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IntroComponent,
     JuegoComponent,
-    LavaderoComponent
+    LavaderoComponent,
+    MochilaComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

@@ -9,53 +9,89 @@ import { ApiService } from '../services/api.service';
 })
 export class LavaderoComponent implements OnInit {
 
-  // 1. El interruptor para mostrar/ocultar el cuadro rectangular de abajo
-  mostrarMenuInspeccion: boolean = false;
-  objetoSeleccionado: any = null;
+  // 1. Controles de Visibilidad
+  mostrarMenuInspeccion: boolean = false; // El marco largo de abajo
+  mostrarMiniMenu: boolean = false;       // El cuadro cuadrado de acciones
+  mostrarDescripcion: boolean = false;       // El cartel con la descripción del ítem
 
-  // 2. Aquí guardaremos los objetos cuando los traigamos de la DB (por ahora vacío)
+
+  // 2. Datos de la DB
   listaDeObjetosDB: any[] = [];
+  listaDePuzzlesDB: any[] = [];
+
+  // 3. Ítem que el usuario clickeó (puede ser Objeto o Puzzle)
+  itemSeleccionado: any = null;
+  esPuzzle: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    console.log('Iniciando carga del Lavadero...');
-    this.cargarObjetosDelLavadero();
-    // Por ahora lo dejamos vacío para que no tire errores
+    this.cargarDatosDelLavadero();
+
+    // EL LAVADERO PRENDE LA RADIO Y ESCUCHA:
+    this.apiService.inventarioCambio$.subscribe(() => {
+      this.cargarDatosDelLavadero();
+    });
   }
 
-  // 3. La función que cambia de true a false para abrir el menú
+  cargarDatosDelLavadero() {
+    const idHabitacion = 1;
+    this.apiService.getObjetos(idHabitacion).subscribe(datos => this.listaDeObjetosDB = datos);
+    this.apiService.getPuzzles(idHabitacion).subscribe(datos => this.listaDePuzzlesDB = datos);
+  }
+
+  // --- LÓGICA DE INTERACCIÓN ---
+
+  // Esta función centraliza todo el click de la lista
+  abrirAcciones(item: any, tipo: 'objeto' | 'puzzle') {
+    this.itemSeleccionado = item;
+    this.esPuzzle = (tipo === 'puzzle');
+    this.mostrarMiniMenu = true;
+
+    // Debug para ver qué llega de la DB
+    console.log("Datos del item:", item);
+  }
+  cerrarMiniMenu() {
+    this.mostrarMiniMenu = false;
+    this.itemSeleccionado = null;
+  }
+
   alternarInspeccion() {
     this.mostrarMenuInspeccion = !this.mostrarMenuInspeccion;
-
-    // Si abrimos el menú y la lista está vacía, traemos los datos
-    if (this.mostrarMenuInspeccion) {
-      this.cargarObjetosDelLavadero();
+    if (!this.mostrarMenuInspeccion) {
+      this.cerrarMiniMenu();
     }
   }
 
-  cargarObjetosDelLavadero() {
-    // Llamamos al servicio (ID 1 = Lavadero)
-    this.apiService.getObjetos(1).subscribe({
-      next: (datos: any[]) => {
-        console.log('¡Datos recibidos con éxito!', datos);
-        this.listaDeObjetosDB = datos;
+  volver() {
+    this.router.navigate(['/juego']);
+  }
+
+  // Esta función la llamaremos desde el botón "Ver Descripción" del cuadrito
+  verDescripcion() {
+    this.mostrarMiniMenu = false;       // Esconde el cuadrito de opciones
+    this.mostrarMenuInspeccion = false; // Esconde el marco largo de abajo
+    this.mostrarDescripcion = true;         // Muestra el marco de descripción central
+  }
+
+  cerrarLectura() {
+    this.mostrarDescripcion = false;
+    this.mostrarMenuInspeccion = true;  // Vuelve el marco largo
+    this.mostrarMiniMenu = true;        // Vuelve el cuadrito de opciones
+  }
+  guardarItem() {
+    if (!this.itemSeleccionado) return;
+
+    this.apiService.guardarEnInventario(this.itemSeleccionado.id).subscribe({
+      next: (res) => {
+        console.log("Hacha guardada!");
+        this.cerrarMiniMenu();
+        // Actualizamos la lista para que el hacha desaparezca del lavadero
+        this.cargarDatosDelLavadero();
       },
-      error: (err: any) => {
-        console.error('ERROR de red o servidor:', err);
-      }
+      error: (err) => console.error("Error al guardar:", err)
     });
   }
 
 
-  seleccionarObjeto(obj: any) {
-    this.objetoSeleccionado = obj;
-    console.log('Tocaste el objeto:', obj.nombre);
-
-    // Aquí es donde después haremos que aparezca el mini-cuadro cuadrado
-  }
-  // Función para volver al pasillo
-  volver() {
-    this.router.navigate(['/juego']);
-  }
 }
