@@ -1,0 +1,270 @@
+/* --- CONTENEDOR GLOBAL DEL PUZZLE (LA SOLUCIÓN AL BUG) --- */
+.puzzle-overlay-global {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* EXACTAMENTE 100% PARA NO DESBORDAR */
+  height: 100%; /* EXACTAMENTE 100% PARA NO DESBORDAR */
+  background-color: rgba(18, 18, 18, 0.85);
+  z-index: 800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Centrador para los estados 0, 2 y 3 (cuadros de texto) */
+.pantalla-lectura-centrada {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Contenedor del Estado 1 (Mecanismo y panel) */
+.contenedor-puzzle-clasico {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* La imagen vertical de la puerta en el centro */
+.mecanismo-central {
+  height: 55%;
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.8));
+}
+
+/* --- PANEL INFERIOR --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%; /* Clavado abajo */
+  left: 5%;
+  width: 90%;
+  height: 35%;
+  z-index: 870;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* BOTÓN CERRAR PRINCIPAL (IMAGEN) */
+.boton-cerrar-img {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  z-index: 900;
+}
+
+.contenido-panel-dividido {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 30px 60px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+/* Mitad Izquierda */
+.mitad-izquierda {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo-puzzle {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre */
+  font-size: 26px;
+  margin: 0 0 15px 0;
+  text-shadow: 1px 1px 2px black;
+}
+
+.lista-ranuras {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 20px;
+}
+
+.item-ranura {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-shadow: 1px 1px 2px black;
+  transform-origin: left center;
+}
+
+/* Cuando colocás una imagen en la ranura */
+.ranura-llena {
+  display: flex;
+  align-items: center;
+}
+
+.img-ranura-pequena {
+  width: 110px;
+  height: 35px;
+  object-fit: fill;
+  margin-left: -10px;
+  pointer-events: none;
+}
+
+/* Mitad Derecha */
+.mitad-derecha {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grilla-piezas-img {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.img-pieza-derecha {
+  width: 110px;
+  height: 35px;
+  object-fit: fill;
+  pointer-events: none;
+  filter: drop-shadow(2px 2px 4px black);
+}
+
+/* --- ESTILO DEL BOTÓN NUEVO --- */
+.boton-probar {
+  position: absolute;
+  bottom: 25px;
+  left: 60px;
+  font-family: 'Crimson Pro', Serif;
+  color: #1CA8A8;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 110;
+  text-shadow: 1px 1px 2px black;
+  letter-spacing: 1px;
+}
+
+/* --- MINI MENÚ FLOTANTE --- */
+.mini-menu-cuadrado {
+  position: absolute;
+  bottom: 36.5%; /* Se apoya encima del panel inferior */
+  left: 10%;
+  width: 220px;
+  height: 160px;
+  z-index: 950;
+}
+
+/* BOTON X MINI (IMAGEN) */
+.boton-cerrar-mini-img {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  height: 18px;
+  width: auto;
+  cursor: pointer;
+  z-index: 960;
+}
+
+.contenido-mini {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 955;
+  padding-top: 10px;
+}
+
+.lista-nombres-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+}
+
+.nombre-mini {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 22px;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px black;
+  transform-origin: center center;
+}
+
+/* --- CUADRO NARRATIVO (Intro y Final) --- */
+.cuadro-narrativo {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.contenido-texto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.texto-historia {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 25px;
+  line-height: 1.4;
+  text-shadow: 2px 2px 4px black;
+}
+
+/* BOTON IMAGEN (Flecha y Cerrar) */
+.boton-imagen-accion {
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+/* EFECTOS GENERALES UNIFICADOS */
+.efecto-hover {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }

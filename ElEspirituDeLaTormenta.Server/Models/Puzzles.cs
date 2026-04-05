@@ -14,6 +14,7 @@ public partial class Puzzles
     public string? Descripcion { get; set; }
 
     public bool Resuelto { get; set; }
+    public bool Roto { get; set; }
 
     public virtual Habitaciones IdhabitacionNavigation { get; set; } = null!;
 

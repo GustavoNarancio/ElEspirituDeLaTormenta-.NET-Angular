@@ -1,0 +1,307 @@
+/* el-espiritu-de-la-tormenta.component.css */
+
+/* --- 1. ESTRUCTURA DE LAYOUT ESTÁNDAR (Fija el fondo y centra la acción) --- */
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.fondo-puerta-final {
+  background-image: url('/assets/ElEspirituDeLaTormenta.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- 2. CUADROS NARRATIVOS (Escenas de texto 0 y 1) --- */
+.cuadro-narrativo {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado absoluto perfecto dentro del área interactiva */
+  z-index: 100;
+}
+
+.fondo-marco {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.contenido-texto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 50px; /* Ajuste para que el texto no toque los bordes */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.texto-historia {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Color crema parchment */
+  font-size: 18px; /* Tamaño reducido para encajar texto intro */
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+}
+
+/* Botones de acción dentro de los marcos narrativos */
+.boton-flecha {
+  position: absolute;
+  bottom: 40px;
+  right: 50px;
+  height: 35px; /* Compacta la flecha */
+  width: auto;
+  cursor: pointer;
+}
+
+.boton-cerrar-img {
+  position: absolute;
+  bottom: 40px;
+  right: 50px;
+  height: 30px; /* Compacta el botón de cerrar */
+  width: auto;
+  cursor: pointer;
+}
+
+/* --- 3. INTERFAZ DE LA MOCHILA (Escena 2) --- */
+.interfaz-mochila {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+}
+
+/* Panel principal anclado abajo dentro del área interactiva */
+.panel-inventario {
+  position: absolute;
+  bottom: 2%; /* Anclado cerca del borde inferior del área de juego */
+  left: 5%;
+  width: 90%;
+  height: 30%;
+}
+
+/* Botón Volver Atrás relativo al área interactiva, anclado fuera del panel */
+.boton-volver-flotante {
+  position: absolute;
+  top: -40px; /* Justo arriba del borde del panel */
+  right: 20px;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre */
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #C4A463; /* Dorado Viejo */
+  padding: 6px 18px;
+  background-color: rgba(0, 0, 0, 0.9);
+  text-transform: uppercase;
+}
+
+.fondo-panel {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.contenido-inventario {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 25px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-mochila {
+  font-family: 'Crimson Pro', Serif;
+  color: #C4A463; /* Dorado Viejo */
+  font-size: 22px;
+  margin: 0 0 15px 0;
+}
+
+.grilla-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 100px;
+  width: 80%;
+  justify-items: start;
+}
+
+.item-mochila {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre */
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* --- 4. MINI MENÚ ([-usar]) --- */
+.mini-menu-usar {
+  position: absolute;
+  bottom: 31.5%; /* Arriba del panel de mochila */
+  left: 10%;
+  width: 220px; /* Tamaño clásico para que el marco no se rompa */
+  height: 140px;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-mini {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.contenido-mini {
+  position: relative;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  z-index: 210;
+}
+
+.cerrar-x {
+  position: absolute;
+  top: -15px;
+  right: 5px;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.opcion-usar {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 22px;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+/* --- 5. CUADRO DE ERROR (Imagen 7) --- */
+.cuadro-error {
+  position: absolute;
+  width: 450px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado absoluto perfecto */
+  z-index: 300;
+}
+
+.contenido-texto-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.texto-error {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Crema parchment */
+  font-size: 20px;
+  text-align: center;
+}
+
+.boton-cerrar-error {
+  position: absolute;
+  bottom: 25px;
+  right: 35px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* --- 6. EFECTOS REUTILIZABLES --- */
+.efecto-hover {
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s, color 0.2s;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important; /* Ámbar claro para hover */
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+
+.pantalla-negra-absoluta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.titulo-entrar {
+  font-family: 'Crimson Pro', Serif;
+  color: #C4A463;
+  font-size: 36px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

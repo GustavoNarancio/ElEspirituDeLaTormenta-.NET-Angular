@@ -1,0 +1,238 @@
+.pantalla-puzzle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 800;
+  background-color: rgba(18, 18, 18, 0.85);
+}
+
+.contenedor-puzzle {
+  position: relative;
+  width: 900px;
+  height: 800px;
+  /* Le saqué el flex-direction para poder posicionar todo absoluto como en el dormitorio */
+}
+
+/* --- BOTÓN CERRAR SUPERIOR --- */
+.cerrar-x-img {
+  position: absolute;
+  top: -15px;
+  right: 0;
+  height: 45px;
+  width: auto;
+  z-index: 900;
+}
+
+.fondo-absoluto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 10;
+  opacity: 0.9;
+}
+
+/* --- CAJA FUERTE --- */
+.seccion-superior {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.imagen-caja {
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- PANEL INFERIOR (Copiado de .panel-inferior del Dormitorio) --- */
+.panel-inferior-puzzle {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 90%;
+  height: 35%; /* Ocupa el 35% de abajo para las combinaciones */
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.contenido-panel-puzzle {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px; /* Margen superior interno */
+  box-sizing: border-box;
+}
+
+.titulo-columna {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 28px;
+  margin: 0 0 30px 0;
+  text-align: center;
+  text-shadow: 2px 2px 4px black;
+}
+
+.grilla-ranuras {
+  width: 80%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 20px;
+  justify-items: center;
+}
+
+.item-texto {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 26px;
+  text-shadow: 1px 1px 2px black;
+  text-align: center;
+}
+
+/* --- MINI MENÚ DE NÚMEROS (Independiente) --- */
+.mini-menu-puzzle {
+  position: absolute;
+  bottom: 36%; /* Se apoya exactamente sobre el marco inferior */
+  left: 10%;
+  width: 220px;
+  height: 140px;
+  z-index: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-cuadrado {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -8px;
+  left: 0;
+  object-fit: fill;
+  z-index: 10;
+}
+
+.contenido-numeros {
+  position: relative;
+  z-index: 20;
+  width: 85%;
+  height: 70%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-items: center;
+  gap: 10px;
+}
+
+.numero-hover {
+  font-family: 'Crimson Pro', Serif;
+  color: #C4A463;
+  font-size: 26px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+  .numero-hover:hover {
+    color: #F2A840;
+    transform: scale(1.3);
+    text-shadow: 0px 0px 8px rgba(242, 168, 64, 0.6);
+  }
+
+/* --- BOTÓN PROBAR COMBINACIÓN (Independiente) --- */
+.boton-probar {
+  position: absolute;
+  bottom: 37%; /* Se apoya exactamente sobre el marco inferior del lado derecho */
+  right: 10%;
+  width: 250px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.texto-boton {
+  position: relative;
+  z-index: 20;
+  font-family: 'Crimson Pro', Serif;
+  font-size: 24px;
+  text-shadow: 1px 1px 3px black;
+}
+
+/* --- UTILIDADES Y MODAL --- */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+.modal-aviso {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 200px;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenido-aviso {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.texto-aviso {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px black;
+}
+
+.boton-cerrar-aviso-img {
+  height: 30px;
+  width: auto;
+  margin-top: 15px;
+}

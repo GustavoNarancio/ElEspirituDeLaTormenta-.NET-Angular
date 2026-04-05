@@ -13,6 +13,8 @@ public partial class PuzzlesResueltos
 
     public bool EstaResuelto { get; set; }
 
+    public bool EstaRoto { get; set; }
+
     public virtual Puzzles IdpuzzleNavigation { get; set; } = null!;
 
     public virtual Usuarios IdusuarioNavigation { get; set; } = null!;

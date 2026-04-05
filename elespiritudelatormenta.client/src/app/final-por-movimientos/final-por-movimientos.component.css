@@ -1,0 +1,113 @@
+/* --- 1. CONTENEDOR BASE: PANTALLA COMPLETA ABSOLUTA --- */
+.pantalla-completa {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  overflow: hidden;
+  z-index: 100;
+}
+
+/* --- 2. FONDO ESPECÍFICO (Se usa tu imagen finalMovimientos.png) --- */
+.fondo-final-movimientos {
+  background-image: url('/assets/FinalMovimientos.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- 3. EL MARCO NARRATIVO (FIJO EN EL CENTRO) --- */
+.marco-narrativo {
+  position: relative;
+  width: 800px;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.5));
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* --- 4. CONTENIDO DEL TEXTO --- */
+.contenido-texto {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  padding: 80px 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* --- MAGIA PARA OCULTAR EL SCROLLBAR --- */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer y Edge */
+}
+
+  .contenido-texto::-webkit-scrollbar {
+    display: none;
+  }
+
+.textoDelMarco {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  line-height: 1.5;
+  text-align: center;
+  white-space: pre-wrap;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin: 0;
+}
+
+/* --- 5. BOTONES FINALES --- */
+.contenedor-acciones {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.btn-fin {
+  width: 120px;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.2));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.btn-flecha {
+  height: 50px;
+  width: auto;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 0.2));
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* EFECTO HOVER */
+.efecto-hover:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0px 0px 15px rgba(242, 168, 64, 0.8));
+}

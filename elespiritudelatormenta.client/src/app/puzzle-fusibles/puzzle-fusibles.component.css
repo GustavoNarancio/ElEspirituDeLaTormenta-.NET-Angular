@@ -1,0 +1,275 @@
+/* --- OVERLAY GLOBAL CON FONDO OSCURO --- */
+.pantalla-puzzle-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 800;
+  background-color: rgba(18, 18, 18, 0.70);
+}
+
+.contenedor-puzzle {
+  position: relative;
+  width: 900px;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* BOTÓN CERRAR CON IMAGEN */
+.cerrar-x {
+  position: absolute;
+  top: -20px;
+  right: -19px;
+  height: 37px; /* Tamaño de la imagen */
+  width: auto;
+  cursor: pointer;
+  z-index: 900;
+}
+
+/* --- CLASE REUTILIZABLE PARA FONDOS --- */
+.fondo-absoluto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 10;
+  opacity: 0.9;
+}
+
+/* --- PARTE SUPERIOR (Caja de Fusibles) --- */
+.seccion-superior {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.imagen-caja {
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- PARTE INFERIOR (Panel de Control) --- */
+.seccion-inferior {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  margin-top: 20px;
+}
+
+/* --- PANEL PRINCIPAL (Ranuras y Mochila) --- */
+.panel-principal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+}
+
+.contenido-panel {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 30px 40px;
+  box-sizing: border-box;
+}
+
+.columna-ranuras {
+  width: 40%;
+}
+
+.columna-mochila {
+  width: 60%;
+}
+
+/* TÍTULOS UNIFICADOS (Cobre Oxidado) */
+.titulo-columna {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 26px;
+  text-align: center;
+  margin: 0 0 20px 0;
+  text-decoration: underline;
+  text-shadow: 2px 2px 4px black;
+}
+
+.lista-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.grilla-mochila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* TEXTOS DE ÍTEMS (Un poco más apagados para no competir con títulos) */
+.item-texto {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 22px;
+  text-shadow: 1px 1px 2px black;
+  transition: color 0.3s ease;
+}
+
+/* HOVER DE RANURAS (Ámbar Dorado) */
+.columna-ranuras .item-texto {
+  cursor: pointer;
+}
+
+  .columna-ranuras .item-texto:hover {
+    color: #F2A840; /* Ámbar Dorado al pasar mouse */
+  }
+
+/* --- ELEMENTOS FLOTANTES SOBRE EL PANEL --- */
+
+/* SELECTOR NUMÉRICO (Abajo a la izquierda) */
+.mini-menu-numeros {
+  position: absolute;
+  bottom: 270px;
+  left: 20px;
+  width: 160px;
+  height: 120px;
+  z-index: 30;
+}
+
+.contenido-numeros {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* NÚMEROS (Cobre Oxidado) */
+.numero-hover {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+  /* HOVER DE NÚMEROS (Ámbar Dorado) */
+  .numero-hover:hover {
+    color: #F2A840; /* Ámbar Dorado */
+    transform: scale(1.2);
+  }
+
+/* BOTÓN DAR CORRIENTE (Abajo a la derecha) */
+.boton-corriente {
+  position: absolute;
+  bottom: 270px;
+  right: 20px;
+  width: 250px;
+  height: 60px;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* TEXTO DEL BOTÓN (Cobre Oxidado) */
+.texto-boton {
+  color: #5CC4A6;
+  position: relative;
+  z-index: 20;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px black;
+}
+
+/* Efectos comunes de hover */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+/* --- MODAL DE AVISO MEJORADO (Bloquea clics y se ve perfecto) --- */
+.modal-aviso-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Este fondo oscuro bloquea que el jugador toque cosas por atrás */
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000; /* Lo ponemos por encima del 800 del puzzle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-aviso-caja {
+  position: relative;
+  width: 450px;
+  height: 450px; /* Mismo tamaño holgado que usás en el Lavadero */
+}
+
+.contenido-aviso {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 20; /* <--- ESTA ES LA SOLUCIÓN */
+}
+
+.texto-aviso {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 23px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  text-shadow: 1px 1px 2px black;
+}
+
+.cerrar-aviso-img {
+  margin-top: 30px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+
+/* --- BOTÓN CERRAR ESPECÍFICO DEL MODAL DE AVISO --- */
+.cerrar-aviso-img {
+  position: absolute;
+  bottom: 25px; /* Siempre a 25px del borde inferior del cartel */
+  right: 25px;
+  height: 25px;
+  width: auto;
+  cursor: pointer;
+  z-index: 30;
+}

@@ -1,0 +1,112 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva cocina-fondo">
+
+    <app-mochila></app-mochila>
+
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
+      <span class="opcion-amarilla efecto-hover" (click)="volver()">Volver atrás</span>
+    </div>
+
+    <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">
+            {{ textoLectura }}
+          </p>
+          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Cerrar">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarLibreriaInterface" class="pantalla-libreria-overlay">
+      <div class="contenedor-libro-abierto">
+        <img src="/assets/LibroAbierto.png" class="imagen-libro-fondo">
+
+        <img src="/assets/Cerrar.png" class="cerrar-libreria-img efecto-hover" (click)="cerrarLibreria()" alt="Cerrar">
+
+        <div class="contenedor-texto-paginas">
+          <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-texto-transparente-libro">
+
+          <div class="contenido-texto-libro">
+            <p *ngIf="libroActual" class="texto-pagina-actual">
+              {{ libroActual.paginas[paginaActual] }}
+            </p>
+
+            <p *ngIf="!libroActual" class="texto-pagina-actual" style="text-align: center; margin-top: 50px;">
+              Seleccioná un libro del panel inferior para comenzar la lectura.
+            </p>
+
+            <div *ngIf="libroActual" class="controles-paginacion">
+              <img src="/assets/flecha3Izquierda.png"
+                   class="flecha-navegacion efecto-hover"
+                   (click)="cambiarPagina(-1)">
+
+              <img src="/assets/flecha3.png"
+                   class="flecha-navegacion efecto-hover"
+                   (click)="cambiarPagina(1)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-inferior-especial">
+        <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+        <div class="contenedor-lista-objetos lista-libros-horizontal">
+          <div *ngFor="let libro of librosDisponibles"
+               class="objeto-lista libro-item"
+               [class.libro-seleccionado]="libro.id === libroActual?.id"
+               (click)="seleccionarLibro(libro.id)">
+            - {{ libro.titulo }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMenuInspeccion && !mostrarLibreriaInterface" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <img *ngIf="!viendoCajon" src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
+      <img *ngIf="viendoCajon" src="/assets/Volver.png" class="boton-cerrar efecto-hover" (click)="cerrarCajon()" alt="Volver">
+
+      <div class="contenedor-lista-objetos">
+        <ng-container *ngIf="!viendoCajon">
+          <div class="objeto-lista" (click)="abrirCajon()">- Revisar Cajón</div>
+          <div class="objeto-lista" (click)="abrirAcciones({nombre: 'Librería', descripcion: 'La estanteria, aunque firme, muestran señales de desgaste debido al paso del tiempo y de la fuerte humedad del lugar.', esAgarrable: false}, 'libreria')">
+            - Librería
+          </div>
+          <div *ngFor="let obj of objetosPrincipales" class="objeto-lista" (click)="abrirAcciones(obj, 'objeto')">
+            - {{ obj.nombre }}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="viendoCajon">
+          <div *ngIf="objetosCajon.length === 0" class="objeto-lista" style="cursor: default;">El cajón está vacío.</div>
+          <div *ngFor="let obj of objetosCajon" class="objeto-lista" (click)="abrirAcciones(obj, 'objeto')">
+            - {{ obj.nombre }}
+          </div>
+        </ng-container>
+      </div>
+
+      <div *ngIf="mostrarMiniMenu" class="mini-menu-acciones">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+
+        <div class="contenido-acciones">
+          <div class="opcion-accion efecto-hover" *ngIf="itemSeleccionado?.esInteractuableEspecial" (click)="abrirLibreria()">
+            - Ver Libros
+          </div>
+          <div class="opcion-accion efecto-hover" *ngIf="!itemSeleccionado?.esInteractuableEspecial && (itemSeleccionado?.esAgarrable || itemSeleccionado?.EsAgarrable)" (click)="guardarItem()">
+            - Guardar en Mochila
+          </div>
+          <div class="opcion-accion efecto-hover" (click)="verDescripcion()">
+            - Ver Descripción
+          </div>
+
+          <img src="/assets/x.png" class="cerrar-mini efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

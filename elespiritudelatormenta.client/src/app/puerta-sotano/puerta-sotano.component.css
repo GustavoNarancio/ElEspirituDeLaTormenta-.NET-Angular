@@ -1,0 +1,233 @@
+/* --- CONTENEDORES PRINCIPALES --- */
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.puerta-sotano-fondo {
+  background-image: url('/assets/PuertaSotano.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.titulo-habitacion {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 32px;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+}
+
+/* --- BOTÓN VOLVER (SOLO LA IMAGEN) --- */
+.contenedor-volver {
+  position: absolute;
+  bottom: 33%;
+  right: 5%;
+  z-index: 150;
+}
+
+.imagen-boton-volver-solo {
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* --- PANEL INFERIOR (Mochila) --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%; /* Base del marco inferior */
+  left: 5%;
+  width: 90%;
+  height: 30%; /* Ocupa el 30% del alto */
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.contenido-panel-mochila {
+  position: relative;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  padding: 25px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-mochila-centrado {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 26px;
+  margin: 0 0 15px 0;
+  text-decoration: underline;
+  text-shadow: 2px 2px 4px black;
+}
+
+.contenedor-lista-objetos {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+  gap: 10px 20px;
+  overflow: hidden;
+}
+
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Beige Almendra */
+  font-size: 24px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+  text-align: left;
+  /* LA MAGIA: Al agrandarse, crece solo hacia la derecha, evitando cortarse en el borde izquierdo */
+  transform-origin: left center;
+}
+
+/* --- MINI MENÚ --- */
+.mini-menu-acciones {
+  position: absolute;
+  /* Lo apoyamos justo sobre el borde superior del panel inferior (que llega hasta el 32%) */
+  bottom: 32%;
+  left: 10%;
+  width: 200px;
+  height: 120px;
+  z-index: 900;
+}
+
+.fondo-cuadrado {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 4px;
+  left: 0;
+  object-fit: fill;
+  z-index: 10;
+}
+
+.contenido-acciones {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; /* Texto alineado a la izquierda */
+  padding-left: 30px; /* Separación del borde izquierdo */
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+.cerrar-mini-esquina {
+  position: absolute;
+  top: 17px; /* Adentro del marco, esquina superior */
+  right: 15px; /* Adentro del marco, esquina derecha */
+  height: 19px; /* Chiquita, porque usamos x.png */
+  width: auto;
+  cursor: pointer;
+  z-index: 30;
+}
+
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Beige Almendra */
+  font-size: 24px;
+  cursor: pointer;
+  transform-origin: left center; /* Para que tampoco se corte si le pasás el mouse */
+}
+
+/* --- PANTALLA DE LECTURA (Centro) --- */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  background-color: rgba(18, 18, 18, 0.80);
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: fill;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.imagen-accion-lectura {
+  margin-top: 30px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* --- UTILIDADES (PALETA COHERENTE) --- */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important; /* Ámbar Dorado */
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }

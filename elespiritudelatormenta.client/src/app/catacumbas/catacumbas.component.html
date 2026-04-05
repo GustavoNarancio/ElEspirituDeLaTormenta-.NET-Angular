@@ -1,0 +1,25 @@
+<div class="pantalla-completa fondo-catacumbas">
+
+  <div class="marco-narrativo">
+    <img src="/assets/marcoSinFondoNuevo.png" class="fondo-marco">
+
+    <div class="contenido-texto">
+      <p class="textoDelMarco">{{ textoMostrado }}</p>
+
+      <div class="contenedor-acciones">
+        <img *ngIf="mostrarBotonSiguiente"
+             src="/assets/flecha3.png"
+             class="btn-flecha efecto-hover"
+             (click)="avanzarEscena()"
+             alt="Siguiente">
+
+        <img *ngIf="mostrarBotonFin"
+             src="/assets/FIN.png"
+             class="btn-fin efecto-hover"
+             (click)="finalizarJuego()"
+             alt="Fin del Juego">
+      </div>
+    </div>
+  </div>
+
+</div>

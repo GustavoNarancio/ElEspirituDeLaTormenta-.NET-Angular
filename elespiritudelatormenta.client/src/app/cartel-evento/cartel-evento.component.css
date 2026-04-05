@@ -1,0 +1,169 @@
+.overlay-global-eventos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animacion-oscurecer-rapido {
+  animation: backgroundDarken 1s ease-in-out forwards;
+}
+
+@keyframes backgroundDarken {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  to {
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+}
+
+.contenedor-cartel-aviso {
+  position: relative;
+  width: 550px;
+  height: 450px;
+  filter: drop-shadow(0px 0px 30px rgba(0, 0, 0, 0.9));
+  animation: popIn 0.3s ease-out;
+}
+
+.special-menace-glow {
+  /* Borramos el box-shadow rígido que hacía el cuadrado negro */
+  animation: popIn 0.3s ease-out, glowPulse 2s infinite alternate;
+}
+
+@keyframes glowPulse {
+  from {
+    /* Usamos drop-shadow doble: Mantenemos la sombra negra de fondo + sumamos el latido rojo */
+    filter: drop-shadow(0px 0px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(211, 76, 76, 0.3));
+  }
+
+  to {
+    filter: drop-shadow(0px 0px 30px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 40px rgba(211, 76, 76, 0.7));
+  }
+}
+
+.fondo-marco-aviso {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.contenido-aviso {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 80px 70px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.texto-aviso-rojo {
+  font-family: 'Crimson Pro', Serif;
+  color: #D34C4C;
+  font-size: 28px;
+  line-height: 1.5;
+  text-align: center;
+  text-shadow: 2px 2px 5px black;
+  margin: 0;
+}
+
+.pulsing-menace-shadow {
+  animation: textShadowPulse 2s infinite alternate;
+}
+
+@keyframes textShadowPulse {
+  from {
+    text-shadow: 2px 2px 4px black, 0 0 5px rgba(211, 76, 76, 0.3);
+  }
+
+  to {
+    text-shadow: 2px 2px 4px black, 0 0 10px rgba(211, 76, 76, 0.8);
+  }
+}
+
+.contenedor-boton-cerrar {
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
+}
+
+.btn-cerrar-img {
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+.pantalla-negra-game-over {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo-game-over {
+  font-family: 'Crimson Pro', Serif;
+  color: #C4A463;
+  font-size: 32px;
+  text-align: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0 40px;
+}
+
+.efecto-hover {
+  transition: transform 0.2s, filter 0.2s, color 0.2s;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animacion-fade {
+  animation: fadeInLento 3s ease-in-out forwards;
+}
+
+@keyframes fadeInLento {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

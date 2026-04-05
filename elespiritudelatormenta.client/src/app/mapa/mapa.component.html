@@ -1,0 +1,31 @@
+<div class="pantalla-mapa-overlay">
+
+  <div class="contenedor-mapa-central">
+
+    <img src="/assets/MapaLiso.png" class="imagen-mapa-fondo">
+
+    <img src="/assets/Cerrar.png" class="cerrar-mapa" (click)="alCerrar()" />
+
+    <div class="capa-habitaciones-mapa">
+
+      <span class="punto-mapa bosque" (click)="intentarSalirBosque()">BOSQUE</span>
+
+      <span class="punto-mapa living" (click)="viajarHacia('/living')">LIVING</span>
+      <span class="punto-mapa cocina" (click)="viajarHacia('/cocina')">COCINA</span>
+      <span class="punto-mapa lavadero" (click)="viajarHacia('/lavadero')">LAVADERO</span>
+
+      <span class="punto-mapa garaje" (click)="viajarGaraje()">GARAJE</span>
+      <span class="punto-mapa dormitorio" (click)="viajarHacia('/dormitorio')">DORMITORIO</span>
+      <span class="punto-mapa sotano" (click)="viajarSotano()">SOTANO</span>
+
+    </div>
+
+    <div *ngIf="mostrarPantallaBosque" class="pantalla-negra-absoluta animacion-fade-lento">
+      <h1 class="titulo-entrar efecto-hover" (click)="viajarAlBosque()">SALIR AL BOSQUE</h1>
+
+      <img src="/assets/Volver.png" class="btn-volver-final efecto-hover" (click)="volverDePantallaBosque()" alt="Volver">
+    </div>
+
+  </div>
+
+</div>

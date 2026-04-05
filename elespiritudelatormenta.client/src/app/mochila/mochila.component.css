@@ -9,12 +9,13 @@
 }
 
 .efecto-hover {
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
 }
 
   .efecto-hover:hover {
+    color: #F2A840; /* Ámbar Dorado */
     transform: scale(1.1);
-    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.8));
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
   }
 
 /* --- 2. LA PANTALLA GIGANTE (Al tocar el ícono) --- */
@@ -80,7 +81,7 @@
 
 .titulo-inventario {
   font-family: 'Crimson Pro', Serif !important;
-  color: #9b8b36 !important;
+  color: #B8673F !important; /* Cobre Oxidado */
   font-size: 34px;
   margin-top: 0;
   margin-bottom: 25px;
@@ -98,7 +99,7 @@
 
 .texto-mochila-item {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 26px;
   margin: 5px 0;
   text-shadow: 1px 1px 3px black;
@@ -106,22 +107,21 @@
 }
 
   .texto-mochila-item:hover {
-    color: #f5f5dc;
+    color: #F2A840; /* Ámbar Dorado */
   }
 
 .boton-cerrar-mochila {
   font-family: 'Crimson Pro', Serif;
-  color: #f5f5dc;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 18px;
   cursor: pointer;
   margin-top: auto;
 }
 
 /* --- 4. MINI MENÚ DE ACCIONES (Devolver / Leer) --- */
-
 .mini-menu-acciones {
   position: absolute;
-  bottom: 102%; /* Lo sube arriba del marco principal */
+  bottom: 102%;
   left: 50px;
   width: 220px;
   height: 140px;
@@ -143,21 +143,21 @@
 
 .opcion-accion {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 20px;
   cursor: pointer;
   text-shadow: 1px 1px 2px black;
 }
 
   .opcion-accion:hover {
-    color: #f5f5dc;
+    color: #F2A840; /* Ámbar Dorado */
   }
 
 .cerrar-mini {
   position: absolute;
   top: 5px;
   right: 10px;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 14px;
   cursor: pointer;
 }
@@ -172,7 +172,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 700; /* Superpone a la mochila */
+  z-index: 700;
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -198,7 +198,7 @@
 
 .texto-descripcion-db {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #E8DCC2; /* Crema Base para textos largos */
   font-size: 24px;
   text-align: center;
   line-height: 1.4;
@@ -207,7 +207,7 @@
 
 .boton-volver-lectura {
   margin-top: 30px;
-  color: #f5f5dc;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 18px;
   cursor: pointer;
   font-family: 'Crimson Pro', Serif;

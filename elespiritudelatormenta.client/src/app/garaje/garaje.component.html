@@ -1,0 +1,72 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva garaje-fondo">
+
+    <h1 class="titulo-habitacion">Garaje</h1>
+
+    <app-mochila></app-mochila>
+
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
+      <span class="opcion-amarilla efecto-hover" (click)="volverAtras()">Volver atrás</span>
+    </div>
+
+    <<div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+  <div class="contenedor-lectura-central">
+    <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+    <div class="contenido-texto-lectura">
+      <p class="texto-descripcion-db">{{ textoLectura }}</p>
+
+      <img src="/assets/Volver.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Volver">
+
+    </div>
+  </div>
+</div>
+
+    <div *ngIf="mostrarMenuInspeccion" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
+
+      <div class="contenedor-lista-objetos">
+        <div *ngFor="let obj of listaDeObjetosDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(obj, 'objeto')">
+          - {{ obj.nombre || obj.Nombre }}
+        </div>
+        <div *ngFor="let puz of listaDePuzzlesDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(puz, 'puzzle')">
+          - {{ puz.nombre || puz.Nombre }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenu && itemSeleccionado" class="mini-menu-acciones">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+      <div class="contenido-acciones">
+
+        <div class="opcion-accion efecto-hover" *ngIf="esPuzzle" (click)="interactuar()">- Interactuar</div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="!esPuzzle && (itemSeleccionado?.esAgarrable || itemSeleccionado?.EsAgarrable)" (click)="guardarItem()">
+          - Guardar en Mochila
+        </div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="itemSeleccionado?.EsNavegacion" (click)="interactuar()">- Subirse</div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="!itemSeleccionado?.EsNavegacion" (click)="verDescripcion()">
+          - Ver Descripción
+        </div>
+
+        <img src="/assets/x.png" class="cerrar-mini efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+      </div>
+    </div>
+
+    <app-puzzle-camioneta *ngIf="mostrarPuzzleModal"
+                          [inventarioUsuario]="inventarioUsuario"
+                          (resuelto)="manejarPuzzleResuelto($event)"
+                          (cerrar)="manejarPuzzleCerrado()">
+    </app-puzzle-camioneta>
+
+    <div *ngIf="escenaFinal === 1" class="pantalla-negra-absoluta animacion-fade-lento">
+      <h1 class="titulo-entrar efecto-hover" (click)="escaparConCamioneta()">ESCAPAR CON LA CAMIONETA</h1>
+      <img src="/assets/Volver.png" class="btn-volver-final efecto-hover" (click)="volverDePantallaNegra()" alt="Volver">
+    </div>
+
+  </div>
+</div>

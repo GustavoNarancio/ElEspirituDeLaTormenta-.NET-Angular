@@ -1,0 +1,87 @@
+<div class="puzzle-overlay-global">
+
+  <div *ngIf="estadoPantalla === 0" class="pantalla-lectura-centrada">
+    <div class="cuadro-narrativo">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+      <div class="contenido-texto">
+        <p class="texto-historia">
+          Al costado de este mecanismo hay unas tablas rectangulares de piedra, parecen identicas entre si, solo que en la parte de atras tienen un simbolo diferente. en la parte de adelante son de piedra lisa, pero alguien se tomó el trabajo de tallarles un nombre con alguna herramienta.
+        </p>
+        <img src="/assets/flecha3.png" class="boton-imagen-accion efecto-hover" (click)="comenzarPuzzle()" alt="Continuar">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="estadoPantalla === 1" class="contenedor-puzzle-clasico">
+
+    <img src="/assets/puzzle-sotano.png" class="mecanismo-central">
+
+    <div class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <img src="/assets/Cerrar.png" class="boton-cerrar-img efecto-hover" (click)="cancelar()" alt="Cerrar">
+
+      <span *ngIf="estanTodasLlenas()"
+            class="boton-probar efecto-hover"
+            (click)="probarCombinacion()">
+        PROBAR COMBINACION
+      </span>
+
+      <div class="contenido-panel-dividido">
+
+        <div class="mitad-izquierda">
+          <h2 class="titulo-puzzle">Cerradura magica</h2>
+          <div class="lista-ranuras">
+            <div *ngFor="let ranura of ranuras; let i = index" class="item-ranura efecto-hover" (click)="abrirOpcionesRanura(i)">
+
+              <span *ngIf="!ranura">-Ranura {{ i + 1 }}</span>
+
+              <div *ngIf="ranura" class="ranura-llena">
+                <img [src]="ranura.img" class="img-ranura-pequena" alt="{{ ranura.nombre }}">
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="mitad-derecha">
+          <div class="grilla-piezas-img">
+            <img *ngFor="let pieza of piezasDisponibles"
+                 [src]="pieza.img"
+                 class="img-pieza-derecha"
+                 alt="{{ pieza.nombre }}">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenuNombres" class="mini-menu-cuadrado">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+
+      <img src="/assets/x.png" class="boton-cerrar-mini-img efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+
+      <div class="contenido-mini">
+        <div class="lista-nombres-mini">
+          <span *ngFor="let pieza of piezasDisponibles"
+                class="nombre-mini efecto-hover"
+                (click)="seleccionarPieza(pieza)">
+            -{{ pieza.nombre }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="estadoPantalla === 2 || estadoPantalla === 3" class="pantalla-lectura-centrada">
+    <div class="cuadro-narrativo">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+      <div class="contenido-texto">
+        <p class="texto-historia">{{ mensajeFinal }}</p>
+        <img src="/assets/Cerrar.png" class="boton-imagen-accion efecto-hover" (click)="continuarFinal()" alt="Continuar">
+      </div>
+    </div>
+  </div>
+
+</div>

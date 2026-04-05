@@ -11,6 +11,8 @@ public partial class Usuarios
 
     public string Contrasenia { get; set; } = null!;
 
+    public int Movimientos { get; set; } // Agregamos esta línea
+
     public virtual ICollection<Inventario> Inventario { get; set; } = new List<Inventario>();
 
     public virtual ICollection<ProgresoPartida> ProgresoPartida { get; set; } = new List<ProgresoPartida>();

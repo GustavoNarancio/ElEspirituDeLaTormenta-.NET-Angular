@@ -1,14 +1,49 @@
-﻿:host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+:host {
+  max-width: 1280px;
+  padding: 2rem;
+  text-align: center;
 }
 
 th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 table {
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+/* --- ESTILOS NUEVOS PARA LA ALERTA DE MOCHILA --- */
+.alerta-flotante-mochila {
+  position: fixed;
+  top: 10%; /* Aparece en la parte superior central de la pantalla */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 350px; /* Un poco más ancho para que entre bien el texto */
+  height: 150px;
+  z-index: 9999; /* Siempre por encima de todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.fondo-alerta {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0.95;
+  z-index: 10;
+}
+
+.alerta-flotante-mochila p {
+  position: relative;
+  z-index: 20;
+  color: #B8673F; 
+  font-family: 'Crimson Pro', Serif;
+  font-size: 24px;
+  padding: 20px;
+  margin: 0;
+  text-shadow: 1px 1px 3px black;
 }

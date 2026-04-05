@@ -1,0 +1,18 @@
+<div class="pantalla-completa fondo-escape">
+
+  <div class="marco-narrativo">
+    <img src="/assets/marcoSinFondoNuevo.png" class="fondo-marco">
+
+    <div class="contenido-texto">
+      <p class="textoDelMarco">{{ textoMostrado }}</p>
+
+      <div class="contenedor-acciones" *ngIf="mostrarBotonFin">
+        <img src="/assets/FIN.png"
+             class="btn-fin efecto-hover"
+             (click)="finalizarJuego()"
+             alt="Fin del Juego">
+      </div>
+    </div>
+  </div>
+
+</div>

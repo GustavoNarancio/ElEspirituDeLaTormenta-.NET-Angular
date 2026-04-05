@@ -1,0 +1,51 @@
+<div class="modal-puzzle-container">
+
+  <img src="/assets/Cerrar.png" class="boton-cerrar-global efecto-hover" (click)="clickCerrarGlobal()" alt="Cerrar">
+
+  <img src="/assets/Camioneta.png" class="imagen-camioneta" alt="Camioneta">
+
+  <div class="pantalla-lectura">
+    <div class="contenedor-lectura-central">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+
+      <div class="contenido-texto-lectura">
+        <p class="texto-historia">{{ textoCentral }}</p>
+
+        <div *ngIf="estado === 'errorItem'" class="contenedor-botones-centro fila-botones-derecha">
+          <img src="/assets/Cerrar.png" class="btn-imagen-chica efecto-hover" (click)="volverAIntro()" alt="Cerrar">
+        </div>
+
+        <div *ngIf="estado === 'confirmacion'" class="contenedor-botones-centro fila-botones-separados">
+          <span class="btn-texto-arreglar efecto-hover" (click)="confirmarArreglo()">ARREGLARLO</span>
+          <img src="/assets/Volver.png" class="btn-imagen-chica efecto-hover" (click)="volverAIntro()" alt="Volver">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="estado === 'intro' || estado === 'roto'" class="panel-inferior">
+    <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+    <div class="contenido-panel">
+      <h2 class="titulo-mochila">MOCHILA</h2>
+
+      <div class="grilla-mochila">
+        <span *ngFor="let item of inventarioUsuario"
+              class="item-mochila efecto-hover"
+              (click)="abrirMiniMenu(item)">
+          - {{ item.nombre || item.Nombre }}
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenu" class="mini-menu-usar">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-mini">
+      <div class="contenido-mini">
+        <img src="/assets/x.png" class="cerrar-mini-esquina efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+        <span class="opcion-usar efecto-hover" (click)="usarItem()">- Usar</span>
+      </div>
+    </div>
+  </div>
+
+</div>

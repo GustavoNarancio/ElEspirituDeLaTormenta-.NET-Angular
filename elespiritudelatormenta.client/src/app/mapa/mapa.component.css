@@ -1,0 +1,188 @@
+/* --- OVERLAY GIGANTE (Fondo semioscuro de la paleta) --- */
+.pantalla-mapa-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 900; /* Por encima de todo */
+  background-color: rgba(18, 18, 18, 0.85); /* Fondo oscuro paleta */
+}
+
+.contenedor-mapa-central {
+  position: relative;
+  /* Aseguramos que el contenedor sea cuadrado como la imagen PNG liso */
+  width: 900px;
+  height: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-mapa-fondo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 10;
+}
+
+/* --- BOTÓN CERRAR SUPERIOR --- */
+.cerrar-mapa {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  z-index: 110;
+  /* Agregamos una transición suave para que el brillo no sea de golpe */
+  transition: filter 0.3s ease, transform 0.2s ease;
+}
+
+  .cerrar-mapa:hover {
+    /* Como es una imagen, usamos filter para darle brillo y la sombra dorada */
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.8));
+    /* Si querés que también se agrande apenitas como los otros botones, dejá esta línea. 
+       Si lo querés fijo sin movimiento, borrala. */
+    transform: scale(1.05);
+  }
+
+/* --- CAPA DE PALABRAS INTERACTIVAS --- */
+.capa-habitaciones-mapa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+}
+
+/* --- ESTILO COMÚN PARA LOS PUNTOS (Habitaciones) --- */
+.punto-mapa {
+  position: absolute;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado Base */
+  /* Letra más chica (34px) para que entre bien */
+  font-size: 34px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px black;
+  /* Transición suave solo para color y filtros (el brillo) */
+  transition: all 0.3s ease;
+  /* MAGIA DEL CENTRADO ENTERO */
+  transform: translate(-50%, -50%);
+}
+
+  /* EL GLOW DEFINITIVO: Solo color y brillo, nada de movimiento ni scaling */
+  .punto-mapa:hover {
+    color: #F2A840; /* Cambia a Ámbar Dorado al tocar (Parte 1 del Brillo) */
+    /* Mantenemos el translate CENTRADO, NO SCALE */
+    transform: translate(-50%, -50%); /* Fijo, sin agrandarse ni moverse */
+    /* El 'brillo' real lo logramos aumentando el brillo y la sombra dorada */
+    filter: brightness(1.2) drop-shadow(0px 0px 15px rgba(242, 168, 64, 0.9));
+  }
+
+  /* --- POSICIONES EXACTAS --- */
+
+  /* Nuevo Punto: Bosque (Arriba al centro) - TU NUEVA POSICIÓN */
+  .punto-mapa.bosque {
+    top: 19%;
+    left: 41%;
+  }
+
+  /* Columna Izquierda */
+  .punto-mapa.living {
+    top: 35%;
+    left: 30%;
+  }
+
+  .punto-mapa.cocina {
+    top: 55%;
+    left: 30%;
+  }
+
+  .punto-mapa.lavadero {
+    top: 74%;
+    left: 30%;
+  }
+
+  /* Columna Derecha */
+  .punto-mapa.garaje {
+    top: 26%;
+    left: 70%;
+  }
+
+  .punto-mapa.dormitorio {
+    top: 55%;
+    left: 70%;
+  }
+
+  .punto-mapa.sotano {
+    top: 75%;
+    left: 70%;
+  }
+
+/* --- ESTILOS DE LA PANTALLA NEGRA DEL BOSQUE --- */
+
+.pantalla-negra-absoluta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 500; /* Tapa el mapa entero */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Animación y efecto hover importados del Garaje */
+.animacion-fade-lento {
+  animation: fadeInLento 4s ease-in-out forwards;
+}
+
+.titulo-entrar {
+  font-family: 'Crimson Pro', Serif;
+  color: #C4A463;
+  font-size: 42px; /* Ajustado al tamaño de fuente del garaje */
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px black;
+}
+
+/* Imagen del botón volver importada del Garaje */
+.btn-volver-final {
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.efecto-hover {
+  transition: transform 0.2s, filter 0.2s, color 0.2s;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+@keyframes fadeInLento {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+

@@ -1,0 +1,383 @@
+/* --- 1. CONTENEDORES BASE --- */
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.cocina-fondo {
+  background-image: url('/assets/Cocina.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- 2. ELEMENTOS DE UI (Mochila, Títulos) --- */
+.mochila-icon {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  width: 80px;
+  z-index: 50;
+}
+
+/* --- 3. MENÚ DE NAVEGACIÓN --- */
+.menu-opciones {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 50;
+}
+
+.opcion-amarilla {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 26px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+}
+
+/* --- 4. PANEL INFERIOR (Marco Rectangular Largo) --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 90%;
+  height: 30%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.boton-cerrar {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px; /* Tamaño de imagen Cerrar.png o Volver.png */
+  width: auto;
+  cursor: pointer;
+  z-index: 110;
+}
+
+/* --- 5. LISTA DE OBJETOS --- */
+.contenedor-lista-objetos {
+  position: absolute;
+  top: 16%;
+  left: 6px;
+  width: 100%;
+  height: 65%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+  gap: 15px 20px;
+  padding: 0 60px;
+  box-sizing: border-box;
+  z-index: 120;
+  overflow: hidden;
+}
+
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Cobre Oxidado */
+  font-size: 30px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+  .objeto-lista:hover {
+    color: #F2A840; /* Ámbar Dorado al tocar */
+    transform: translateX(15px); /* ESTE ES EL DEL LAVADERO QUE QUERÍAS MANTENER */
+    filter: drop-shadow(0px 0px 8px rgba(242, 168, 64, 0.4));
+  }
+
+/* --- 6. MINI MENÚ CUADRADO (Flotando a la izquierda) --- */
+.mini-menu-acciones {
+  position: absolute;
+  bottom: 102%;
+  left: 50px;
+  width: 220px;
+  height: 140px;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-cuadrado {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 9px;
+  left: 0;
+  object-fit: fill;
+}
+
+.contenido-acciones {
+  position: relative;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  z-index: 210;
+  top: 5px;
+}
+
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Cobre Oxidado */
+  font-size: 20px;
+  cursor: pointer;
+  text-align: left;
+  text-shadow: 1px 1px 2px black;
+}
+
+  .opcion-accion:hover {
+    color: #F2A840;
+  }
+
+.cerrar-mini {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  height: 20px; /* Tamaño chico para x.png */
+  width: auto;
+  cursor: pointer;
+  z-index: 220;
+}
+
+/* --- 7. UTILIDADES GENERALES --- */
+.efecto-hover {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840;
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+/* --- 8. PANTALLA DE LECTURA --- */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: fill;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 22px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.boton-volver-lectura {
+  margin-top: 30px;
+  height: 30px; /* Tamaño de imagen Cerrar.png */
+  width: auto;
+  cursor: pointer;
+}
+
+/* =================================================== */
+/* ESTILOS EXCLUSIVOS PARA LA LIBRERÍA DE LA COCINA */
+/* =================================================== */
+.pantalla-libreria-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 400;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding-top: 50px;
+}
+
+.contenedor-libro-abierto {
+  position: relative;
+  width: 80%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-libro-fondo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cerrar-libreria-img {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 30px; /* Tamaño imagen Cerrar.png */
+  width: auto;
+  cursor: pointer;
+  z-index: 410;
+}
+
+.contenedor-texto-paginas {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-texto-transparente-libro {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  object-fit: fill;
+}
+
+.contenido-texto-libro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-pagina-actual {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 0;
+  text-align: justify;
+  white-space: pre-wrap;
+}
+
+.controles-paginacion {
+  position: absolute;
+  bottom: 25px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+.flecha-navegacion {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Panel Inferior Especial para Libros */
+.panel-inferior-especial {
+  position: absolute;
+  bottom: 7%;
+  left: 5%;
+  width: 90%;
+  height: 25%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lista-libros-horizontal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 0;
+  overflow-x: auto;
+}
+
+.libro-item {
+  font-size: 26px;
+}
+
+  .libro-item:hover {
+    transform: scale(1.05);
+  }
+
+.libro-seleccionado {
+  color: #F2A840 !important;
+  filter: drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.7));
+}

@@ -1,0 +1,74 @@
+.pantalla-completa {
+  position: fixed; /* Ocupa la pantalla sin importar el scroll del body */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; /* Rellena costados con negro si contain deja huecos */
+  overflow: hidden; /* Prohibido el scroll de la página entera */
+  z-index: 100;
+}
+
+.fondo-agradecimiento {
+  background-image: url('/assets/agradecimiento.png');
+  background-size: contain; /* ARREGLO CLAVE: Contain respeta la proporción vertical. No cover. */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.marco-narrativo {
+  background-image: url('/assets/marcoSinFondoNuevo.png');
+  height: 90vh;
+  width: 90vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 120px 100px; /* Ajuste manual según tu PNG */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra el texto verticalmente dentro del marco */
+  position: relative;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.textoDelMarco {
+  font-family: 'Crimson Pro', serif;
+  color: #E8DCC2; /* Color Crema de tu paleta */
+  font-size: 24px;
+  text-align: center; /* En agradecimientos suele quedar mejor centrado */
+  white-space: pre-line; /* Clave para los saltos de línea del TS */
+  line-height: 1.6;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.contenedor-acciones {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn-volver {
+  cursor: pointer;
+  height: 50px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: sepia(1) hue-rotate(10deg) brightness(0.8); /* Ajuste para que el botón naranja combine con el dorado */
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

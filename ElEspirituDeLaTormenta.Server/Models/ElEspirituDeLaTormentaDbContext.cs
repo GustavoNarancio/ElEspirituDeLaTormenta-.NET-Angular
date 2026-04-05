@@ -29,11 +29,22 @@ public partial class ElEspirituDeLaTormentaDbContext : DbContext
 
     public virtual DbSet<Usuarios> Usuarios { get; set; }
 
+    public virtual DbSet<PuzzleCamioneta> PuzzleCamioneta { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        modelBuilder.Entity<PuzzleCamioneta>(entity =>
+        {
+            entity.ToTable("PuzzleCamioneta");
+            entity.HasKey(e => e.Id);
+        });
+
+
+
         modelBuilder.Entity<Habitaciones>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Habitaci__3214EC27FB979C4D");

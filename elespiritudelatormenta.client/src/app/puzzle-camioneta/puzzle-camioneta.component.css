@@ -1,0 +1,261 @@
+/* ========================================== */
+/* 1. CONTENEDOR GLOBAL Y CIERRE GENERAL      */
+/* ========================================== */
+.modal-puzzle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; /* <-- CORREGIDO: Ahora respeta el cuadrado del juego */
+  height: 100%; /* <-- CORREGIDO */
+  background-color: rgba(18, 18, 18, 0.45);
+  z-index: 800;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* --- BOTÓN CERRAR SUPERIOR --- */
+.boton-cerrar-global {
+  position: absolute;
+  top: 15px; /* Ajustado para igualar al resto del juego */
+  right: 25px; /* Ajustado para igualar al resto del juego */
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  z-index: 900;
+}
+
+.imagen-camioneta {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 75%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0px 0px 30px rgba(0, 0, 0, 0.9));
+  z-index: 810;
+}
+
+/* ========================================== */
+/* 2. CUADRO DE TEXTO CENTRAL                 */
+/* ========================================== */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 850;
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 550px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 860;
+}
+
+.texto-historia {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 26px;
+  line-height: 1.5;
+  text-align: center;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* --- BOTONES DENTRO DEL CUADRO --- */
+.contenedor-botones-centro {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 100%;
+  padding: 0 70px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.fila-botones-derecha {
+  justify-content: flex-end;
+}
+
+.fila-botones-separados {
+  justify-content: space-between;
+}
+
+.btn-imagen-chica {
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+.btn-texto-arreglar {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 26px;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px black;
+}
+
+/* ========================================== */
+/* 3. PANEL INFERIOR (MOCHILA)                */
+/* ========================================== */
+.panel-inferior {
+  position: absolute;
+  bottom: 4%;
+  left: 5%;
+  width: 90%;
+  height: 25%;
+  z-index: 870;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.contenido-panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 500;
+  padding: 20px 40px 30px 40px;
+  box-sizing: border-box;
+}
+
+.titulo-mochila {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 26px;
+  margin: 0 0 20px 0;
+  text-decoration: underline;
+  text-shadow: 2px 2px 4px black;
+}
+
+.grilla-mochila {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px 40px;
+  width: 80%;
+  justify-items: center;
+  align-items: center;
+}
+
+.item-mochila {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 25px;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px black;
+  transform-origin: center center;
+}
+
+/* ========================================== */
+/* 4. EL MINI MENÚ DE OBJETOS (-Usar)         */
+/* ========================================== */
+.mini-menu-usar {
+  position: absolute;
+  bottom: 102%;
+  left: 7%;
+  width: 180px;
+  height: 120px;
+  z-index: 1000;
+  top: -116px;
+}
+
+.fondo-mini {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 951;
+}
+
+.contenido-mini {
+  position: absolute;
+  top: 0;
+  left: -23px;
+  width: 100%;
+  height: 100%;
+  z-index: 952;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cerrar-mini-esquina {
+  position: absolute;
+  top: 15px;
+  right: -3px;
+  height: 18px;
+  width: auto;
+  cursor: pointer;
+}
+
+.opcion-usar {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 0;
+  margin-top: 10px;
+  text-shadow: 1px 1px 2px black;
+}
+
+/* ========================================== */
+/* 5. EFECTOS GLOBALES                        */
+/* ========================================== */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }

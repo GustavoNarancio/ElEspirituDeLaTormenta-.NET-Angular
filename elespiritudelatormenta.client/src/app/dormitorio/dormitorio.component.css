@@ -1,0 +1,335 @@
+/* --- 1. CONTENEDORES BASE --- */
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.dormitorio-fondo {
+  background-image: url('/assets/Dormitorio.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* TÍTULO AGREGADO (Color #B8673F) */
+.titulo-habitacion {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 32px;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+}
+
+/* --- 2. MENÚ DE NAVEGACIÓN --- */
+.menu-opciones {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 50;
+}
+
+.opcion-amarilla {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 26px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+}
+
+/* --- 3. PANEL INFERIOR INSPECCIÓN --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 90%;
+  height: 30%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+/* CLASE UNIFICADA LAVADERO */
+.boton-cerrar {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.contenedor-lista-objetos {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 65%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+  gap: 15px 20px;
+  padding: 0 60px;
+  box-sizing: border-box;
+  z-index: 120;
+  overflow: hidden;
+}
+
+/* COLOR CAMBIADO A #E8DCC2 */
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 30px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+  text-align: left;
+  transform-origin: left center;
+}
+
+/* --- 4. MINI MENÚ DE ACCIONES --- */
+.mini-menu-acciones {
+  position: absolute;
+  bottom: 31.5%; /* Mantuve tu posición original del dormitorio para que quede justo arriba del marco */
+  left: 10%;
+  width: 220px; /* CORREGIDO: Igual al lavadero (antes tenía 200px y por eso el texto se caía) */
+  height: 140px; /* CORREGIDO: Igual al lavadero */
+  z-index: 900;
+  display: flex; /* CORREGIDO: Faltaba esto para alinear bien el fondo y el texto */
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-cuadrado {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -1px; /* CORREGIDO: Igual al lavadero */
+  left: 0;
+  object-fit: fill;
+  z-index: 10;
+}
+
+.contenido-acciones {
+  position: relative;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  z-index: 210;
+  top: 5px;
+}
+
+.cerrar-mini {
+  position: absolute;
+  top: -15px; /* CORREGIDO: Igual al lavadero para que la X quede bien acomodada en el borde superior */
+  right: 5px;
+  height: 20px;
+  width: auto;
+  cursor: pointer;
+  z-index: 220;
+}
+
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: left;
+  text-shadow: 1px 1px 2px black;
+}
+
+/* --- 5. PANTALLA DE LECTURA --- */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  background-color: rgba(18, 18, 18, 0.80);
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: fill;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* COLOR CAMBIADO A #E8DCC2 */
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 23px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+/* CLASE UNIFICADA LAVADERO */
+.boton-volver-lectura {
+  margin-top: 30px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* --- 6. PANTALLA ESPECIAL (INTERIOR CAJA) --- */
+.pantalla-especial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 600;
+  background-color: rgba(18, 18, 18, 0.85);
+}
+
+.fondo-caja-abierta {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* ESTE BOTÓN ES ÚNICO DE LA CAJA: Mantuve tu lógica pero le saqué el "-img" al nombre */
+.boton-cerrar-grande {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  z-index: 650;
+}
+
+.cuadro-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  z-index: 610;
+}
+
+.fondo-marco-cuadrado {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.contenido-cuadro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* COLOR CAMBIADO A #E8DCC2 */
+.texto-interior {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.item-llave {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transform-origin: center center;
+}
+
+  .item-llave img {
+    width: 60px;
+    height: auto;
+  }
+
+  /* COLOR CAMBIADO A #E8DCC2 */
+  .item-llave span {
+    font-family: 'Crimson Pro', Serif;
+    color: #E8DCC2;
+    font-size: 26px;
+  }
+
+/* --- 7. UTILIDADES --- */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }

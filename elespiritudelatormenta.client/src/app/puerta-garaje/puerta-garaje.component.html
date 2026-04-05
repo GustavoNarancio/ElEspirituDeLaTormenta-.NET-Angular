@@ -1,0 +1,58 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva puerta-garaje-fondo">
+
+    <h1 class="titulo-habitacion">Puerta</h1>
+
+    <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoLectura }}</p>
+
+          <img *ngIf="!puzzleResuelto"
+               src="/assets/Cerrar.png"
+               class="imagen-accion-lectura efecto-hover"
+               (click)="cerrarLectura()"
+               alt="Cerrar">
+
+          <img *ngIf="puzzleResuelto"
+               src="/assets/Entrar.png"
+               class="imagen-accion-lectura efecto-hover"
+               (click)="entrarAlGaraje()"
+               alt="Entrar">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!mostrarDescripcion" class="contenedor-volver">
+      <img src="/assets/Volver.png" class="imagen-boton-volver-solo efecto-hover" (click)="volverAlPasillo()" alt="Volver atrás">
+    </div>
+
+    <div *ngIf="!mostrarDescripcion" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <div class="contenido-panel-mochila">
+        <h3 class="titulo-mochila-centrado">MOCHILA</h3>
+
+        <div class="contenedor-lista-objetos">
+          <div *ngFor="let item of inventarioUsuario"
+               class="objeto-lista efecto-hover"
+               (click)="abrirAcciones(item)">
+            - {{ item.nombre }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenu && itemSeleccionado" class="mini-menu-acciones">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+
+      <div class="contenido-acciones">
+        <img src="/assets/x.png" class="cerrar-mini-esquina efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+
+        <div class="opcion-accion efecto-hover" (click)="usarItem()">- Usar</div>
+      </div>
+    </div>
+
+  </div>
+</div>

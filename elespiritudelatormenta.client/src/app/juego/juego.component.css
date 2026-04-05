@@ -1,42 +1,41 @@
+/* --- 1. CONTENEDORES BASE (Plantilla Maestra) --- */
 .contenedor-juego {
   height: 100vh;
   width: 100vw;
   background-color: black;
   display: flex;
   justify-content: center;
-  align-items: center; /* Volvemos al centro para que nada se rompa */
+  align-items: center;
   margin: 0;
   overflow: hidden;
 }
 
 .area-interactiva {
   height: 100vh;
-  aspect-ratio: 1 / 1; /* Esto es lo que mantiene a la mochila en su lugar */
-  background-image: url('/assets/pasillo.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  aspect-ratio: 1 / 1;
   position: relative;
 }
 
-/* Efecto que ya te gustaba */
-.efecto-hover {
-  cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
+.pasillo-fondo {
+  background-image: url('/assets/pasillo.png'); /* Asegurate de tener esta imagen */
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-  .efecto-hover:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.8));
-  }
-
-.mochila-icon {
+/* --- 2. ELEMENTOS DE UI --- */
+.titulo-habitacion {
   position: absolute;
   top: 5%;
-  right: 5%;
-  width: 80px;
+  left: 5%;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 32px;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
 }
 
+/* --- 3. MENÚ DE NAVEGACIÓN (Estilo Lavadero) --- */
 .menu-opciones {
   position: absolute;
   bottom: 5%;
@@ -45,11 +44,139 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
+  z-index: 50;
 }
 
 .opcion-amarilla {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 26px;
   text-shadow: 2px 2px 4px black;
+  cursor: pointer;
 }
+
+/* --- 4. PANEL INFERIOR (Inspección) --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 90%;
+  height: 30%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.boton-cerrar {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px; /* Controlamos el tamaño de la imagen */
+  width: auto;
+  cursor: pointer;
+  z-index: 110;
+}
+
+/* --- 5. LISTA DE OBJETOS --- */
+.contenedor-lista-objetos {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 80px;
+  gap: 12px;
+  z-index: 120;
+  overflow-y: auto;
+}
+
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; 
+  font-size: 30px;
+  text-shadow: 2px 2px 4px black;
+  text-align: left;
+}
+
+/* --- 6. PANTALLA DE LECTURA --- */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  background-color: rgba(18, 18, 18, 0.75); /* Fondo oscuro paleta */
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: fill;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2; /* Crema para lectura */
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.boton-volver-lectura {
+  margin-top: 30px;
+  color: #B8673F; /* Cobre Oxidado */
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Efectos comunes hover (Paleta Ámbar) */
+.efecto-hover {
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840; /* Ámbar Dorado al tocar */
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }

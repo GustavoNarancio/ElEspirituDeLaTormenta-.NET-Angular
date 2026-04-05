@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { EventosGlobalesService } from '../services/eventos-globales.service'; 
 
 @Component({
   selector: 'app-lavadero',
@@ -13,6 +14,8 @@ export class LavaderoComponent implements OnInit {
   mostrarMenuInspeccion: boolean = false; // El marco largo de abajo
   mostrarMiniMenu: boolean = false;       // El cuadro cuadrado de acciones
   mostrarDescripcion: boolean = false;       // El cartel con la descripción del ítem
+  mostrarPuzzleModal: boolean = false;
+  textoLectura: string = '';
 
 
   // 2. Datos de la DB
@@ -23,7 +26,7 @@ export class LavaderoComponent implements OnInit {
   itemSeleccionado: any = null;
   esPuzzle: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService) { }
+  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
 
   ngOnInit(): void {
     this.cargarDatosDelLavadero();
@@ -55,6 +58,9 @@ export class LavaderoComponent implements OnInit {
     this.mostrarMiniMenu = false;
     this.itemSeleccionado = null;
   }
+  cerrarPuzzle() {
+    this.mostrarPuzzleModal = false;
+  }
 
   alternarInspeccion() {
     this.mostrarMenuInspeccion = !this.mostrarMenuInspeccion;
@@ -64,14 +70,19 @@ export class LavaderoComponent implements OnInit {
   }
 
   volver() {
+    this.eventosService.sumarAccion();
     this.router.navigate(['/juego']);
   }
 
   // Esta función la llamaremos desde el botón "Ver Descripción" del cuadrito
   verDescripcion() {
-    this.mostrarMiniMenu = false;       // Esconde el cuadrito de opciones
-    this.mostrarMenuInspeccion = false; // Esconde el marco largo de abajo
-    this.mostrarDescripcion = true;         // Muestra el marco de descripción central
+    this.textoLectura = this.itemSeleccionado.descripcion; // Acá cargamos la BD
+    this.mostrarMiniMenu = false;
+    this.mostrarMenuInspeccion = false;
+    this.mostrarDescripcion = true;
+    if (this.itemSeleccionado.EsAgarrable === false) {
+      this.eventosService.sumarAccion();            }
+
   }
 
   cerrarLectura() {
@@ -84,14 +95,53 @@ export class LavaderoComponent implements OnInit {
 
     this.apiService.guardarEnInventario(this.itemSeleccionado.id).subscribe({
       next: (res) => {
-        console.log("Hacha guardada!");
+        // Éxito: lo de siempre
         this.cerrarMiniMenu();
-        // Actualizamos la lista para que el hacha desaparezca del lavadero
         this.cargarDatosDelLavadero();
+        this.apiService.notificarCambioInventario();
+        this.eventosService.sumarAccion();
       },
-      error: (err) => console.error("Error al guardar:", err)
+      error: (err) => {
+        // ACÁ ESTÁ EL CAMBIO:
+        if (err.error && err.error.errorType === 'MOCHILA_LLENA') {
+          this.eventosService.mostrarAlertaMochila(err.error.mensaje);
+          this.cerrarMiniMenu(); // Cerramos el menú para que el usuario vea el cartel
+        } else {
+          console.error("Error al guardar:", err);
+        }
+      }
     });
   }
 
+  // Esta función la llamaremos desde el botón "Interactuar" del cuadrito
+  interactuar() {
+    if (!this.itemSeleccionado) return;
+    this.eventosService.sumarAccion();
+    // A. ¿Está resuelto bien?
+    if (this.itemSeleccionado.resuelto) {
+      // Texto exacto que pediste:
+      this.textoLectura = "la corriente fluye por toda la casa, la caja de fusibles se ve bien";
+      this.mostrarMiniMenu = false;
+      this.mostrarMenuInspeccion = false;
+      this.mostrarDescripcion = true;
+      return; // Corta acá
+    }
+
+    // B. ¿Está roto?
+    if (this.itemSeleccionado.roto) {
+      // Texto exacto que pediste:
+      this.textoLectura = "la caja de fusibles está quemada, no hay forma de arreglarla";
+      this.mostrarMiniMenu = false;
+      this.mostrarMenuInspeccion = false;
+      this.mostrarDescripcion = true;
+      return; // Corta acá
+    }
+
+    // C. Si no está ni resuelto ni roto, ABRE EL PUZZLE
+    console.log("Abriendo puzzle:", this.itemSeleccionado.nombre);
+    this.cerrarMiniMenu();
+    this.mostrarMenuInspeccion = false;
+    this.mostrarPuzzleModal = true;
+  }
 
 }

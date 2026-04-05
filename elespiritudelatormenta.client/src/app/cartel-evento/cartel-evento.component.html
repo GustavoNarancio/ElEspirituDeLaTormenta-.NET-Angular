@@ -1,0 +1,19 @@
+<div *ngIf="eventoActual" class="overlay-global-eventos animacion-oscurecer-rapido">
+
+  <div *ngIf="!mostrarPantallaNegra" class="contenedor-cartel-aviso pop-in-animation special-menace-glow">
+    <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco-aviso">
+
+    <div class="contenido-aviso">
+      <p class="texto-aviso-rojo pulsing-menace-shadow">{{ eventoActual.texto }}</p>
+
+      <div class="contenedor-boton-cerrar">
+        <img src="/assets/Cerrar.png" class="btn-cerrar-img efecto-hover" (click)="cerrarCartel()" alt="Cerrar">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarPantallaNegra" class="pantalla-negra-game-over animacion-fade">
+    <h1 class="titulo-game-over efecto-hover" (click)="irAlFinal()">TRATAR DE ESCAPAR...</h1>
+  </div>
+
+</div>

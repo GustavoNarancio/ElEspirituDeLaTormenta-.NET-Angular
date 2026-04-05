@@ -1,0 +1,364 @@
+/* --- 1. CONTENEDORES BASE --- */
+.contenedor-juego {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.area-interactiva {
+  height: 100vh;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.living-fondo {
+  background-image: url('/assets/Living.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* --- 2. TÍTULOS Y MENÚ DE NAVEGACIÓN --- */
+.titulo-habitacion {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 32px;
+  text-shadow: 2px 2px 4px black;
+  margin: 0;
+}
+
+.menu-opciones {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 50;
+}
+
+.opcion-amarilla {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 26px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+}
+
+/* --- 3. PANEL INFERIOR NORMAL --- */
+.panel-inferior {
+  position: absolute;
+  bottom: 2%;
+  left: 5%;
+  width: 90%;
+  height: 30%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.boton-cerrar {
+  position: absolute;
+  top: 17px;
+  right: 25px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  z-index: 110;
+}
+
+/* --- 4. LISTA DE OBJETOS --- */
+.contenedor-lista-objetos {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 80px;
+  gap: 12px;
+  z-index: 120;
+  overflow: hidden;
+}
+/* Chau scrollbar general */
+
+.objeto-lista {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 30px;
+  text-shadow: 2px 2px 4px black;
+  cursor: pointer;
+  text-align: left;
+  transform-origin: left center;
+}
+
+/* --- 5. MINI MENÚ DE ACCIONES --- */
+.mini-menu-acciones {
+  position: absolute;
+  bottom: 102%;
+  left: 50px;
+  width: 220px;
+  height: 140px;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-cuadrado {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 9px;
+  left: 0;
+  object-fit: fill;
+}
+
+.contenido-acciones {
+  position: relative;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  z-index: 210;
+  top: 5px;
+}
+
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: left;
+  text-shadow: 1px 1px 2px black;
+}
+
+.cerrar-mini {
+  position: absolute;
+  top: -15px;
+  right: 15px;
+  height: 20px;
+  width: auto;
+  cursor: pointer;
+  z-index: 220;
+}
+
+/* --- 6. PANTALLA DE LECTURA NORMAL --- */
+.pantalla-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.contenedor-lectura-central {
+  position: relative;
+  width: 450px;
+  height: 450px;
+}
+
+.fondo-lectura-transparente {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  object-fit: fill;
+}
+
+.contenido-texto-lectura {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-descripcion-db {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.boton-volver-lectura {
+  margin-top: 30px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+}
+
+/* --- 7. UTILIDADES GENERALES --- */
+.efecto-hover {
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+/* ========================================================== */
+/* NUEVOS ESTILOS DEL ESCRITORIO (OVERLAY Y GRILLA)           */
+/* ========================================================== */
+
+.pantalla-especial-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 400;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding-top: 20px;
+}
+
+.contenedor-imagen-central {
+  position: relative;
+  width: 95%;
+  height: 72%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagen-fondo-overlay {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cerrar-overlay-escritorio {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  z-index: 410;
+}
+
+.contenedor-texto-paginas {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 66%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fondo-texto-transparente-libro {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  object-fit: fill;
+}
+
+.contenido-texto-libro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-escritorio {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 22px;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+/* PANEL INFERIOR ESPECIAL */
+.panel-inferior-especial {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  width: 90%;
+  height: 25%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Seguridad extra para scrollbars */
+}
+
+/* GRILLA MODIFICADA A 3 COLUMNAS - SCROLLBAR ASESINADA */
+.lista-documentos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px 10px;
+  width: 100%;
+  height: 100%;
+  padding: 35px 60px 0 60px; /* Empuja el contenido desde arriba y los costados */
+  box-sizing: border-box;
+  justify-content: center;
+  align-content: start;
+  overflow: hidden !important; /* Fuerza la eliminación de cualquier barra */
+}
+
+.documento-item {
+  font-size: 26px;
+  text-align: center;
+  transform-origin: center center;
+}
+
+.libro-seleccionado {
+  color: #F2A840 !important;
+  filter: drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.7));
+}

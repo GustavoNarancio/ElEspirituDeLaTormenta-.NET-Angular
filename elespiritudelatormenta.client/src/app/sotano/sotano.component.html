@@ -1,0 +1,79 @@
+<div class="contenedor-juego">
+
+  <div *ngIf="!hayLuz" class="pantalla-completa-oscura">
+    <div class="cuadro-oscuridad">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco-oscuridad">
+      <div class="contenido-oscuridad">
+        <p class="texto-oscuridad">
+          Más allá del umbral no hay nada. Es una oscuridad absoluta, antinatural, que respira un aire viciado y me transmite un terror irracional. Ni siquiera puedo distinguir mis propios dedos. Algo me dice que las sombras de este lugar no están vacías. No voy a bajar hasta que consiga con qué iluminar el camino.
+        </p>
+
+        <img src="/assets/Volver.png" class="boton-volver-oscuridad efecto-hover" (click)="volver()" alt="Volver atrás">
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="hayLuz" class="area-interactiva sotano-fondo">
+
+    <h1 class="titulo-habitacion">Sótano</h1>
+
+    <app-mochila></app-mochila>
+
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
+      <span class="opcion-amarilla efecto-hover" (click)="volver()">Volver atrás</span>
+    </div>
+
+    <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoLectura }}</p>
+
+          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Continuar">
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMenuInspeccion && !mostrarPuzzleModal" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
+
+      <div class="contenedor-lista-objetos">
+        <div *ngFor="let obj of listaDeObjetosDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(obj, 'objeto')">
+          - {{ obj.nombre || obj.Nombre }}
+        </div>
+        <div *ngFor="let puz of listaDePuzzlesDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(puz, 'puzzle')">
+          - {{ puz.nombre || puz.Nombre }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenu && itemSeleccionado" class="mini-menu-acciones">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+      <div class="contenido-acciones">
+
+        <div class="opcion-accion efecto-hover" *ngIf="esPuzzle" (click)="interactuar()">- Interactuar</div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="!esPuzzle && (itemSeleccionado?.esAgarrable || itemSeleccionado?.EsAgarrable)" (click)="guardarItem()">
+          - Guardar en Mochila
+        </div>
+
+        <div class="opcion-accion efecto-hover" (click)="verDescripcion()">
+          - Ver Descripción
+        </div>
+
+        <img src="/assets/x.png" class="cerrar-mini efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+      </div>
+    </div>
+
+    <app-puzzle-sotano *ngIf="mostrarPuzzleModal"
+                       [puzzleId]="itemSeleccionado?.id || itemSeleccionado?.Id"
+                       (cerrar)="mostrarPuzzleModal = false; mostrarMenuInspeccion = true"
+                       (resuelto)="manejarPuzzleResuelto($event)"
+                       (roto)="manejarPuzzleRoto($event)">
+    </app-puzzle-sotano>
+
+  </div>
+</div>

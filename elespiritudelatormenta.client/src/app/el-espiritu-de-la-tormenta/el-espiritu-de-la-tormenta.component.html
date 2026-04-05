@@ -1,0 +1,93 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva fondo-puerta-final">
+
+    <div *ngIf="escena === 0" class="cuadro-narrativo">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+      <div class="contenido-texto">
+        <p class="texto-historia">
+          Caminas lento porque no puedes creer lo que ven tus ojos, ante ti, una puerta muy extraña se presenta.<br>
+          Es de un tipo de piedra que nunca habias visto, su forma tambien es unica, con una ranura en el centro de una forma extraña.<br><br>
+          el resplandor violeta de las runas grabadas en el borde del marco llama tu atencion, no está tallado, parece como si la piedra hubiera nacido con esas marcas.<br>
+          Reconoces las runas, es del pueblo Valea Furtunil, no reconoces todas pero si una especifica<br><br>
+          <strong>"EL ESPIRITU DE LA TORMENTA"</strong> ...
+        </p>
+        <img src="/assets/flecha3.png" class="boton-flecha efecto-hover" (click)="avanzarEscena()">
+      </div>
+    </div>
+
+    <div *ngIf="escena === 1" class="cuadro-narrativo">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+      <div class="contenido-texto">
+        <p class="texto-historia">
+          tratas de abrirla, de moverla, de levantarla, pero no hay caso, está firme como una montaña. al parecer lo unico que se puede hacer es intentar decifrar la ranura, es la clave de todo esto.
+        </p>
+        <img src="/assets/Cerrar.png" class="boton-cerrar-img efecto-hover" (click)="avanzarEscena()">
+      </div>
+    </div>
+
+    <div *ngIf="escena === 2" class="interfaz-mochila">
+
+      <div class="panel-inventario">
+        <span class="boton-volver-flotante efecto-hover" (click)="volverAtras()">VOLVER ATRÁS</span>
+
+        <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-panel">
+
+        <div class="contenido-inventario">
+          <h2 class="titulo-mochila">MOCHILA</h2>
+
+          <div class="grilla-items">
+            <span *ngFor="let item of inventarioUsuario"
+                  class="item-mochila efecto-hover"
+                  (click)="abrirMiniMenu(item)">
+              -{{ item.nombre || item.Nombre }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mostrarMiniMenu" class="mini-menu-usar">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-mini">
+        <div class="contenido-mini">
+          <span class="cerrar-x" (click)="cerrarMiniMenu()">[x]</span>
+          <span class="opcion-usar efecto-hover" (click)="usarObjeto()">-usar</span>
+        </div>
+      </div>
+
+      <div *ngIf="mostrarErrorRanura" class="cuadro-error">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+        <div class="contenido-texto-error">
+          <h3 class="texto-error">ESE OBJETO NO ENCAJA EN LA RANURA</h3>
+          <img src="/assets/Cerrar.png" class="boton-cerrar-error efecto-hover" (click)="cerrarError()">
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngIf="escena === 3" class="cuadro-narrativo">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco">
+      <div class="contenido-texto">
+        <p class="texto-historia">
+          Te acordás del amuleto que recuperaste de tu abuelo en el bosque.<br>
+          Lo tomás y, con mucho cuidado, lo apoyás sobre la ranura.<br>
+          Lentamente, el objeto empieza a encajar en la puerta con una precisión que parece imposible a la vista.<br>
+          Cuando toca el fondo, el amuleto comienza a brillar con un tono violeta intenso.<br>
+          La puerta empieza a vibrar levemente y comienza a enterrarse en el piso.<br>
+          Te quedás paralizado.<br>
+          La puerta se detiene justo al nivel del suelo, dejándote la entrada libre, pero no lográs ver nada adentro…<br>
+          la oscuridad es total.
+        </p>
+        <span class="boton-cerrar-error efecto-hover" style="color: #B8673F; font-family: 'Crimson Pro', Serif; font-size: 20px;" (click)="cerrarExitoAmuleto()">CERRAR</span>
+      </div>
+    </div>
+
+    <div *ngIf="escena === 4" class="pantalla-negra-absoluta">
+      <h1 class="titulo-entrar efecto-hover" (click)="irACatacumbas()">Entrar en las catacumbas</h1>
+
+      <span class="boton-volver-flotante efecto-hover"
+            style="top: auto; bottom: 40px; right: 40px;"
+            (click)="volverDePantallaNegra()">VOLVER ATRÁS</span>
+    </div>
+
+
+  </div>
+</div>

@@ -1,24 +1,36 @@
 <div class="contenedor-juego">
-  <div class="area-interactiva">
+  <div class="area-interactiva pasillo-fondo">
 
-    <img src="/assets/mochila.png" class="mochila-icon efecto-hover">
+    <h1 class="titulo-habitacion">Pasillo Central</h1>
+
+    <app-mochila></app-mochila>
+
+    <app-mapa *ngIf="mostrarMapa" (cerrarMapa)="cerrarMapa()"></app-mapa>
 
     <div class="menu-opciones">
-      <span class="opcion-amarilla efecto-hover" (click)="abrirMapa()">
-        Moverse
-      </span>
-      <span class="opcion-amarilla efecto-hover">
-        Descripción del ambiente
-      </span>
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
+      <span class="opcion-amarilla efecto-hover" (click)="abrirMapa()">Moverse</span>
     </div>
 
-    <div *ngIf="mostrarMapa" class="overlay-mapa">
-      <div class="mapa-pergamino">
-        <span class="boton-cerrar efecto-hover" (click)="cerrarMapa()">
-          [ X ] CERRAR
-        </span>
+    <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoLectura }}</p>
+          <span class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()">[ VOLVER ]</span>
+        </div>
       </div>
     </div>
 
+    <div *ngIf="mostrarMenuInspeccion" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+      <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
+      <div class="contenedor-lista-objetos">
+        <p *ngIf="listaDeObjetosDB.length === 0 && listaDePuzzlesDB.length === 0" class="objeto-lista">
+          (No hay nada relevante para inspeccionar en este pasillo)
+      </div>
+    </div>
   </div>
+
 </div>
+

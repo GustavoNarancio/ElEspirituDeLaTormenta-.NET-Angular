@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
-
+import { EventosGlobalesService } from '../services/eventos-globales.service';
 @Component({
   selector: 'app-mochila',
   templateUrl: './mochila.component.html',
@@ -15,7 +15,8 @@ export class MochilaComponent {
   mostrarMiniMenu: boolean = false;
   mostrarLectura: boolean = false;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private eventosService: EventosGlobalesService
+ ) { }
 
   abrirMochila() {
     this.mostrarMochila = true;
@@ -61,6 +62,8 @@ export class MochilaComponent {
 
     this.apiService.devolverObjeto(idUsuarioActual, this.itemSeleccionado.id).subscribe({
       next: () => {
+        this.eventosService.sumarAccion();
+
         console.log("Objeto devuelto");
         this.cerrarMiniMenu();
         this.cargarObjetosDeLaMochila(); // Recargamos para que desaparezca visualmente

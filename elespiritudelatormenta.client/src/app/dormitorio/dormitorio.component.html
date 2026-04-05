@@ -1,0 +1,87 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva dormitorio-fondo">
+
+    <h1 class="titulo-habitacion">Dormitorio</h1>
+
+    <app-mochila></app-mochila>
+
+    <div class="menu-opciones">
+      <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
+      <span class="opcion-amarilla efecto-hover" (click)="volver()">Volver atrás</span>
+    </div>
+
+    <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoLectura }}</p>
+          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Cerrar">
+        </div>
+      </div>
+    </div>
+
+    <app-puzzle-caja *ngIf="mostrarPuzzleModal"
+                     [puzzleId]="itemSeleccionado?.id || itemSeleccionado?.Id"
+                     (cerrar)="mostrarPuzzleModal = false; mostrarMenuInspeccion = true"
+                     (resuelto)="manejarPuzzleResuelto($event)"
+                     (roto)="manejarPuzzleRoto($event)">
+    </app-puzzle-caja>
+
+    <div *ngIf="mostrarInteriorCaja" class="pantalla-especial">
+      <img src="/assets/cajaFuerte.png" class="fondo-caja-abierta">
+
+      <img src="/assets/Cerrar.png" class="boton-cerrar-grande efecto-hover" (click)="cerrarInteriorCaja()" alt="Cerrar">
+
+      <div class="cuadro-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco-cuadrado">
+
+        <div class="contenido-cuadro">
+          <ng-container *ngIf="!elUsuarioTieneLaLlave()">
+            <p class="texto-interior">Al abrir la pesada puerta, encontrás lo siguiente:</p>
+            <div class="item-llave efecto-hover" (click)="abrirAcciones(llaveSecreta, 'objeto')">
+              <span>- Llave</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="elUsuarioTieneLaLlave()">
+            <p class="texto-interior">La caja fuerte está vacía.</p>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMenuInspeccion && !mostrarPuzzleModal && !mostrarInteriorCaja" class="panel-inferior">
+      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
+
+      <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
+
+      <div class="contenedor-lista-objetos">
+        <div *ngFor="let obj of listaDeObjetosDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(obj, 'objeto')">
+          - {{ obj.nombre }}
+        </div>
+        <div *ngFor="let puz of listaDePuzzlesDB" class="objeto-lista efecto-hover" (click)="abrirAcciones(puz, 'puzzle')">
+          - {{ puz.nombre }}
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarMiniMenu && itemSeleccionado" class="mini-menu-acciones">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+
+      <div class="contenido-acciones">
+        <img src="/assets/x.png" class="cerrar-mini efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+
+        <div class="opcion-accion efecto-hover" *ngIf="esPuzzle" (click)="interactuar()">- Interactuar</div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="!esPuzzle && (itemSeleccionado?.esAgarrable || itemSeleccionado?.EsAgarrable)" (click)="guardarItem()">
+          - Guardar en Mochila
+        </div>
+
+        <div class="opcion-accion efecto-hover" *ngIf="itemSeleccionado?.id !== 1011" (click)="verDescripcion()">
+          - Ver Descripción
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,1 +1,7 @@
 <router-outlet></router-outlet>
+<app-cartel-evento></app-cartel-evento>
+
+<div *ngIf="mensajeAlerta" class="alerta-flotante-mochila">
+  <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-alerta">
+  <p>{{ mensajeAlerta }}</p>
+</div>

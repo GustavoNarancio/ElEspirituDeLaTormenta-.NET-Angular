@@ -29,7 +29,7 @@
   top: 5%;
   left: 5%;
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 32px;
   text-shadow: 2px 2px 4px black;
   margin: 0;
@@ -57,7 +57,7 @@
 
 .opcion-amarilla {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #B8673F; /* Cobre Oxidado */
   font-size: 26px;
   text-shadow: 2px 2px 4px black;
   cursor: pointer;
@@ -81,6 +81,7 @@
   top: 0;
   left: 0;
   width: 100%;
+
   height: 100%;
   object-fit: fill;
   pointer-events: none;
@@ -88,35 +89,37 @@
 
 .boton-cerrar {
   position: absolute;
-  top: 15px;
+  top: 17px;
   right: 25px;
-  font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
-  font-size: 18px;
+  height: 30px; /* Controlamos el tamaño de la imagen */
+  width: auto;
   cursor: pointer;
   z-index: 110;
 }
 
 /* --- 5. LISTA DE OBJETOS (Dentro del Marco) --- */
+/* --- 5. LISTA DE OBJETOS (Dentro del Marco) --- */
 .contenedor-lista-objetos {
   position: absolute;
-  top: 20%;
-  left: 0;
+  top: 16%; /* Lo bajamos un poquito para que respire con el borde superior */
+  left: 6px;
   width: 100%;
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding-left: 80px;
-  gap: 12px;
+  height: 65%;
+  /* ACA ESTA LA MAGIA DE LAS 2 COLUMNAS */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Crea exactamente dos columnas del mismo ancho */
+  align-content: start; /* Empuja todos los items hacia arriba */
+  gap: 15px 20px; /* 15px de espacio vertical, 20px de espacio horizontal */
+
+  padding: 0 60px; /* Le damos margen a izquierda y derecha para que no toque los bordes del dibujo */
+  box-sizing: border-box; /* Asegura que el padding no rompa el ancho total */
   z-index: 120;
-  overflow-y: auto;
+  overflow: hidden; /* CHAU SCROLLBAR. Lo que sobrepasa el límite se oculta. */
 }
 
 .objeto-lista {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #E8DCC2; /* Cobre Oxidado */
   font-size: 30px;
   text-shadow: 2px 2px 4px black;
   cursor: pointer;
@@ -125,9 +128,9 @@
 }
 
   .objeto-lista:hover {
-    color: #f5f5dc;
+    color: #F2A840; /* Ámbar Dorado al tocar */
     transform: translateX(15px);
-    filter: drop-shadow(0px 0px 8px rgba(245, 245, 220, 0.4));
+    filter: drop-shadow(0px 0px 8px rgba(242, 168, 64, 0.4));
   }
 
 /* --- 6. MINI MENÚ CUADRADO (Acciones) --- */
@@ -136,7 +139,7 @@
   bottom: 102%;
   left: 50px;
   width: 220px;
-  height: 140px; /* Altura reducida como pediste */
+  height: 140px;
   z-index: 200;
   display: flex;
   justify-content: center;
@@ -147,7 +150,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 0;
+  top: 9px;
   left: 0;
   object-fit: fill;
 }
@@ -160,11 +163,12 @@
   gap: 8px;
   padding: 10px;
   z-index: 210;
+  top: 5px;
 }
 
 .opcion-accion {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
+  color: #E8DCC2; /* Cobre Oxidado */
   font-size: 20px;
   cursor: pointer;
   text-align: left;
@@ -172,29 +176,34 @@
 }
 
   .opcion-accion:hover {
-    color: #f5f5dc;
+    color: #F2A840; /* Ámbar Dorado al tocar */
   }
+
 
 .cerrar-mini {
   position: absolute;
-  top: -20px;
+  top: -15px; /* Lo bajamos un pelín para que la imagen quede centrada en el borde */
   right: 15px;
-  color: #9b8b36;
-  font-size: 14px;
+  height: 20px; /* Tamaño un poco más chico porque es el mini menú */
+  width: auto;
   cursor: pointer;
+  z-index: 220; /* Aseguramos que quede por encima de todo */
 }
 
-/* --- 7. UTILIDADES --- */
+/* --- 7. UTILIDADES GENERALES --- */
 .efecto-hover {
   cursor: pointer;
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
 }
 
   .efecto-hover:hover {
+    color: #F2A840; /* Fuerza a que todo lo interactivo se ponga Ámbar */
     transform: scale(1.1);
-    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(155, 139, 54, 0.8));
+    /* Sombra dorada para resaltar el brillo */
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
   }
 
+/* --- 8. PANTALLA DE LECTURA --- */
 .pantalla-lectura {
   position: absolute;
   top: 0;
@@ -204,20 +213,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 500; /* Por encima de todo */
-  background-color: rgba(0, 0, 0, 0.5); /* Fondo semioscuro para dar foco */
+  z-index: 500;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .contenedor-lectura-central {
   position: relative;
-  width: 450px; /* Tamaño del cuadro de lectura */
+  width: 450px;
   height: 450px;
 }
 
 .fondo-lectura-transparente {
   width: 100%;
   height: 100%;
-  opacity: 0.8; /* Transparencia solicitada */
+  opacity: 0.8;
   object-fit: fill;
 }
 
@@ -227,7 +236,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 60px; /* Para que el texto no toque los bordes del marco */
+  padding: 60px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -237,16 +246,15 @@
 
 .texto-descripcion-db {
   font-family: 'Crimson Pro', Serif;
-  color: #9b8b36;
-  font-size: 24px;
+  color: #E8DCC2; /* Crema Base para que la lectura sea relajante */
+  font-size: 23px;
   text-align: center;
   line-height: 1.4;
   margin: 0;
 }
-
 .boton-volver-lectura {
   margin-top: 30px;
-  color: #f5f5dc;
-  font-size: 16px;
+  height: 30px; /* Controlamos el tamaño de la imagen */
+  width: auto;
   cursor: pointer;
 }

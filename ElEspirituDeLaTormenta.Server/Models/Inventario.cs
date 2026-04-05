@@ -11,6 +11,7 @@ public partial class Inventario
 
     public int Idobjeto { get; set; }
 
+
     public virtual Objetos IdobjetoNavigation { get; set; } = null!;
 
     public virtual Usuarios IdusuarioNavigation { get; set; } = null!;

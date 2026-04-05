@@ -1,0 +1,75 @@
+<div class="pantalla-puzzle-overlay">
+
+  <div class="contenedor-puzzle">
+
+    <img src="/assets/Cerrar.png" class="cerrar-x efecto-hover" (click)="cerrarPuzzle()" alt="Cerrar">
+    <div class="seccion-superior">
+      <img src="/assets/cajaDeFusiblesSinFondo1.png" class="imagen-caja">
+    </div>
+
+    <div class="seccion-inferior">
+
+      <div *ngIf="mostrarMiniMenu" class="mini-menu-numeros">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-absoluto">
+        <div class="contenido-numeros">
+
+          <ng-container *ngFor="let item of itemsMochila; let i = index">
+
+            <span *ngIf="!itemEstaEnUso(item)"
+                  class="numero-hover"
+                  (click)="colocarItem(item)">
+              {{ i + 1 }}
+            </span>
+
+          </ng-container>
+
+        </div>
+      </div>
+
+      <div class="boton-corriente efecto-hover" (click)="darCorriente()">
+        <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-absoluto">
+        <span class="texto-boton" style="color: #5CC4A6;">Dar la corriente</span>
+      </div>
+
+      <div class="panel-principal">
+        <img src="/assets/MarcoDeTextoRectangularGrande.png" class="fondo-absoluto">
+
+        <div class="contenido-panel">
+
+          <div class="columna-ranuras">
+            <h3 class="titulo-columna">Caja De Fusibles</h3>
+            <div class="lista-items">
+              <span *ngFor="let ranura of ranuras; let i = index"
+                    class="item-texto"
+                    (click)="abrirSelectorNumeros(i)">
+                -Espacio {{ i + 1 }}: {{ ranura ? ranura.nombre : '(Vacío)' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="columna-mochila">
+            <h3 class="titulo-columna">Mochila</h3>
+            <div class="grilla-mochila">
+              <span *ngFor="let item of itemsMochila; let i = index" class="item-texto">
+                {{ i + 1 }}- {{ item.nombre }}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="mensajeAviso" class="modal-aviso-overlay">
+    <div class="modal-aviso-caja">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-absoluto">
+      <div class="contenido-aviso">
+        <p class="texto-aviso">{{ mensajeAviso }}</p>
+        <img src="/assets/Cerrar.png" class="cerrar-aviso-img efecto-hover" (click)="cerrarAviso()" alt="Cerrar">
+      </div>
+    </div>
+  </div>
+
+
+</div>

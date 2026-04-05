@@ -1,8 +1,12 @@
-<div class="pantalla-completa" [class.fondo-bosque]="escena === 1" [class.fondo-cabania]="escena === 2">
+<div class="contenedor-juego">
 
-  <h1 *ngIf="mostrarTitulo && escena === 1" class="titulo-juego" [class.visible]="tituloVisible">
-    El Espiritu de la Tormenta
-  </h1>
+  <div *ngIf="mostrarFondoPrologo" class="area-interactiva fondo-prologo"></div>
+
+  <div *ngIf="mostrarNegroAbsoluto" class="pantalla-negra-absoluta"></div>
+
+  <div *ngIf="mostrarFondoLogo" class="area-interactiva fondo-presentacion-logo"></div>
+
+  <div *ngIf="mostrarFondoPersecucionBosque" class="area-interactiva fondo-bosque" [class.fondo-cabania]="faseIntro === 4 && subFasePersecucion === 2"></div>
 
   <div *ngIf="mostrarMarco" class="marco-narrativo">
     <p class="textoDelMarco">
@@ -10,15 +14,15 @@
     </p>
 
     <div class="contenedor-acciones">
-      <img *ngIf="mostrarFlecha && escena === 1"
-           src="/assets/flecha3.png"
-           (click)="irACabania()"
-           class="flecha-img" alt="Siguiente">
 
-    
-      <img *ngIf="mostrarBotonJuego && escena === 2"
+      <img *ngIf="mostrarFlecha"
+           src="/assets/flecha3.png"
+           (click)="avanzar()"
+           class="flecha-img efecto-hover" alt="Siguiente">
+
+      <img *ngIf="mostrarBotonJuego && faseIntro === 4 && subFasePersecucion === 2"
            src="/assets/iniciarJuego.png"
-           class="btn-iniciar"
+           class="btn-iniciar efecto-hover"
            (click)="finalizarIntro()"
            alt="Iniciar Juego">
 
