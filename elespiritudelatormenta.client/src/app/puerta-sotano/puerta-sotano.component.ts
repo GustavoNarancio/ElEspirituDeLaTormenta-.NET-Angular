@@ -34,7 +34,6 @@ export class PuertaSotanoComponent implements OnInit {
   }
 
   cargarInventario() {
-    // --- NUEVO: Leemos el ID exacto de tu login ---
     const usuarioStorage = localStorage.getItem('idUsuarioActual');
     const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
@@ -75,7 +74,10 @@ export class PuertaSotanoComponent implements OnInit {
     if (!this.itemSeleccionado) return;
     this.eventosService.sumarAccion();
 
-    this.apiService.intentarLlave(this.ID_PUZZLE_SOTANO, this.itemSeleccionado.id).subscribe({
+    // --- EL FIX ESTÁ ACÁ --- Atajamos tanto 'id' como 'Id'
+    const idObj = this.itemSeleccionado.id || this.itemSeleccionado.Id;
+
+    this.apiService.intentarLlave(this.ID_PUZZLE_SOTANO, idObj).subscribe({
       next: (res) => {
         this.puzzleResuelto = true;
         this.procesarTextoLectura(res.mensaje);

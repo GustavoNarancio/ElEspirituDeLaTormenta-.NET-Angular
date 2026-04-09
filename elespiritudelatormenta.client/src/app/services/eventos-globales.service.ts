@@ -24,12 +24,12 @@ export class EventosGlobalesService {
   private umbralesEventos: { [key: number]: string } = {
     50: "Te detienes en seco. Escuchas una fuerte pisada alrededor de la cabaña.",
     60: "Definitivamente, la bestia está merodeando cada vez más cerca.",
-    100: "El estallido de un vidrio roto resuena en el aire... y sabes muy bien que no fue por la tormenta.",
-    120: "Las paredes empiezan a temblar. Un rugido ensordecedor te aturde; es evidente que quiere entrar.",
-    140: "Los rugidos y los golpes contra la madera ya son insoportables. No sabes cuánto tiempo te queda antes de que logre entrar.",
-    160: "Su presencia es abrumadora. Sea lo que sea que la mantenía afuera, ya no funciona. Estás en grave peligro.",
-    180: "Tienes que encontrar una salida YA. El tiempo se acaba.",
-    220: "LO INEVITABLE SUCEDE... LA BESTIA ESTÁ EN LA CABAÑA"
+    80: "El estallido de un vidrio roto resuena en el aire... y sabes muy bien que no fue por la tormenta.",
+    100: "Las paredes empiezan a temblar. Un rugido ensordecedor te aturde; es evidente que quiere entrar.",
+    120: "Los rugidos y los golpes contra la madera ya son insoportables. No sabes cuánto tiempo te queda antes de que logre entrar.",
+    140: "Su presencia es abrumadora. Sea lo que sea que la mantenía afuera, ya no funciona. Estás en grave peligro.",
+    160: "Tienes que encontrar una salida YA. El tiempo se acaba.",
+    180: "LO INEVITABLE SUCEDE... LA BESTIA ESTÁ EN LA CABAÑA"
   };
 
   private limiteFinal: number = 200;

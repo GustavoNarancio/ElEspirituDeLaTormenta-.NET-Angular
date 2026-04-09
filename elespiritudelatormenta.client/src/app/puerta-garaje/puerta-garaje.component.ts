@@ -27,7 +27,6 @@ export class PuertaGarajeComponent implements OnInit {
   }
 
   cargarInventario() {
-    // --- NUEVO: Leemos el ID exacto de tu login ---
     const usuarioStorage = localStorage.getItem('idUsuarioActual');
     const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
@@ -52,9 +51,12 @@ export class PuertaGarajeComponent implements OnInit {
 
   usarItem() {
     if (!this.itemSeleccionado) return;
-
     this.eventosService.sumarAccion();
-    this.apiService.intentarLlave(this.ID_PUZZLE_PUERTA, this.itemSeleccionado.id).subscribe({
+
+    // --- EL FIX ESTÁ ACÁ --- Atajamos tanto 'id' como 'Id'
+    const idObj = this.itemSeleccionado.id || this.itemSeleccionado.Id;
+
+    this.apiService.intentarLlave(this.ID_PUZZLE_PUERTA, idObj).subscribe({
       next: (res) => {
         this.textoLectura = res.mensaje;
         this.puzzleResuelto = true;

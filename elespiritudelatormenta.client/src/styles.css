@@ -4,8 +4,10 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  background-color: black; /* Esto mata cualquier línea blanca de fondo */
-  overflow: hidden; /* Evita que aparezcan barras de scroll que pueden verse blancas */
+  background-color: black;
+  overflow: hidden;
   border: none;
   outline: none;
+  /* ---> EL TRUCO DE LA LUZ <--- */
+  filter: brightness(1.2) contrast(1.05);
 }

@@ -88,7 +88,7 @@
 .textoDelMarco {
   font-family: 'Crimson Pro', Serif;
   color: #E8DCC2; /* Color crema parchment (De la paleta de T28) */
-  font-size: 24px; /* Tamaño reducido para encajar texto largo */
+  font-size: 26px; /* Tamaño reducido para encajar texto largo */
   text-align: justify;
   line-height: 1.4;
   margin: 0;
