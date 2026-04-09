@@ -28,22 +28,6 @@ var builder = WebApplication.CreateBuilder(args);
         });
 
         var app = builder.Build();
-// --- INICIO DE CÓDIGO NUEVO ---
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ElEspirituDeLaTormentaDbContext>();
-    try
-    {
-        // Obligamos a C# a crear las tablas del juego sí o sí, saltándose las comprobaciones
-        var databaseCreator = db.Database.GetService<IRelationalDatabaseCreator>();
-        databaseCreator.CreateTables();
-    }
-    catch (Exception)
-    {
-        // Si entra acá es porque las tablas ya se crearon en un deploy anterior. Lo ignoramos.
-    }
-}
-// --- FIN DEL CÓDIGO NUEVO ---
 
 app.UseDefaultFiles();
         app.UseStaticFiles();
