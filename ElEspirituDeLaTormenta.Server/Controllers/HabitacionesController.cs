@@ -337,6 +337,7 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             if (estado == null) return NotFound("No se encontró un estado inicial para esta camioneta.");
             if (estado.Resuelto || estado.Roto) return BadRequest(new { mensaje = "Ya no podés interactuar con este vehículo." });
 
+
             bool esCorrecto = false;
             string mensajeResultado = "";
 

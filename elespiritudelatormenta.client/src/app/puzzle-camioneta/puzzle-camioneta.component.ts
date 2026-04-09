@@ -66,7 +66,7 @@ export class PuzzleCamionetaComponent implements OnInit {
     this.mostrarMiniMenu = false;
     const idObj = this.itemSeleccionado.id || this.itemSeleccionado.Id;
 
-    if (idObj === 1012 || idObj === 1013 || idObj === 1014) {
+    if (idObj === 25 || idObj === 26 || idObj === 27) {
       this.estado = 'confirmacion';
       this.textoCentral = "Sinceramente no sé nada de autos, no se muy bien lo que estoy haciendo, espero esto sea el arreglo correcto porque puedo llegar a romper la camioneta";
     } else {
