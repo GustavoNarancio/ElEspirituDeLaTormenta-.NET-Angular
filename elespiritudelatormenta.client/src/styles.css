@@ -9,5 +9,5 @@ html, body {
   border: none;
   outline: none;
   /* ---> EL TRUCO DE LA LUZ <--- */
-  filter: brightness(1.2) contrast(1.05);
+  filter: brightness(1.8) contrast(1.05);
 }
