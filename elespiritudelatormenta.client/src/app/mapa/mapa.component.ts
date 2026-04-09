@@ -25,7 +25,7 @@ export class MapaComponent {
   // NUEVA LÓGICA PARA EL GARAJE
   viajarGaraje() {
     const idHabitacionFalsa = 5;
-    const idPuzzlePuerta = 4;
+    const idPuzzlePuerta = 3;
 
     this.apiService.getPuzzles(idHabitacionFalsa).subscribe({
       next: (puzzles) => {
@@ -46,7 +46,7 @@ export class MapaComponent {
 
   viajarSotano() {
     const idHabitacionFalsa = 5;
-    const idPuzzlePuertaSotano = 5;
+    const idPuzzlePuertaSotano = 4;
 
     this.apiService.getPuzzles(idHabitacionFalsa).subscribe({
       next: (puzzles) => {

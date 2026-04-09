@@ -38,7 +38,10 @@ export class SotanoComponent implements OnInit {
   verificarLuzYCargarDatos() {
     const idHabitacionSotano = 7;
     const idHabitacionFusibles = 1;
-    const idUsuarioActual = 1;
+
+    // --- NUEVO: Leemos el ID exacto de tu login ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
     this.apiService.getPuzzles(idHabitacionFusibles).subscribe(puzzles => {
       const cajaFusibles = puzzles.find(p => p.id === 1 || p.Id === 1);
@@ -54,9 +57,8 @@ export class SotanoComponent implements OnInit {
 
       this.apiService.getPuzzles(idHabitacionSotano).subscribe(puzzles => {
 
-        // ¡ACÁ ESTÁ LA MAGIA PARA CAMBIAR EL NOMBRE!
         this.listaDePuzzlesDB = puzzles.map(p => {
-          if (p.id === 7 || p.Id === 7) {
+          if (p.id === 6 || p.Id === 6) {
             p.nombre = "Cerradura";
             p.Nombre = "Cerradura";
           }

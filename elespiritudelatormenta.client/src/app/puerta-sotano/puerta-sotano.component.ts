@@ -21,7 +21,7 @@ export class PuertaSotanoComponent implements OnInit {
   inventarioUsuario: any[] = [];
 
   readonly ID_HACHA = 1;
-  readonly ID_PUZZLE_SOTANO = 5;
+  readonly ID_PUZZLE_SOTANO = 4;
 
   constructor(
     private router: Router,

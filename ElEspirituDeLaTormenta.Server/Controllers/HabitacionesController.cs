@@ -255,15 +255,15 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
 
             switch (idPuzzle)
             {
-                case 4:
-                    if (request.IdObjeto == 1011)
+                case 3:
+                    if (request.IdObjeto == 19)
                     {
                         esCorrecto = true;
                         mensajeExito = "Deslizo la vieja llave en la cerradura. Encaja a la perfección. Giro con firmeza y el pestillo se destraba con un golpe seco. La puerta se abre lentamente.";
                     }
                     break;
 
-                case 5:
+                case 4:
                     if (request.IdObjeto == 1)
                     {
                         esCorrecto = true;
@@ -340,9 +340,9 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             bool esCorrecto = false;
             string mensajeResultado = "";
 
-            if (estado.TipoFalla == 1 && request.IdObjeto == 1012) esCorrecto = true;
-            else if (estado.TipoFalla == 2 && request.IdObjeto == 1013) esCorrecto = true;
-            else if (estado.TipoFalla == 3 && request.IdObjeto == 1014) esCorrecto = true;
+            if (estado.TipoFalla == 1 && request.IdObjeto == 25) esCorrecto = true;
+            else if (estado.TipoFalla == 2 && request.IdObjeto == 26) esCorrecto = true;
+            else if (estado.TipoFalla == 3 && request.IdObjeto == 27) esCorrecto = true;
 
             if (esCorrecto)
             {
@@ -420,7 +420,7 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             {
                 estadoPuzzle.EstaRoto = true;
                 await _context.SaveChangesAsync();
-                return BadRequest(new { mensaje = "Las piezas crujen y el mecanismo se traba por completo. La cerradura mágica se bloqueó para siempre." });
+                return BadRequest(new { mensaje = "Las placas de piedra crujen entre si, se escucha como el mecanismo se traba por completo. La cerradura mágica se bloqueó para siempre." });
             }
         }
 

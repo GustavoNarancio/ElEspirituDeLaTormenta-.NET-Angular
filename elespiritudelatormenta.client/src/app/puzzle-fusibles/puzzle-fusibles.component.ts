@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core'; // IMPORTANTE: Agregá Output y EventEmitter
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../services/api.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class PuzzleFusiblesComponent implements OnInit {
   ranuraActivaIndex: number | null = null;
   mensajeAviso: string | null = null;
   esFinDelPuzzle: boolean = false; // Nos avisa si el puzzle ya se terminó
+
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
@@ -24,11 +25,14 @@ export class PuzzleFusiblesComponent implements OnInit {
   }
 
   cargarInventario() {
-    const idUsuarioActual = 1;
+    // --- NUEVO: Leemos el ID exacto de tu login ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
     this.apiService.getInventario(idUsuarioActual).subscribe({
       next: (datos) => {
         this.itemsMochila = datos;
-        console.log("Mochila cargada en el puzzle:", this.itemsMochila); // Agregamos este log para ver si llegan
+        console.log("Mochila cargada en el puzzle:", this.itemsMochila);
       },
       error: (err) => console.error(err)
     });
@@ -65,7 +69,7 @@ export class PuzzleFusiblesComponent implements OnInit {
     }
 
     const idsFusibles = this.ranuras.map(r => r.id);
-    const idPuzzleActual = 1;
+    const idPuzzleActual = 1; // Este 1 es el ID del puzzle, está perfecto así.
 
     this.apiService.intentarPuzzle(idPuzzleActual, idsFusibles).subscribe({
       next: (respuesta) => {
@@ -82,12 +86,11 @@ export class PuzzleFusiblesComponent implements OnInit {
   }
 
   cerrarPuzzle() {
-    // En vez de console.log, hacemos sonar el megáfono
     this.cerrar.emit();
   }
+
   // NUEVA FUNCIÓN: Revisa si el ítem ya está puesto en alguna ranura
   itemEstaEnUso(item: any): boolean {
-    // Si la ranura no es null, y el ID coincide, devuelve true
     return this.ranuras.some(ranura => ranura !== null && ranura.id === item.id);
   }
 
@@ -100,6 +103,4 @@ export class PuzzleFusiblesComponent implements OnInit {
       this.cerrarPuzzle();
     }
   }
-
-
 }

@@ -17,8 +17,8 @@ export class PuertaGarajeComponent implements OnInit {
   itemSeleccionado: any = null;
   inventarioUsuario: any[] = [];
 
-  readonly ID_LLAVE_GARAJE = 1011;
-  readonly ID_PUZZLE_PUERTA = 4;
+  readonly ID_LLAVE_GARAJE = 19;
+  readonly ID_PUZZLE_PUERTA = 3;
 
   constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
 
