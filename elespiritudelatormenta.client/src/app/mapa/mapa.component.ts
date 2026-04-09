@@ -18,7 +18,7 @@ export class MapaComponent {
 
   viajarHacia(destinoUrl: string) {
     this.eventosService.sumarAccion();
-    this.router.navigate([destinoUrl]);
+    this.router.navigate([destinoUrl], { replaceUrl: true });
     this.cerrarMapa.emit();
   }
 

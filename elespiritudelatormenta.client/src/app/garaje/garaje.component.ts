@@ -10,7 +10,7 @@ import { EventosGlobalesService } from '../services/eventos-globales.service';
 })
 export class GarajeComponent implements OnInit {
 
-  idHabitacion: number = 6; // ID real de tu Garaje
+  idHabitacion: number = 6; 
   idUsuario: number = 1;    // ID del usuario jugando
 
   // Variables de control de UI
@@ -121,13 +121,24 @@ export class GarajeComponent implements OnInit {
 
     this.apiService.guardarEnInventario(this.itemSeleccionado.id || this.itemSeleccionado.Id).subscribe({
       next: (res) => {
-        this.eventosService.sumarAccion();
-
+        // Éxito: lógica local + notificaciones globales
         this.inventarioUsuario.push(this.itemSeleccionado);
         this.cerrarMiniMenu();
         this.cargarDatos();
+
+        // Avisamos a la app que hay un item nuevo y sumamos la acción
+        this.apiService.notificarCambioInventario();
+        this.eventosService.sumarAccion();
       },
-      error: (err) => console.error("Error al guardar:", err)
+      error: (err) => {
+        // Manejo del error: si la mochila está llena, mostramos tu alerta
+        if (err.error && err.error.errorType === 'MOCHILA_LLENA') {
+          this.eventosService.mostrarAlertaMochila(err.error.mensaje);
+          this.cerrarMiniMenu(); // Cerramos el menú para dejar ver el cartel
+        } else {
+          console.error("Error al guardar:", err);
+        }
+      }
     });
   }
 
@@ -173,11 +184,11 @@ export class GarajeComponent implements OnInit {
   volverAtras() {
     this.eventosService.sumarAccion();
 
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 
   escaparConCamioneta() {
-    this.router.navigate(['/escapeFinal']);
+    this.router.navigate(['/escapeFinal'], { replaceUrl: true });
   }
 
   volverDePantallaNegra() {

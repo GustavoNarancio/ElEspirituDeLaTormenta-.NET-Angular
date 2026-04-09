@@ -50,18 +50,29 @@
 
 .contenedor-acciones {
   position: absolute;
-  bottom: 100px;
+  bottom: 80px; /* Ajustado para que el botón no quede tan pegado al texto */
   left: 50%;
   transform: translateX(-50%);
+  animation: fadeIn 1s ease-in-out; /* Que el botón aparezca suave */
 }
 
-.btn-volver {
+/* --- BOTÓN FIN (Imagen) --- */
+.btn-volver-fin {
+  height: 40px; /* Ajustá esto según el tamaño real de tu Fin.png */
+  width: auto;
   cursor: pointer;
-  height: 50px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: sepia(1) hue-rotate(10deg) brightness(0.8); /* Ajuste para que el botón naranja combine con el dorado */
 }
 
+/* --- EFECTO HOVER ESTÁNDAR --- */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
 
 @keyframes fadeIn {
   from {

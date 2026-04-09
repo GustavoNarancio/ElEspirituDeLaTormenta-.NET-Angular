@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { EventosGlobalesService } from '../services/eventos-globales.service'; 
+import { EventosGlobalesService } from '../services/eventos-globales.service';
 
 @Component({
   selector: 'app-lavadero',
@@ -11,18 +11,25 @@ import { EventosGlobalesService } from '../services/eventos-globales.service';
 export class LavaderoComponent implements OnInit {
 
   // 1. Controles de Visibilidad
-  mostrarMenuInspeccion: boolean = false; // El marco largo de abajo
-  mostrarMiniMenu: boolean = false;       // El cuadro cuadrado de acciones
-  mostrarDescripcion: boolean = false;       // El cartel con la descripción del ítem
+  mostrarMenuInspeccion: boolean = false;
+  mostrarMiniMenu: boolean = false;
+  mostrarDescripcion: boolean = false;
   mostrarPuzzleModal: boolean = false;
   textoLectura: string = '';
 
+  // --- NUEVAS VARIABLES PARA LA NOTA ---
+  mostrarNotaEspecial: boolean = false;
+  paginaActualIndex: number = 0;
+  paginasNota: string[] = [
+    "Una hoja suelta, escrita con apuro. Reconozco la letra de inmediato, es de mi abuelo Thaddeus:\n\n“Al margen de la tablilla, encontré este cántico. Relata el orden perfecto de algún ritual:”",
+    "La llama dorada que devora la pradera.\nLa rama desnuda que se rinde a la brisa.\nLa cuna de escarcha donde la bestia sueña.\nLa lágrima del deshielo que despierta la raíz."
+  ];
 
   // 2. Datos de la DB
   listaDeObjetosDB: any[] = [];
   listaDePuzzlesDB: any[] = [];
 
-  // 3. Ítem que el usuario clickeó (puede ser Objeto o Puzzle)
+  // 3. Ítem que el usuario clickeó
   itemSeleccionado: any = null;
   esPuzzle: boolean = false;
 
@@ -31,7 +38,6 @@ export class LavaderoComponent implements OnInit {
   ngOnInit(): void {
     this.cargarDatosDelLavadero();
 
-    // EL LAVADERO PRENDE LA RADIO Y ESCUCHA:
     this.apiService.inventarioCambio$.subscribe(() => {
       this.cargarDatosDelLavadero();
     });
@@ -43,21 +49,27 @@ export class LavaderoComponent implements OnInit {
     this.apiService.getPuzzles(idHabitacion).subscribe(datos => this.listaDePuzzlesDB = datos);
   }
 
-  // --- LÓGICA DE INTERACCIÓN ---
-
-  // Esta función centraliza todo el click de la lista
-  abrirAcciones(item: any, tipo: 'objeto' | 'puzzle') {
+  // --- LÓGICA DE INTERACCIÓN MODIFICADA ---
+  abrirAcciones(item: any, tipo: 'objeto' | 'puzzle' | 'especial') {
     this.itemSeleccionado = item;
-    this.esPuzzle = (tipo === 'puzzle');
-    this.mostrarMiniMenu = true;
 
-    // Debug para ver qué llega de la DB
-    console.log("Datos del item:", item);
+    // Evaluamos si es la nota fija o algo de la DB
+    if (tipo === 'especial') {
+      this.esPuzzle = false;
+      item.esInteractuableEspecial = true;
+    } else {
+      this.esPuzzle = (tipo === 'puzzle');
+      if (this.itemSeleccionado) this.itemSeleccionado.esInteractuableEspecial = false;
+    }
+
+    this.mostrarMiniMenu = true;
   }
+
   cerrarMiniMenu() {
     this.mostrarMiniMenu = false;
     this.itemSeleccionado = null;
   }
+
   cerrarPuzzle() {
     this.mostrarPuzzleModal = false;
   }
@@ -71,41 +83,64 @@ export class LavaderoComponent implements OnInit {
 
   volver() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/juego']);
+    this.router.navigate(['/juego'], { replaceUrl: true });
   }
 
-  // Esta función la llamaremos desde el botón "Ver Descripción" del cuadrito
+  // --- LÓGICA DE LA NOTA PAGINADA ---
+  abrirNotaEspecial() {
+    this.mostrarNotaEspecial = true;
+    this.mostrarMenuInspeccion = false;
+    this.cerrarMiniMenu();
+    this.paginaActualIndex = 0; // Arranca en la pág 1
+  }
+
+  cerrarNotaEspecial() {
+    this.mostrarNotaEspecial = false;
+    this.mostrarMenuInspeccion = true; // Volvemos al menú
+  }
+
+  paginaSiguiente() {
+    if (this.paginaActualIndex < this.paginasNota.length - 1) {
+      this.paginaActualIndex++;
+    }
+  }
+
+  paginaAnterior() {
+    if (this.paginaActualIndex > 0) {
+      this.paginaActualIndex--;
+    }
+  }
+
+  // --- RESTO DEL CÓDIGO ORIGINAL ---
   verDescripcion() {
-    this.textoLectura = this.itemSeleccionado.descripcion; // Acá cargamos la BD
+    this.textoLectura = this.itemSeleccionado.descripcion;
     this.mostrarMiniMenu = false;
     this.mostrarMenuInspeccion = false;
     this.mostrarDescripcion = true;
     if (this.itemSeleccionado.EsAgarrable === false) {
-      this.eventosService.sumarAccion();            }
-
+      this.eventosService.sumarAccion();
+    }
   }
 
   cerrarLectura() {
     this.mostrarDescripcion = false;
-    this.mostrarMenuInspeccion = true;  // Vuelve el marco largo
-    this.mostrarMiniMenu = true;        // Vuelve el cuadrito de opciones
+    this.mostrarMenuInspeccion = true;
+    this.mostrarMiniMenu = true;
   }
+
   guardarItem() {
     if (!this.itemSeleccionado) return;
-
     this.apiService.guardarEnInventario(this.itemSeleccionado.id).subscribe({
       next: (res) => {
-        // Éxito: lo de siempre
         this.cerrarMiniMenu();
         this.cargarDatosDelLavadero();
         this.apiService.notificarCambioInventario();
         this.eventosService.sumarAccion();
       },
       error: (err) => {
-        // ACÁ ESTÁ EL CAMBIO:
         if (err.error && err.error.errorType === 'MOCHILA_LLENA') {
           this.eventosService.mostrarAlertaMochila(err.error.mensaje);
-          this.cerrarMiniMenu(); // Cerramos el menú para que el usuario vea el cartel
+          this.cerrarMiniMenu();
         } else {
           console.error("Error al guardar:", err);
         }
@@ -113,35 +148,26 @@ export class LavaderoComponent implements OnInit {
     });
   }
 
-  // Esta función la llamaremos desde el botón "Interactuar" del cuadrito
   interactuar() {
     if (!this.itemSeleccionado) return;
     this.eventosService.sumarAccion();
-    // A. ¿Está resuelto bien?
     if (this.itemSeleccionado.resuelto) {
-      // Texto exacto que pediste:
       this.textoLectura = "la corriente fluye por toda la casa, la caja de fusibles se ve bien";
       this.mostrarMiniMenu = false;
       this.mostrarMenuInspeccion = false;
       this.mostrarDescripcion = true;
-      return; // Corta acá
+      return;
     }
-
-    // B. ¿Está roto?
     if (this.itemSeleccionado.roto) {
-      // Texto exacto que pediste:
       this.textoLectura = "la caja de fusibles está quemada, no hay forma de arreglarla";
       this.mostrarMiniMenu = false;
       this.mostrarMenuInspeccion = false;
       this.mostrarDescripcion = true;
-      return; // Corta acá
+      return;
     }
-
-    // C. Si no está ni resuelto ni roto, ABRE EL PUZZLE
     console.log("Abriendo puzzle:", this.itemSeleccionado.nombre);
     this.cerrarMiniMenu();
     this.mostrarMenuInspeccion = false;
     this.mostrarPuzzleModal = true;
   }
-
 }

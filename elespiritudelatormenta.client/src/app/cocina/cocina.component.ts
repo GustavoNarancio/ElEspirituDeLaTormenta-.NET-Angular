@@ -103,49 +103,50 @@ export class CocinaComponent implements OnInit {
 
   cargarTextosHardcodeados() {
     this.librosDisponibles = [
-      // --- 1. COCINA (ESENCIAL - SIN MODIFICAR) ---
+      
+
+      // --- 2. DECORACIÓN TEXTIL (FORMATO BITÁCORA A MANO) ---
       {
         id: 1,
         titulo: 'Libro 1',
         paginas: [
-          "Libro de Cocina\n“CUALQUIERA PUEDE COCINAR”\n\nDescubre los secretos gastronómicos del famoso chef Remy con este completo libro de cocina.\n\nUna colección única de recetas ancestrales, transmitidas de generación en generación, que capturan la esencia de los sabores y tradiciones de este mágico reino.",
-          "Desde suculentas carnes asadas al estilo de los grandes banquetes reales hasta delicados pasteles elaborados con frutos de los bosques encantados, este libro ofrece una amplia variedad de platos para todas las ocasiones.\n\nCada receta es única, con instrucciones claras y fáciles de seguir, además de consejos del mejor chef: Remy.",
-          "Ensalada de Pollo y Manzana\nIngredientes:\n- 2 pechugas de pollo cocidas y desmenuzadas\n- 1 manzana grande cortada en cubos \n- 1 taza de nueces picadas\n- 3 cucharadas de mayonesa\n- Jugo de limón\n- Sal y pimienta a gusto",
-          "\nPreparación:\nEn un tazón grande mezcla el pollo desmenuzado, la manzana y las nueces.\n\nAñade la mayonesa y el jugo de limón, y mezcla bien.\n\nSazona con sal y pimienta al gusto. Sirve fría y disfruta.",
-          "Pasta al Pesto\nIngredientes:\n- 200 gramos de pasta (espagueti o fettuccine)\n- ½ taza de hojas de albahaca frescas\n- ¼ de taza de queso parmesano rallado\n- 2 dientes de ajo\n- ⅓ de taza de aceite de oliva\n- Sal al gusto",
-          "\nPreparación:Cocina la pasta hasta que esté al dente. Escurre y reserva. En una licuadora o procesador de alimentos mezcla la albahaca, los piñones, el queso parmesano y el ajo. Mientras mezclas, añade lentamente el aceite de oliva hasta obtener una salsa suave.\nSazona con sal al gusto. Mezcla la pasta cocida con el pesto y sirve caliente.",
-          "Tostadas de Palta y Huevo\nIngredientes:\n- 2 rebanadas de pan integral\n- 1 palta madura\n- 2 huevos\n- 1 cucharada de jugo de limón\n- ¼ cucharadita de sal\n- ⅛ cucharadita de pimienta negra\n- Pizca de hojuelas de pimiento rojo",
-          "\nPreparación:\nTuesta las rebanadas de pan hasta que estén doradas.\nEn un tazón machaca la palta con el jugo de limón, la sal y la pimienta. Cocina los huevos al gusto (fritos, revueltos o pochados).\n\nUnta la palta sobre las tostadas y coloca los huevos encima. Espolvorea con hojuelas de pimiento rojo si deseas un toque picante.",
-          "Batido de Fresas y Plátano\nIngredientes:\n- 1 plátano maduro\n- 1 taza de fresas frescas o congeladas\n- ½ taza de yogur natural\n- ½ taza de leche\n- 1 cucharada de miel\n- ½ cucharadita de extracto de vainilla\n- Cubos de hielo a gusto",
-          "\nPreparación:\nColoca el plátano, las fresas, el yogur, la leche, la miel y el extracto de vainilla en una licuadora.\n\nAñade unos cuantos cubos de hielo para obtener una textura más fría y espesa.\n\nLicua hasta que la mezcla esté suave y homogénea. Sirve inmediatamente y disfruta.",
-          "Página estropeada por la humedad...",
-          "Página estropeada por la humedad...",
-          "Página estropeada por la humedad...",
-          "Esta no es una página del libro.\n\nMás bien parece un papel viejo, pero bien cuidado, escrito por un nene:\n\n“Abuelita Mary, ¿podés hacerme la ensalada de pollo y manzana?\n\nTu ensalada de pollo y manzana es la más rica del mundo. Es mi comida favorita.\n\nTE AMO ABU.”",
-          "Fin del libro."
-        ],
-        contenidoCompleto: ''
-      },
-
-      // --- 2. DECORACIÓN TEXTIL (FORMATO BITÁCORA A MANO) ---
-      {
-        id: 2,
-        titulo: 'Libro 2',
-        paginas: [
           "CUADERNO DE TALLER TEXTIL\n\n(La tapa es de cuero gastado. Las páginas están llenas de anotaciones a mano, garabatos y muestras de tela pegadas).",
           "Junio.\nEmpezar con el taller de decoración no es fácil. Hoy llegaron los primeros rollos de lienzo. El olor a algodón crudo inunda toda la habitación, pero es un buen comienzo.",
           "Nota rápida: \nNunca mezclar lino con fibras sintéticas si se busca una caída natural para cortinados pesados. El lino necesita respirar.",
-          "Página ilegible, cubierta de moho...",
           "Página arruinada por la humedad...",
            "Acordarme de comprar telas color NEGRO, AZUL y ROJO. en genero pana y terciopelo",
           "Página arruinada por la humedad...",
           "(Hay un pedazo de tela gruesa pegado con un alfiler oxidado en esta página). \n\nPrueba de resistencia: La pana aguantó bien la fricción, pero el terciopelo pierde el pelo si se lo cepilla a contrapelo. No sirve para este proyecto.",
-          "Tengo que afilar las tijeras grandes. Ya arruiné medio metro de muselina por un mal corte.",
           "El resto de las páginas están completamente pegadas entre sí por la humedad del lugar. Es imposible separarlas sin romperlas por completo.",
-          "Fin del cuaderno."
+          "FIN DEL LIBRO."
         ],
         contenidoCompleto: ''
       },
+
+      // --- 1. COCINA (ESENCIAL - SIN MODIFICAR) ---
+      {
+        id: 2,
+        titulo: 'Libro 2',
+        paginas: [
+          "Libro de Cocina\n“CUALQUIERA PUEDE COCINAR”\n\nDescubre los secretos gastronómicos del famoso chef Remy con este completo libro de cocina.\n\nUna colección única de recetas ancestrales, transmitidas de generación en generación, que capturan la esencia de los sabores y tradiciones de este mágico reino.",
+          "Ensalada de Pollo y Manzana\nIngredientes:\n- 2 pechugas de pollo cocidas y desmenuzadas\n- 1 manzana grande cortada en cubos \n- 1 taza de nueces picadas\n- 3 cucharadas de mayonesa",
+          "\nPreparación:\nEn un tazón grande mezcla el pollo desmenuzado, la manzana y las nueces.\n\nAñade la mayonesa y el jugo de limón, y mezcla bien.\n\nSazona con sal y pimienta al gusto. Sirve fría y disfruta.",
+          "Pasta al Pesto\nIngredientes:\n- 200 gramos de pasta (espagueti o fettuccine)\n- ½ taza de hojas de albahaca frescas\n- ¼ de taza de queso parmesano rallado\n- 2 dientes de ajo\n- ⅓ de taza de aceite de oliva\n- Sal al gusto",
+          "\nPreparación:Cocina la pasta hasta que esté al dente. Escurre y reserva. En una licuadora o procesador de alimentos mezcla la albahaca, los piñones, el queso parmesano y el ajo. Mientras mezclas, añade lentamente el aceite de oliva hasta obtener una salsa suave.\nSazona con sal al gusto. Mezcla la pasta cocida con el pesto y sirve caliente.",
+          "Tostadas de Palta y Huevo\nIngredientes:\n- 2 rebanadas de pan integral\n- 1 palta madura\ n- 1 cucharadita de pimienta negra \n- 2 huevos\n- 1 cucharada de jugo de limón\n- 2 cucharadita de sal\ \n- Pizca de hojuelas de pimiento rojo",
+          "\nPreparación:\nTuesta las rebanadas de pan hasta que estén doradas.\nEn un tazón machaca la palta con el jugo de limón, la sal y la pimienta. Cocina los huevos al gusto (fritos, revueltos o pochados).\n\nUnta la palta sobre las tostadas y coloca los huevos encima. Espolvorea con hojuelas de pimiento rojo si deseas un toque picante.",
+          "Página estropeada por la humedad...",
+          "Página estropeada por la humedad...",
+          "Página estropeada por la humedad...",
+          "Esta no es una página del libro.\n\nMás bien parece un papel viejo, pero bien cuidado, escrito por un nene:\n\n“Abuelita Mary, ¿podés hacerme la ensalada de pollo y manzana?\n\nTu ensalada de pollo y manzana es la más rica del mundo. Es mi comida favorita.\n\nTE AMO ABU.”",
+          "FIN DEL LIBRO."
+        ],
+
+        contenidoCompleto: ''
+      },
+
+
+
 
       // --- 3. MECÁNICA (ESENCIAL - SIN MODIFICAR) ---
       {
@@ -161,8 +162,7 @@ export class CocinaComponent implements OnInit {
           "Desgaste en el Motor de Arranque (1/2)\n\nEl motor de arranque es el encargado de poner en marcha el motor utilizando la energía de la batería.\n\nDentro de este sistema, los carbones son piezas que se desgastan con el uso.",
           "Desgaste en el Motor de Arranque (2/2)\n\nCuando están deteriorados, el funcionamiento es irregular. El vehículo puede intentar arrancar varias veces sin lograrlo.\n\nEn algunos casos, se perciben sonidos secos o golpes al accionar la llave, señal de que el mecanismo no funciona correctamente.",
           "Página estropeada por la humedad...",
-          "Página estropeada por la humedad...",
-          "Fin del libro (parece que el resto del libro está arruinado)"
+          "FIN DEL LIBRO (parece que el resto del libro está arruinado)"
         ],
         contenidoCompleto: ''
       },
@@ -179,7 +179,7 @@ export class CocinaComponent implements OnInit {
           "Capítulo 4: Patologías comunes.\n\n...como se mencionaba en el capítulo anterior, la necrosis en los bordes de las frondas suele indicar una alarmante falta de humedad ambiental en el lugar de cultivo.",
           "Advertencia: El exceso de riego es el asesino silencioso del helecho doméstico. Provoca asfixia radicular y fomenta la aparición de hongos letales de los que no hay salvación.",
           "(El libro se corta abruptamente acá. Faltan todas las páginas finales y la contratapa de cartón).",
-          "Fin del tomo."
+          "FIN DEL LIBRO"
         ],
         contenidoCompleto: ''
       }
@@ -236,7 +236,7 @@ export class CocinaComponent implements OnInit {
   volver() {
     this.eventosService.sumarAccion();
 
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 
   interactuar() { }

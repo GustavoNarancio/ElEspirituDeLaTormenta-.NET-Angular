@@ -10,13 +10,18 @@ export class PuzzleCajaComponent implements OnInit {
 
   @Input() puzzleId: number | undefined;
   @Output() cerrar = new EventEmitter<void>();
-  @Output() resuelto = new EventEmitter<string>(); // <--- Agregamos <string>
+  @Output() resuelto = new EventEmitter<string>();
   @Output() roto = new EventEmitter<string>();
 
   ranuras: (number | null)[] = [null, null, null, null];
   mostrarMiniMenu: boolean = false;
   ranuraActivaIndex: number | null = null;
-  mensajeAviso: string | null = null;
+  mensajeAviso: string | null = null; // Para el aviso chiquito ("Necesito completar...")
+
+  // ---> NUEVAS VARIABLES: Control del cartel gigante de historia
+  intentosFallidos: number = 0;
+  mostrarAdvertencia: boolean = false;
+  textoAdvertencia: string = '';
 
   numerosDisponibles: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -40,37 +45,40 @@ export class PuzzleCajaComponent implements OnInit {
   probarCombinacion() {
     const estanTodasLlenas = this.ranuras.every(r => r !== null);
     if (!estanTodasLlenas) {
-      this.mensajeAviso = "Necesito completar los 4 digitos para probar abrirla";
+      this.mensajeAviso = "Necesito completar los 4 dígitos para probar abrirla.";
       return;
     }
 
-    console.log("--> INICIANDO INTENTO DE ABRIR CAJA");
-    console.log("1. ID del Puzzle detectado:", this.puzzleId);
-    console.log("2. Combinación armada:", this.ranuras);
-
-    // Si el ID sigue siendo undefined, gritamos el error en la consola
     if (!this.puzzleId) {
-      console.error("¡ERROR CRÍTICO! Angular no sabe cuál es el ID del puzzle. El envío a .NET se abortó.");
+      console.error("¡ERROR CRÍTICO! Angular no sabe cuál es el ID del puzzle.");
       return;
     }
 
     const digitos = this.ranuras as number[];
-    console.log("3. Viajando al Backend...");
 
-    // Viajamos a .NET
-    this.apiService.intentarCaja(this.puzzleId, digitos).subscribe({
+    // ---> NUEVO: Calculamos si ya quemó su primer intento
+    const esElUltimo = this.intentosFallidos >= 1;
+
+    // Viajamos a .NET pasándole la bandera esElUltimo
+    this.apiService.intentarCaja(this.puzzleId, digitos, esElUltimo).subscribe({
       next: (respuesta) => {
-        console.log("4. ¡Éxito! .NET respondió:", respuesta);
-        this.resuelto.emit(respuesta.mensaje); // <--- Le pasamos el texto acá
+        this.resuelto.emit(respuesta.mensaje);
       },
       error: (errorHttp) => {
-        console.error("4. Error o Fallo en .NET:", errorHttp);
-        const msj = errorHttp.error?.mensaje || "puse la combinacion incorrecta y ahora la caja se trabó";
-        this.roto.emit(msj);
+        this.intentosFallidos++;
+
+        if (this.intentosFallidos === 1) {
+          // Primer error: Angular maneja la advertencia, .NET no tocó la BD
+          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados, no creo que aguante otra combinación incorrecta antes de trabarse por completo.";
+          this.mostrarAdvertencia = true;
+        } else {
+          // Segundo error: .NET rompió la BD y nos mandó el mensaje de la IMAGEN 1
+          const msj = errorHttp.error?.mensaje || "Puse la combinación incorrecta y la perilla quedó completamente trabada.";
+          this.roto.emit(msj);
+        }
       }
     });
   }
-
   cerrarPuzzle() {
     this.cerrar.emit();
   }
@@ -78,5 +86,11 @@ export class PuzzleCajaComponent implements OnInit {
   cerrarAviso() {
     this.mensajeAviso = null;
     this.ranuraActivaIndex = null;
+  }
+
+  // ---> NUEVA FUNCIÓN: Cierra el cartel gigante y resetea los números
+  cerrarAdvertencia() {
+    this.mostrarAdvertencia = false;
+    this.ranuras = [null, null, null, null]; // Limpiamos para que intente de nuevo
   }
 }

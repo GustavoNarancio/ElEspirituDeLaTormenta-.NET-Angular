@@ -5,6 +5,10 @@
       {{ textoMostrado }}
     </p>
 
+    <div *ngIf="mostrarBotonVolver" class="contenedor-acciones">
+      <img src="/assets/FIN.png" class="btn-volver-fin efecto-hover" (click)="reiniciarJuego()" alt="Finalizar">
+    </div>
   </div>
 
 </div>
+

@@ -27,7 +27,8 @@
       <img src="/assets/MarcoDeTextoRectangularGrande.png" class="fondo-marco">
 
       <div class="contenido-panel-puzzle">
-        <h3 class="titulo-columna">COMBINACION
+        <h3 class="titulo-columna">
+          COMBINACION
         </h3>
 
         <div class="grilla-ranuras">
@@ -56,5 +57,19 @@
       <img src="/assets/Cerrar.png" class="boton-cerrar-aviso-img efecto-hover" (click)="cerrarAviso()" alt="Cerrar">
     </div>
   </div>
+
+
+
+  <div *ngIf="mostrarAdvertencia" class="pantalla-lectura-puzzle">
+    <div class="contenedor-lectura-central">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+      <div class="contenido-texto-lectura">
+        <p class="texto-descripcion-db">{{ textoAdvertencia }}</p>
+        <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarAdvertencia()" alt="Cerrar">
+      </div>
+    </div>
+  </div>
+
+
 
 </div>

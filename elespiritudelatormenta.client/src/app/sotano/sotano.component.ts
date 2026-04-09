@@ -182,11 +182,11 @@ export class SotanoComponent implements OnInit {
 
   navegarFinal() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/el-espiritu-de-la-tormenta']);
+    this.router.navigate(['/el-espiritu-de-la-tormenta'], { replaceUrl: true });
   }
 
   volver() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 }

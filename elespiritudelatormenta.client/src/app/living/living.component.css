@@ -362,3 +362,62 @@
   color: #F2A840 !important;
   filter: drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.7));
 }
+/* ========================================================== */
+/* PAGINACIÓN DE ESCRITORIO                                   */
+/* ========================================================== */
+
+.contenido-texto-libro {
+  /* ... tus estilos anteriores se mantienen, no te preocupes ... */
+  /* Solo asegurate de que haya un poco de padding inferior para que el texto no pise las flechas */
+  padding-bottom: 70px;
+}
+
+.contenedor-flechas {
+  position: absolute;
+  bottom: 25px; /* Fijado abajo del marco de texto */
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Contenedor invisible para que el número quede siempre al centro,
+incluso si falta la flecha izquierda o derecha */
+.espacio-flecha {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.flecha-paginacion {
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
+}
+
+.flecha-der {
+  /* Suponiendo que la flecha3 apunta a la derecha por defecto */
+}
+
+/* Invertimos la flecha derecha para que sirva de izquierda */
+.flecha-izq {
+  transform: rotate(180deg);
+}
+
+  /* Excepción para el hover de la flecha izquierda, para que no pierda la rotación */
+  .flecha-izq.efecto-hover:hover {
+    transform: rotate(180deg) scale(1.1) !important;
+  }
+
+.numeracion-pagina {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F; /* Cobre oxidado */
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px black;
+  width: 60px;
+  text-align: center;
+}

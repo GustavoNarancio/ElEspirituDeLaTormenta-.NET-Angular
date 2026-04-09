@@ -81,7 +81,6 @@
   top: 0;
   left: 0;
   width: 100%;
-
   height: 100%;
   object-fit: fill;
   pointer-events: none;
@@ -98,7 +97,6 @@
 }
 
 /* --- 5. LISTA DE OBJETOS (Dentro del Marco) --- */
-/* --- 5. LISTA DE OBJETOS (Dentro del Marco) --- */
 .contenedor-lista-objetos {
   position: absolute;
   top: 16%; /* Lo bajamos un poquito para que respire con el borde superior */
@@ -110,7 +108,6 @@
   grid-template-columns: 1fr 1fr; /* Crea exactamente dos columnas del mismo ancho */
   align-content: start; /* Empuja todos los items hacia arriba */
   gap: 15px 20px; /* 15px de espacio vertical, 20px de espacio horizontal */
-
   padding: 0 60px; /* Le damos margen a izquierda y derecha para que no toque los bordes del dibujo */
   box-sizing: border-box; /* Asegura que el padding no rompa el ancho total */
   z-index: 120;
@@ -178,7 +175,6 @@
   .opcion-accion:hover {
     color: #F2A840; /* Ámbar Dorado al tocar */
   }
-
 
 .cerrar-mini {
   position: absolute;
@@ -252,9 +248,108 @@
   line-height: 1.4;
   margin: 0;
 }
+
 .boton-volver-lectura {
   margin-top: 30px;
   height: 30px; /* Controlamos el tamaño de la imagen */
   width: auto;
   cursor: pointer;
+}
+
+/* ========================================================== */
+/* ESTILOS PARA LA NOTA PAGINADA (NUEVO)                      */
+/* ========================================================== */
+
+.pantalla-especial-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 550; /* Por encima del menú inferior */
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.boton-cerrar-nota {
+  position: absolute;
+  top: 23px; /* Un poco salido del marco para que quede bien estilo juego */
+  right: 18px;
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  z-index: 600;
+}
+
+.contenido-texto-libro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 30px 40px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.texto-escritorio {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  white-space: pre-wrap;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.contenedor-flechas {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  flex-shrink: 0;
+}
+
+.espacio-flecha {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.flecha-paginacion {
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.5));
+}
+
+.flecha-izq {
+  transform: rotate(180deg);
+}
+
+  .flecha-izq.efecto-hover:hover {
+    transform: rotate(180deg) scale(1.1) !important;
+  }
+
+.numeracion-pagina {
+  font-family: 'Crimson Pro', Serif;
+  color: #B8673F;
+  font-size: 22px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px black;
+  width: 60px;
+  text-align: center;
 }

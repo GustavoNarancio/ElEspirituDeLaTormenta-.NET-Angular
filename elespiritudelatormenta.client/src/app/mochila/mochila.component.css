@@ -1,4 +1,4 @@
-/* --- 1. EL ÍCONO CHIQUITO (Este evita que sea gigante) --- */
+/* --- 1. EL ÍCONO CHIQUITO --- */
 .mochila-icon {
   position: absolute;
   top: 5%;
@@ -8,13 +8,15 @@
   cursor: pointer;
 }
 
+/* EFECTO HOVER GLOBAL UNIFICADO */
 .efecto-hover {
-  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+  cursor: pointer;
 }
 
   .efecto-hover:hover {
-    color: #F2A840; /* Ámbar Dorado */
-    transform: scale(1.1);
+    color: #F2A840 !important; /* Ámbar Dorado */
+    transform: scale(1.05);
     filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
   }
 
@@ -28,14 +30,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 600;
-  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000; /* REINA DE LAS CAPAS */
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
 .contenedor-mochila-abierta {
   position: relative;
-  width: 700px;
-  height: 700px;
+  width: 800px;
+  height: 800px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,15 +48,16 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  z-index: 2005;
 }
 
-/* --- 3. EL MARCO TRANSPARENTE CON EL INVENTARIO --- */
+/* --- 3. EL MARCO RECTANGULAR CON EL INVENTARIO --- */
 .marco-inventario {
   position: relative;
-  width: 420px;
-  height: 420px;
-  margin-top: 60px;
-  z-index: 610;
+  width: 500px;
+  height: 400px;
+  margin-top: 40px;
+  z-index: 2010;
 }
 
 .fondo-lectura-transparente {
@@ -63,69 +66,87 @@
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0.85;
+  opacity: 0.9;
   object-fit: fill;
+  pointer-events: none;
 }
 
 .contenido-inventario {
   position: relative;
-  z-index: 620;
+  z-index: 2020;
   width: 100%;
   height: 100%;
-  padding: 40px;
+  padding: 30px 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
 }
 
+/* Botón cerrar mochila (Imagen) */
+.boton-cerrar-mochila {
+  position: absolute;
+  top: 334px;
+  right: 25px;
+  height: 30px;
+  width: auto;
+  cursor: pointer;
+  z-index: 2030;
+}
+
 .titulo-inventario {
   font-family: 'Crimson Pro', Serif !important;
   color: #B8673F !important; /* Cobre Oxidado */
-  font-size: 34px;
+  font-size: 32px;
   margin-top: 0;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   text-shadow: 2px 2px 4px black;
+  text-transform: uppercase;
 }
 
 .lista-items-mochila {
-  flex-grow: 1;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
+  align-items: center;
+}
+
+.texto-mochila-vacia {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
+  margin-top: 50px;
+  text-shadow: 1px 1px 3px black;
+  font-style: italic;
+}
+
+/* Grilla para los objetos de la mochila (2 columnas) */
+.grilla-objetos-mochila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 40px;
+  width: 90%;
+  justify-items: start;
 }
 
 .texto-mochila-item {
   font-family: 'Crimson Pro', Serif;
-  color: #B8673F; /* Cobre Oxidado */
+  color: #E8DCC2; /* Crema Base */
   font-size: 26px;
   margin: 5px 0;
   text-shadow: 1px 1px 3px black;
   cursor: pointer;
-}
-
-  .texto-mochila-item:hover {
-    color: #F2A840; /* Ámbar Dorado */
-  }
-
-.boton-cerrar-mochila {
-  font-family: 'Crimson Pro', Serif;
-  color: #B8673F; /* Cobre Oxidado */
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: auto;
+  transform-origin: left center;
 }
 
 /* --- 4. MINI MENÚ DE ACCIONES (Devolver / Leer) --- */
 .mini-menu-acciones {
   position: absolute;
   bottom: 102%;
-  left: 50px;
+  left: 10%;
   width: 220px;
   height: 140px;
-  z-index: 650;
+  z-index: 2050;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,31 +155,32 @@
 .contenido-acciones {
   position: relative;
   width: 85%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  z-index: 660;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 30px;
+  box-sizing: border-box;
+  z-index: 2060;
+  gap: 15px;
 }
 
 .opcion-accion {
   font-family: 'Crimson Pro', Serif;
-  color: #B8673F; /* Cobre Oxidado */
-  font-size: 20px;
+  color: #E8DCC2; /* Crema Base */
+  font-size: 22px;
   cursor: pointer;
   text-shadow: 1px 1px 2px black;
+  transform-origin: left center;
 }
 
-  .opcion-accion:hover {
-    color: #F2A840; /* Ámbar Dorado */
-  }
-
-.cerrar-mini {
+.cerrar-mini-esquina {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  color: #B8673F; /* Cobre Oxidado */
-  font-size: 14px;
+  top: 15px;
+  right: 15px;
+  height: 18px; /* Tamaño de la X */
+  width: auto;
   cursor: pointer;
 }
 
@@ -172,8 +194,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 700;
-  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2100; /* Tapa absolutamente todo, incluso la mochila abierta */
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
 .contenedor-lectura-central {
@@ -198,17 +220,17 @@
 
 .texto-descripcion-db {
   font-family: 'Crimson Pro', Serif;
-  color: #E8DCC2; /* Crema Base para textos largos */
+  color: #E8DCC2; /* Crema Base */
   font-size: 24px;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
 }
 
+/* Botón Volver (Imagen) */
 .boton-volver-lectura {
   margin-top: 30px;
-  color: #B8673F; /* Cobre Oxidado */
-  font-size: 18px;
+  height: 35px;
+  width: auto;
   cursor: pointer;
-  font-family: 'Crimson Pro', Serif;
 }

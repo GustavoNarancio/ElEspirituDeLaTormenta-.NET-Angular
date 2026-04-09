@@ -27,28 +27,22 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             return await _context.Habitaciones.ToListAsync();
         }
 
+        // RECIBIMOS EL ID DEL USUARIO POR LA URL
         [HttpGet("{id}/objetos")]
-        public async Task<ActionResult<IEnumerable<Objetos>>> GetObjetosPorHabitacion(int id)
+        public async Task<ActionResult<IEnumerable<Objetos>>> GetObjetosPorHabitacion(int id, [FromQuery] int idUsuario)
         {
-            // Por ahora forzamos el usuario 1 (hasta que hagamos el login)
-            int idUsuarioActual = 1;
-
-            // Buscamos los que tengan el ID de esta habitación 
-            // Y que NO existan en la tabla Inventario para este usuario
             var objetos = await _context.Objetos
                 .Where(o => o.Idhabitacion == id &&
-                            !_context.Inventario.Any(inv => inv.Idusuario == idUsuarioActual && inv.Idobjeto == o.Id))
+                            !_context.Inventario.Any(inv => inv.Idusuario == idUsuario && inv.Idobjeto == o.Id))
                 .ToListAsync();
 
             return Ok(objetos);
         }
 
+        // RECIBIMOS EL ID DEL USUARIO POR LA URL
         [HttpGet("{id}/puzzles")]
-        public async Task<IActionResult> GetPuzzlesPorHabitacion(int id)
+        public async Task<IActionResult> GetPuzzlesPorHabitacion(int id, [FromQuery] int idUsuario)
         {
-            int idUsuarioActual = 1;
-
-            // Cruzamos los datos de Puzzles con el estado particular del usuario en PuzzlesResueltos
             var puzzles = await _context.Puzzles
                 .Where(p => p.Idhabitacion == id)
                 .Select(p => new
@@ -57,13 +51,12 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                     p.Idhabitacion,
                     p.Nombre,
                     p.Descripcion,
-                    // Buscamos si el usuario actual tiene un registro. Si no, devuelve false por defecto.
                     Resuelto = _context.PuzzlesResueltos
-                        .Where(pr => pr.Idpuzzle == p.Id && pr.Idusuario == idUsuarioActual)
+                        .Where(pr => pr.Idpuzzle == p.Id && pr.Idusuario == idUsuario)
                         .Select(pr => pr.EstaResuelto)
                         .FirstOrDefault(),
                     Roto = _context.PuzzlesResueltos
-                        .Where(pr => pr.Idpuzzle == p.Id && pr.Idusuario == idUsuarioActual)
+                        .Where(pr => pr.Idpuzzle == p.Id && pr.Idusuario == idUsuario)
                         .Select(pr => pr.EstaRoto)
                         .FirstOrDefault()
                 })
@@ -75,32 +68,33 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
         [HttpPost("guardar-objeto")]
         public async Task<IActionResult> GuardarEnInventario([FromBody] InventarioRequest request)
         {
-            int idUsuarioActual = 1;
-
-            // 1. NUEVA VERIFICACIÓN: Contamos cuántos objetos tiene ya el usuario
-            var cantidadItems = await _context.Inventario.CountAsync(i => i.Idusuario == idUsuarioActual);
+            var cantidadItems = await _context.Inventario.CountAsync(i => i.Idusuario == request.IdUsuario);
 
             if (cantidadItems >= 5)
             {
-                // Devolvemos un error específico que el frontend pueda identificar
                 return BadRequest(new { errorType = "MOCHILA_LLENA", mensaje = "Ya no tengo espacio en la mochila" });
             }
 
-            // 2. VERIFICAMOS: ¿Ya existe este vínculo? (Tu lógica de siempre)
             bool yaLoTiene = _context.Inventario
-                .Any(i => i.Idusuario == idUsuarioActual && i.Idobjeto == request.IdObjeto);
+                .Any(i => i.Idusuario == request.IdUsuario && i.Idobjeto == request.IdObjeto);
 
             if (yaLoTiene)
             {
                 return BadRequest(new { mensaje = "Ya tenés este objeto en tu inventario." });
             }
 
-            // 3. Si pasó las dos trabas, guardamos
-            var nuevoItem = new Inventario { Idusuario = idUsuarioActual, Idobjeto = request.IdObjeto };
+            var nuevoItem = new Inventario { Idusuario = request.IdUsuario, Idobjeto = request.IdObjeto };
             _context.Inventario.Add(nuevoItem);
             await _context.SaveChangesAsync();
 
             return Ok(new { mensaje = "Objeto guardado con éxito" });
+        }
+
+        // AGREGAMOS EL ID AL REQUEST
+        public class InventarioRequest
+        {
+            public int IdUsuario { get; set; }
+            public int IdObjeto { get; set; }
         }
 
         [HttpGet("~/api/usuarios/{idUsuario}/inventario")]
@@ -120,14 +114,13 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
         [HttpDelete("~/api/usuarios/{idUsuario}/inventario/{idObjeto}")]
         public async Task<IActionResult> EliminarDelInventario(int idUsuario, int idObjeto)
         {
-            // Buscamos el registro exacto en la tabla Inventario
             var item = await _context.Inventario
                 .FirstOrDefaultAsync(i => i.Idusuario == idUsuario && i.Idobjeto == idObjeto);
 
             if (item != null)
             {
-                _context.Inventario.Remove(item); // Lo borramos
-                await _context.SaveChangesAsync(); // Guardamos cambios
+                _context.Inventario.Remove(item);
+                await _context.SaveChangesAsync();
             }
 
             return Ok(new { mensaje = "Objeto devuelto con éxito" });
@@ -136,18 +129,15 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
         [HttpPost("~/api/puzzles/{idPuzzle}/intentar")]
         public async Task<IActionResult> IntentarResolverPuzzle(int idPuzzle, [FromBody] PuzzleIntentoRequest request)
         {
-            int idUsuarioActual = 1;
-
             var puzzleBase = await _context.Puzzles.FindAsync(idPuzzle);
             if (puzzleBase == null) return NotFound("Puzzle no encontrado");
 
-            // Buscamos o creamos el estado del puzzle para el usuario
             var estadoPuzzle = await _context.PuzzlesResueltos
-                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == idUsuarioActual);
+                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == request.IdUsuario);
 
             if (estadoPuzzle == null)
             {
-                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = idUsuarioActual, EstaResuelto = false, EstaRoto = false };
+                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = request.IdUsuario, EstaResuelto = false, EstaRoto = false };
                 _context.PuzzlesResueltos.Add(estadoPuzzle);
             }
 
@@ -178,47 +168,40 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             {
                 estadoPuzzle.EstaRoto = true;
                 await _context.SaveChangesAsync();
-                return BadRequest(new { mensaje = "¡Inserto el último fusible. Un destello cegador estalla desde la caja acompañado de un fuerte estallido seco. El humo y el olor a cobre quemado me golpean la cara al instante. Destrocé el sistema por completo." });
+                return BadRequest(new { mensaje = "Inserto el último fusible. Un destello cegador estalla desde la caja acompañado de un fuerte estallido seco. El humo y el olor a cobre quemado me golpean la cara al instante. Destrocé el sistema por completo." });
             }
         }
 
+        // AGREGAMOS EL ID AL REQUEST
         public class PuzzleIntentoRequest
         {
+            public int IdUsuario { get; set; }
             public List<int> IdsFusibles { get; set; }
         }
 
-        public class InventarioRequest
-        {
-            public int IdObjeto { get; set; }
-        }
 
         [HttpPost("~/api/puzzles/{idPuzzle}/intentar-caja")]
-        public async Task<IActionResult> IntentarCajaSeguridad(int idPuzzle, [FromBody] CajaIntentoRequest request)
+        public async Task<IActionResult> IntentarCajaSeguridad(int idPuzzle, [FromBody] CajaIntentoRequest request, [FromQuery] bool esUltimoIntento = false)
         {
-            int idUsuarioActual = 1;
-
             var puzzleBase = await _context.Puzzles.FindAsync(idPuzzle);
             if (puzzleBase == null) return NotFound("Puzzle no encontrado");
 
             var estadoPuzzle = await _context.PuzzlesResueltos
-                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == idUsuarioActual);
+                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == request.IdUsuario);
 
             if (estadoPuzzle == null)
             {
-                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = idUsuarioActual, EstaResuelto = false, EstaRoto = false };
+                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = request.IdUsuario, EstaResuelto = false, EstaRoto = false };
                 _context.PuzzlesResueltos.Add(estadoPuzzle);
             }
 
-            // 1. Si ya está rota
             if (estadoPuzzle.EstaRoto)
                 return BadRequest(new { mensaje = "puse la combinacion incorrecta y ahora la caja se trabó" });
 
-            // 2. Si ya estaba resuelta
             if (estadoPuzzle.EstaResuelto)
                 return Ok(new { mensaje = "La caja ya está abierta." });
 
-            // 3. Chequeamos la combinación
-            string combinacionCorrecta = "2113"; // Cambialo por el que quieras
+            string combinacionCorrecta = "2113";
             string combinacionIngresada = string.Join("", request.Digitos);
 
             if (combinacionIngresada == combinacionCorrecta)
@@ -229,31 +212,38 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             }
             else
             {
-                estadoPuzzle.EstaRoto = true;
-                await _context.SaveChangesAsync();
-                return BadRequest(new { mensaje = "puse la combinacion incorrecta y ahora la caja se trabó" });
+                if (esUltimoIntento)
+                {
+                    estadoPuzzle.EstaRoto = true;
+                    await _context.SaveChangesAsync();
+                    return BadRequest(new { mensaje = "Giro el dial hasta el último número, pero en lugar de abrirse, escucho un golpe seco en el interior. El mecanismo de seguridad acaba de saltar. Puse la combinación incorrecta y la perilla quedó completamente trabada." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "Error de combinación." });
+                }
             }
         }
 
+        // AGREGAMOS EL ID AL REQUEST
         public class CajaIntentoRequest
         {
+            public int IdUsuario { get; set; }
             public List<int> Digitos { get; set; }
         }
 
         [HttpPost("~/api/puzzles/{idPuzzle}/intentar-llave")]
         public async Task<IActionResult> IntentarConLlave(int idPuzzle, [FromBody] LlaveIntentoRequest request)
         {
-            int idUsuarioActual = 1;
-
             var puzzleBase = await _context.Puzzles.FindAsync(idPuzzle);
             if (puzzleBase == null) return NotFound("Puzzle no encontrado");
 
             var estadoPuzzle = await _context.PuzzlesResueltos
-                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == idUsuarioActual);
+                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == request.IdUsuario);
 
             if (estadoPuzzle == null)
             {
-                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = idUsuarioActual, EstaResuelto = false, EstaRoto = false };
+                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = request.IdUsuario, EstaResuelto = false, EstaRoto = false };
                 _context.PuzzlesResueltos.Add(estadoPuzzle);
             }
 
@@ -265,7 +255,7 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
 
             switch (idPuzzle)
             {
-                case 4: // PUERTA GARAJE
+                case 4:
                     if (request.IdObjeto == 1011)
                     {
                         esCorrecto = true;
@@ -273,9 +263,9 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                     }
                     break;
 
-                case 5: // PUERTA SÓTANO
+                case 5:
                     if (request.IdObjeto == 1)
-                    { // El Hacha
+                    {
                         esCorrecto = true;
                         mensajeExito = "Levanto el hacha de dos manos. Cuesta manejarla, pero fijo la vista en esa traba oxidada. Tomo distancia, la levanto por encima de mi hombro y acierto el golpe.|| El impacto me hace vibrar los brazos, pero el metal estalla en pedazos con un chasquido. El enorme candado cae inútilmente al suelo por su propio peso. El camino está libre.";
                     }
@@ -294,8 +284,10 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             }
         }
 
+        // AGREGAMOS EL ID AL REQUEST
         public class LlaveIntentoRequest
         {
+            public int IdUsuario { get; set; }
             public int IdObjeto { get; set; }
         }
 
@@ -339,10 +331,8 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
         [HttpPost("~/api/puzzles/camioneta/intentar-reparar")]
         public async Task<IActionResult> IntentarRepararCamioneta([FromBody] IntentoReparacionRequest request)
         {
-            int idUsuarioActual = 1;
-
             var estado = await _context.PuzzleCamioneta
-                .FirstOrDefaultAsync(c => c.IdUsuario == idUsuarioActual);
+                .FirstOrDefaultAsync(c => c.IdUsuario == request.IdUsuario);
 
             if (estado == null) return NotFound("No se encontró un estado inicial para esta camioneta.");
             if (estado.Resuelto || estado.Roto) return BadRequest(new { mensaje = "Ya no podés interactuar con este vehículo." });
@@ -389,26 +379,25 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             public bool Roto { get; set; }
         }
 
+        // AGREGAMOS EL ID AL REQUEST
         public class IntentoReparacionRequest
         {
+            public int IdUsuario { get; set; }
             public int IdObjeto { get; set; }
         }
-
 
         [HttpPost("~/api/puzzles/{idPuzzle}/intentar-sotano")]
         public async Task<IActionResult> IntentarPuzzleSotano(int idPuzzle, [FromBody] SotanoIntentoRequest request)
         {
-            int idUsuarioActual = 1;
-
             var puzzleBase = await _context.Puzzles.FindAsync(idPuzzle);
             if (puzzleBase == null) return NotFound("Puzzle no encontrado");
 
             var estadoPuzzle = await _context.PuzzlesResueltos
-                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == idUsuarioActual);
+                .FirstOrDefaultAsync(pr => pr.Idpuzzle == idPuzzle && pr.Idusuario == request.IdUsuario);
 
             if (estadoPuzzle == null)
             {
-                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = idUsuarioActual, EstaResuelto = false, EstaRoto = false };
+                estadoPuzzle = new PuzzlesResueltos { Idpuzzle = idPuzzle, Idusuario = request.IdUsuario, EstaResuelto = false, EstaRoto = false };
                 _context.PuzzlesResueltos.Add(estadoPuzzle);
             }
 
@@ -418,15 +407,13 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             if (estadoPuzzle.EstaResuelto)
                 return Ok(new { mensaje = "La puerta ya está abierta." });
 
-            // Validamos el orden exacto: Nico, Lucas, Matias, Carla
-            var combinacionCorrecta = new List<string> { "Nico", "Lucas", "Matias", "Carla" };
+            var combinacionCorrecta = new List<string> { "Matias", "Carla", "Nico", "Lucas" };
             bool esCorrecto = request.Nombres.SequenceEqual(combinacionCorrecta);
 
             if (esCorrecto)
             {
                 estadoPuzzle.EstaResuelto = true;
                 await _context.SaveChangesAsync();
-                // El mensaje de tu Imagen 4
                 return Ok(new { mensaje = "Al colocar la ultima pieza se escuha un ruido atronador, como grandes placas de piedra moviendose lentamente y raspandose entre si. La puerta se abre muy suavemente y se deja ver en su interior otra habitacion" });
             }
             else
@@ -437,14 +424,14 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             }
         }
 
+        // AGREGAMOS EL ID AL REQUEST
         public class SotanoIntentoRequest
         {
+            public int IdUsuario { get; set; }
             public List<string> Nombres { get; set; }
         }
 
 
-
-        // 1. Endpoint para OBTENER los movimientos actuales
         [HttpGet("{id}/movimientos")]
         public async Task<ActionResult<int>> GetMovimientos(int id)
         {
@@ -458,7 +445,6 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             return Ok(usuario.Movimientos);
         }
 
-        // 2. Endpoint para ACTUALIZAR los movimientos
         [HttpPut("{id}/movimientos")]
         public async Task<IActionResult> ActualizarMovimientos(int id, [FromBody] int nuevosMovimientos)
         {
@@ -469,20 +455,10 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                 return NotFound("Usuario no encontrado");
             }
 
-            // Actualizamos el valor
             usuario.Movimientos = nuevosMovimientos;
-
-            // Guardamos en la base de datos
             await _context.SaveChangesAsync();
 
             return Ok();
         }
-
-
-
     }
-
-
-
-
 }

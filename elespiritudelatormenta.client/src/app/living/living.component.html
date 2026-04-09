@@ -31,13 +31,37 @@
           <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-texto-transparente-libro">
 
           <div class="contenido-texto-libro">
-            <p *ngIf="documentoActual" class="texto-escritorio">
-              {{ documentoActual.texto }}
-            </p>
+            <ng-container *ngIf="documentoActual">
+              <p class="texto-escritorio">
+                {{ documentoActual.paginas[paginaActualIndex] }}
+              </p>
+
+              <div class="contenedor-flechas" *ngIf="documentoActual.paginas.length > 1">
+                <div class="espacio-flecha">
+                  <img *ngIf="paginaActualIndex > 0"
+                       src="/assets/flecha3.png"
+                       class="flecha-paginacion flecha-izq efecto-hover"
+                       (click)="paginaAnterior()">
+                </div>
+
+                <span class="numeracion-pagina">
+                  {{ paginaActualIndex + 1 }} / {{ documentoActual.paginas.length }}
+                </span>
+
+                <div class="espacio-flecha">
+                  <img *ngIf="paginaActualIndex < documentoActual.paginas.length - 1"
+                       src="/assets/flecha3.png"
+                       class="flecha-paginacion flecha-der efecto-hover"
+                       (click)="paginaSiguiente()">
+                </div>
+              </div>
+            </ng-container>
+
             <p *ngIf="!documentoActual" class="texto-escritorio" style="margin-top: 50px;">
               Seleccioná un papel del panel inferior.
             </p>
           </div>
+
         </div>
       </div>
 
@@ -62,7 +86,6 @@
       <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
 
       <div class="contenedor-lista-objetos">
-
         <div class="objeto-lista efecto-hover" (click)="abrirAcciones({nombre: 'Escritorio', descripcion: 'Un viejo escritorio de roble tallado, repleto de papeles sueltos y notas adhesivas.', esAgarrable: false}, 'especial')">
           - Escritorio
         </div>

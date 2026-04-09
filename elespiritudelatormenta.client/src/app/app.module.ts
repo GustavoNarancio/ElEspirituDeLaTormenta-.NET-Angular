@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms'; 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IntroComponent } from './intro/intro.component';
@@ -27,6 +27,7 @@ import { CatacumbasComponent } from './catacumbas/catacumbas.component';
 import { FinalSalidaPorLaPuertaComponent } from './final-salida-por-la-puerta/final-salida-por-la-puerta.component';
 import { CartelEventoComponent } from './cartel-evento/cartel-evento.component';
 import { FinalPorMovimientosComponent } from './final-por-movimientos/final-por-movimientos.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -53,11 +54,13 @@ import { FinalPorMovimientosComponent } from './final-por-movimientos/final-por-
     CatacumbasComponent,
     FinalSalidaPorLaPuertaComponent,
     CartelEventoComponent,
-    FinalPorMovimientosComponent
+    FinalPorMovimientosComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

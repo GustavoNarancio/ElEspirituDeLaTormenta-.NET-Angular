@@ -73,11 +73,11 @@ export class PuertaGarajeComponent implements OnInit {
   entrarAlGaraje() {
     this.eventosService.sumarAccion();
 
-    this.router.navigate(['/garaje']);
+    this.router.navigate(['/garaje'], { replaceUrl: true });
   }
   volverAlPasillo() {
     this.eventosService.sumarAccion();
 
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 }

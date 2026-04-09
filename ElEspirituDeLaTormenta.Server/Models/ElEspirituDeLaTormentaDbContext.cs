@@ -144,7 +144,7 @@ public partial class ElEspirituDeLaTormentaDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Usuarios__3214EC275610072D");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Contrasenia).HasMaxLength(100);
+           
             entity.Property(e => e.Nombre).HasMaxLength(100);
         });
 

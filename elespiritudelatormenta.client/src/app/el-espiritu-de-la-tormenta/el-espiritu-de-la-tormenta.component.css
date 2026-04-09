@@ -1,6 +1,4 @@
-/* el-espiritu-de-la-tormenta.component.css */
-
-/* --- 1. ESTRUCTURA DE LAYOUT ESTÁNDAR (Fija el fondo y centra la acción) --- */
+/* --- 1. ESTRUCTURA BASE --- */
 .contenedor-juego {
   height: 100vh;
   width: 100vw;
@@ -25,14 +23,14 @@
   background-repeat: no-repeat;
 }
 
-/* --- 2. CUADROS NARRATIVOS (Escenas de texto 0 y 1) --- */
-.cuadro-narrativo {
+/* --- 2. PANTALLAS DE NARRACIÓN Y MODALES --- */
+.cuadro-narrativo-centro, .cuadro-modal-centrado {
   position: absolute;
   width: 500px;
   height: 500px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Centrado absoluto perfecto dentro del área interactiva */
+  transform: translate(-50%, -50%);
   z-index: 100;
 }
 
@@ -46,13 +44,13 @@
   pointer-events: none;
 }
 
-.contenido-texto {
+.contenido-texto-narration, .contenido-texto-modal {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 60px 50px; /* Ajuste para que el texto no toque los bordes */
+  padding: 60px 50px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -60,37 +58,39 @@
   align-items: center;
 }
 
-.texto-historia {
+/* TEXTOS UNIFICADOS (Letra fina como pediste) */
+.texto-historia, .texto-error-modal, .texto-exito-final {
   font-family: 'Crimson Pro', Serif;
-  color: #E8DCC2; /* Color crema parchment */
-  font-size: 18px; /* Tamaño reducido para encajar texto intro */
+  color: #E8DCC2;
+  font-weight: normal; /* Aseguramos que no se ponga negrita */
   text-align: center;
   line-height: 1.5;
   text-shadow: 2px 2px 4px black;
   margin: 0;
 }
 
-/* Botones de acción dentro de los marcos narrativos */
-.boton-flecha {
-  position: absolute;
-  bottom: 40px;
-  right: 50px;
-  height: 35px; /* Compacta la flecha */
+.texto-historia {
+  font-size: 22px;
+}
+
+.texto-error-modal {
+  font-size: 24px;
+}
+
+.texto-exito-final {
+  font-size: 24px;
+}
+
+/* Botones de acción dentro de marcos */
+.imagen-accion-narracion, .imagen-accion-modal {
+  margin-top: 30px;
+  height: 30px;
   width: auto;
   cursor: pointer;
 }
 
-.boton-cerrar-img {
-  position: absolute;
-  bottom: 40px;
-  right: 50px;
-  height: 30px; /* Compacta el botón de cerrar */
-  width: auto;
-  cursor: pointer;
-}
-
-/* --- 3. INTERFAZ DE LA MOCHILA (Escena 2) --- */
-.interfaz-mochila {
+/* --- 3. INTERFAZ MOCHILA --- */
+.interfaz-mochila-sotano {
   position: absolute;
   top: 0;
   left: 0;
@@ -99,44 +99,45 @@
   z-index: 50;
 }
 
-/* Panel principal anclado abajo dentro del área interactiva */
-.panel-inventario {
+.contenedor-volver-arriba {
   position: absolute;
-  bottom: 2%; /* Anclado cerca del borde inferior del área de juego */
+  bottom: 31.5%;
+  right: 5%;
+  z-index: 150;
+}
+
+.imagen-boton-volver {
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+}
+
+.panel-inferior-sotano {
+  position: absolute;
+  bottom: 2%;
   left: 5%;
   width: 90%;
   height: 30%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Botón Volver Atrás relativo al área interactiva, anclado fuera del panel */
-.boton-volver-flotante {
+.fondo-marco-rect {
   position: absolute;
-  top: -40px; /* Justo arriba del borde del panel */
-  right: 20px;
-  font-family: 'Crimson Pro', Serif;
-  color: #B8673F; /* Cobre */
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid #C4A463; /* Dorado Viejo */
-  padding: 6px 18px;
-  background-color: rgba(0, 0, 0, 0.9);
-  text-transform: uppercase;
-}
-
-.fondo-panel {
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: fill;
-  position: absolute;
-  top: 0;
-  left: 0;
   pointer-events: none;
+  z-index: 10;
 }
 
-.contenido-inventario {
-  position: absolute;
-  top: 0;
-  left: 0;
+.contenido-panel-mochila {
+  position: relative;
+  z-index: 20;
   width: 100%;
   height: 100%;
   padding: 25px 60px;
@@ -146,133 +147,100 @@
   align-items: center;
 }
 
-.titulo-mochila {
+.titulo-mochila-centrado {
   font-family: 'Crimson Pro', Serif;
-  color: #C4A463; /* Dorado Viejo */
-  font-size: 22px;
+  color: #B8673F;
+  font-size: 26px;
   margin: 0 0 15px 0;
+  text-decoration: underline;
+  text-shadow: 2px 2px 4px black;
+  font-weight: normal;
 }
 
-.grilla-items {
+.contenedor-lista-objetos {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px 100px;
-  width: 80%;
-  justify-items: start;
+  align-content: start;
+  gap: 10px 20px;
 }
 
-.item-mochila {
+.objeto-lista {
   font-family: 'Crimson Pro', Serif;
-  color: #B8673F; /* Cobre */
-  font-size: 22px;
+  color: #E8DCC2;
+  font-size: 27px;
+  text-shadow: 2px 2px 4px black;
   cursor: pointer;
+  text-align: left;
+  transform-origin: left center;
 }
 
-/* --- 4. MINI MENÚ ([-usar]) --- */
-.mini-menu-usar {
+/* --- 4. MINI MENÚ --- */
+.mini-menu-acciones-sotano {
   position: absolute;
-  bottom: 31.5%; /* Arriba del panel de mochila */
+  bottom: 32%;
   left: 10%;
-  width: 220px; /* Tamaño clásico para que el marco no se rompa */
-  height: 140px;
-  z-index: 200;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 200px;
+  height: 120px;
+  z-index: 900;
 }
 
-.fondo-mini {
+.fondo-cuadrado {
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
   object-fit: fill;
-  pointer-events: none;
+  z-index: 10;
 }
 
-.contenido-mini {
+.contenido-acciones-mini {
   position: relative;
-  width: 85%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px;
-  z-index: 210;
-}
-
-.cerrar-x {
-  position: absolute;
-  top: -15px;
-  right: 5px;
-  font-family: 'Crimson Pro', Serif;
-  color: #B8673F;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.opcion-usar {
-  font-family: 'Crimson Pro', Serif;
-  color: #B8673F;
-  font-size: 22px;
-  cursor: pointer;
-  margin-top: 20px;
-  margin-left: 10px;
-}
-
-/* --- 5. CUADRO DE ERROR (Imagen 7) --- */
-.cuadro-error {
-  position: absolute;
-  width: 450px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Centrado absoluto perfecto */
-  z-index: 300;
-}
-
-.contenido-texto-error {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 40px;
+  align-items: flex-start;
+  padding-left: 30px;
   box-sizing: border-box;
+  z-index: 20;
 }
 
-.texto-error {
-  font-family: 'Crimson Pro', Serif;
-  color: #E8DCC2; /* Crema parchment */
-  font-size: 20px;
-  text-align: center;
-}
-
-.boton-cerrar-error {
+.cerrar-mini-esquina {
   position: absolute;
-  bottom: 25px;
-  right: 35px;
-  height: 30px;
+  top: 17px;
+  right: 15px;
+  height: 19px;
+  width: auto;
   cursor: pointer;
+  z-index: 30;
 }
 
-/* --- 6. EFECTOS REUTILIZABLES --- */
-.efecto-hover {
+.opcion-accion {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 24px;
   cursor: pointer;
-  transition: transform 0.2s, filter 0.2s, color 0.2s;
+  transform-origin: left center;
 }
 
-  .efecto-hover:hover {
-    color: #F2A840 !important; /* Ámbar claro para hover */
-    transform: scale(1.05);
-    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
-  }
+/* --- 5. PANTALLA DE BLOQUEO --- */
+.pantalla-bloqueo-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(18, 18, 18, 0.90);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-
+/* --- 6. PANTALLA NEGRA FINAL --- */
 .pantalla-negra-absoluta {
   position: absolute;
   top: 0;
@@ -280,11 +248,15 @@
   width: 100%;
   height: 100%;
   background-color: black;
-  z-index: 500;
+  z-index: 2000;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: fadeIn 2s ease-in-out;
+}
+
+/* ANIMACIÓN IMPORTADA DEL MAPA */
+.animacion-fade-lento {
+  animation: fadeInLento 4s ease-in-out forwards;
 }
 
 .titulo-entrar {
@@ -294,9 +266,28 @@
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  font-weight: normal;
 }
 
-@keyframes fadeIn {
+.contenedor-volver-final {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+}
+
+/* --- 7. EFECTOS Y KEYFRAMES --- */
+.efecto-hover {
+  transition: transform 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+  .efecto-hover:hover {
+    color: #F2A840 !important;
+    transform: scale(1.05);
+    filter: brightness(1.2) drop-shadow(0px 0px 10px rgba(242, 168, 64, 0.6));
+  }
+
+@keyframes fadeInLento {
   from {
     opacity: 0;
   }

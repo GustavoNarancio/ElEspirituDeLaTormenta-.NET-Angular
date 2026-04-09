@@ -1,36 +1,38 @@
-<img src="/assets/mochila.png" class="mochila-icon efecto-hover" (click)="abrirMochila()">
+<img src="/assets/mochila.png" class="mochila-icon efecto-hover" (click)="abrirMochila()" alt="Abrir Mochila">
 
 <div *ngIf="mostrarMochila" class="pantalla-mochila">
   <div class="contenedor-mochila-abierta">
-    <img src="/assets/mochilaAbierta.png" class="imagen-mochila-fondo">
+    <img src="/assets/mochilaAbierta.png" class="imagen-mochila-fondo" alt="Fondo Mochila">
 
     <div class="marco-inventario">
-      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente" alt="Marco">
 
       <div class="contenido-inventario">
+        <img src="/assets/Cerrar.png" class="boton-cerrar-mochila efecto-hover" (click)="cerrarMochila()" alt="Cerrar">
+
         <h3 class="titulo-inventario">Mochila</h3>
 
         <div class="lista-items-mochila">
-          <p *ngIf="itemsMochila.length === 0" class="texto-mochila-item">
+          <p *ngIf="itemsMochila.length === 0" class="texto-mochila-vacia">
             (La mochila está vacía)
           </p>
 
-          <div *ngFor="let item of itemsMochila" class="texto-mochila-item efecto-hover" (click)="abrirAcciones(item)">
-            - {{ item.nombre }}
+          <div class="grilla-objetos-mochila">
+            <div *ngFor="let item of itemsMochila" class="texto-mochila-item efecto-hover" (click)="abrirAcciones(item)">
+              - {{ item.nombre }}
+            </div>
           </div>
         </div>
 
-        <span class="boton-cerrar-mochila efecto-hover" (click)="cerrarMochila()">
-          [ CERRAR ]
-        </span>
       </div>
 
       <div *ngIf="mostrarMiniMenu" class="mini-menu-acciones">
-        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente" alt="Marco Mini">
         <div class="contenido-acciones">
+          <img src="/assets/x.png" class="cerrar-mini-esquina efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
+
           <div class="opcion-accion efecto-hover" (click)="devolverItem()">- Devolver</div>
           <div class="opcion-accion efecto-hover" (click)="verDescripcion()">- Ver Descripción</div>
-          <span class="cerrar-mini efecto-hover" (click)="cerrarMiniMenu()">[ X ]</span>
         </div>
       </div>
 
@@ -40,10 +42,10 @@
 
 <div *ngIf="mostrarLectura" class="pantalla-lectura">
   <div class="contenedor-lectura-central">
-    <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+    <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente" alt="Marco Descripción">
     <div class="contenido-texto-lectura">
       <p class="texto-descripcion-db">{{ itemSeleccionado?.descripcion }}</p>
-      <span class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()">[ VOLVER ]</span>
+      <img src="/assets/Volver.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Volver">
     </div>
   </div>
 </div>

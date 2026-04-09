@@ -1,0 +1,20 @@
+<div class="contenedor-juego">
+  <div class="area-interactiva fondo-login">
+
+    <div class="cuadro-login">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco" alt="Marco Login">
+
+      <div class="contenido-login">
+        <h2 class="label-input-login">INGRESA TU NOMBRE</h2>
+
+        <input type="text" [(ngModel)]="nombreJugador" class="input-nombre-dni" (keyup.enter)="ingresar()">
+
+        <p *ngIf="mensajeError" class="texto-error">{{ mensajeError }}</p>
+
+        <img src="/assets/iniciarJuego.png" class="boton-iniciar-img efecto-hover" (click)="ingresar()" alt="Iniciar Juego">
+      </div>
+    </div>
+
+  </div>
+</div>
+

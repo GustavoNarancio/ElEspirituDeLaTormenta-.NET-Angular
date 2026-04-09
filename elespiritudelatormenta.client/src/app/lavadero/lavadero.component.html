@@ -5,9 +5,7 @@
 
     <app-mochila></app-mochila>
 
-    <app-puzzle-fusibles *ngIf="mostrarPuzzleModal"
-                         (cerrar)="cerrarPuzzle()">
-    </app-puzzle-fusibles>
+    <app-puzzle-fusibles *ngIf="mostrarPuzzleModal" (cerrar)="cerrarPuzzle()"></app-puzzle-fusibles>
 
     <div class="menu-opciones">
       <span class="opcion-amarilla efecto-hover" (click)="alternarInspeccion()">Inspeccionar Objetos</span>
@@ -16,17 +14,34 @@
 
     <div *ngIf="mostrarDescripcion" class="pantalla-lectura">
       <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoLectura }}</p>
+          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarLectura()" alt="Volver">
+        </div>
+      </div>
+    </div>
 
+    <div *ngIf="mostrarNotaEspecial" class="pantalla-especial-overlay">
+      <div class="contenedor-lectura-central">
         <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
 
-        <div class="contenido-texto-lectura">
+        <img src="/assets/Cerrar.png" class="boton-cerrar-nota efecto-hover" (click)="cerrarNotaEspecial()" alt="Cerrar">
 
-          <p class="texto-descripcion-db">
-            {{ textoLectura }}
-          </p>
+        <div class="contenido-texto-libro">
+          <p class="texto-escritorio">{{ paginasNota[paginaActualIndex] }}</p>
 
-          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover"(click)="cerrarLectura()" alt="Volver">
-          
+          <div class="contenedor-flechas" *ngIf="paginasNota.length > 1">
+            <div class="espacio-flecha">
+              <img *ngIf="paginaActualIndex > 0" src="/assets/flecha3.png" class="flecha-paginacion flecha-izq efecto-hover" (click)="paginaAnterior()">
+            </div>
+
+            <span class="numeracion-pagina">{{ paginaActualIndex + 1 }} / {{ paginasNota.length }}</span>
+
+            <div class="espacio-flecha">
+              <img *ngIf="paginaActualIndex < paginasNota.length - 1" src="/assets/flecha3.png" class="flecha-paginacion flecha-der efecto-hover" (click)="paginaSiguiente()">
+            </div>
+          </div>
         </div>
 
       </div>
@@ -34,10 +49,14 @@
 
     <div *ngIf="mostrarMenuInspeccion" class="panel-inferior">
       <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
-
       <img src="/assets/Cerrar.png" class="boton-cerrar efecto-hover" (click)="alternarInspeccion()" alt="Cerrar">
 
       <div class="contenedor-lista-objetos">
+
+        <div class="objeto-lista" (click)="abrirAcciones({nombre: 'Nota del abuelo', esInteractuableEspecial: true}, 'especial')">
+          - Nota arrugada
+        </div>
+
         <div *ngFor="let obj of listaDeObjetosDB" class="objeto-lista" (click)="abrirAcciones(obj, 'objeto')">
           - {{ obj.nombre }}
         </div>
@@ -48,18 +67,21 @@
 
       <div *ngIf="mostrarMiniMenu" class="mini-menu-acciones">
         <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
-
         <div class="contenido-acciones">
+
+          <div class="opcion-accion efecto-hover" *ngIf="itemSeleccionado?.esInteractuableEspecial" (click)="abrirNotaEspecial()">
+            - Leer 
+          </div>
 
           <div class="opcion-accion efecto-hover" *ngIf="esPuzzle" (click)="interactuar()">
             - Interactuar
           </div>
 
-          <div class="opcion-accion efecto-hover" *ngIf="!esPuzzle && itemSeleccionado?.esAgarrable" (click)="guardarItem()">
+          <div class="opcion-accion efecto-hover" *ngIf="!itemSeleccionado?.esInteractuableEspecial && !esPuzzle && itemSeleccionado?.esAgarrable" (click)="guardarItem()">
             - Guardar en Mochila
           </div>
 
-          <div class="opcion-accion efecto-hover" (click)="verDescripcion()">
+          <div class="opcion-accion efecto-hover" *ngIf="!itemSeleccionado?.esInteractuableEspecial" (click)="verDescripcion()">
             - Ver Descripción
           </div>
 

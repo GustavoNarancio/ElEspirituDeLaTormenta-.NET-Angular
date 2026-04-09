@@ -1,5 +1,6 @@
 <div class="contenedor-juego">
   <div class="area-interactiva cocina-fondo">
+    <h1 class="titulo-habitacion">Cocina</h1>
 
     <app-mochila></app-mochila>
 
@@ -73,7 +74,7 @@
       <div class="contenedor-lista-objetos">
         <ng-container *ngIf="!viendoCajon">
           <div class="objeto-lista" (click)="abrirCajon()">- Revisar Cajón</div>
-          <div class="objeto-lista" (click)="abrirAcciones({nombre: 'Librería', descripcion: 'La estanteria, aunque firme, muestran señales de desgaste debido al paso del tiempo y de la fuerte humedad del lugar.', esAgarrable: false}, 'libreria')">
+          <div class="objeto-lista" (click)="abrirAcciones({nombre: 'Librería', descripcion: 'La estanteria, aunque firme, muestra señales de desgaste debido al paso del tiempo y de la fuerte humedad del lugar.', esAgarrable: false}, 'libreria')">
             - Librería
           </div>
           <div *ngFor="let obj of objetosPrincipales" class="objeto-lista" (click)="abrirAcciones(obj, 'objeto')">

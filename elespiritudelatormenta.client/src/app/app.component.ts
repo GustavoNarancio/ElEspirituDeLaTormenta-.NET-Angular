@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { EventosGlobalesService } from './services/eventos-globales.service'; // Revisá que la ruta coincida
+import { Component, OnInit, HostListener } from '@angular/core';
+import { EventosGlobalesService } from './services/eventos-globales.service';
+import { AudioService } from './services/audio.service'; // <-- Importamos el audio
 
 @Component({
   selector: 'app-root',
@@ -9,20 +10,35 @@ import { EventosGlobalesService } from './services/eventos-globales.service'; //
 export class AppComponent implements OnInit {
   title = 'ElespiritudelatormentaClient';
 
-  // NUEVA VARIABLE: Guarda el texto de la alerta
+  // Variable para la mochila
   mensajeAlerta: string | null = null;
 
-  constructor(private eventosService: EventosGlobalesService) { }
+  // Variable para que la música no le dé Play mil veces
+  musicaIniciada: boolean = false;
+
+  // Inyectamos los DOS servicios acá
+  constructor(
+    private eventosService: EventosGlobalesService,
+    private audioService: AudioService
+  ) { }
 
   ngOnInit() {
-    // Al cargar la app (o tocar F5), recuperamos el contador de la DB
+    // Lógica de tu mochila y contador (Intacta)
     this.eventosService.inicializarContador();
 
-    // NUEVO: Escuchamos el canal de alertas de la mochila
     this.eventosService.alertaMochila.subscribe(msj => {
       this.mensajeAlerta = msj;
-      // Borramos la alerta automáticamente a los 3 segundos (3000 milisegundos)
       setTimeout(() => this.mensajeAlerta = null, 3000);
     });
   }
+
+  // Escuchador global de clicks para la música
+  @HostListener('document:click')
+  arrancarMusicaGlobal() {
+    if (!this.musicaIniciada && localStorage.getItem('idUsuarioActual')) {
+      this.audioService.reproducirMusica();
+      this.musicaIniciada = true;
+    }
+  }
 }
+

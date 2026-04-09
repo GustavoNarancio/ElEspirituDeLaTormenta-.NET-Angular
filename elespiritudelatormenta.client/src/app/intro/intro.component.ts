@@ -49,7 +49,7 @@ export class IntroComponent implements OnInit {
     "Su investigación se prolongó durante años, hasta que, " +
     "repentinamente, Thaddeus Tolder desapareció sin dejar rastro. Sus cartas " +
     "dejaron de llegar y nadie supo más de él. Las autoridades investigaron, pero el " +
-    "caso fue cerrado rápidamente por falta de pistas.\n\n" +
+    "caso fue cerrado rápidamente por falta de pruebas.\n\n" +
     "O al menos, eso es lo que le dijeron a la prensa.";
 
   private textoPrologoPag3: string = "Poco antes de esfumarse, mi abuelo me envió una carta que " +

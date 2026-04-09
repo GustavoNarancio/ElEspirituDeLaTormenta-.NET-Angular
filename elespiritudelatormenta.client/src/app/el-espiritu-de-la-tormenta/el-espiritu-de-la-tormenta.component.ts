@@ -2,14 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { EventosGlobalesService } from '../services/eventos-globales.service';
+
 @Component({
   selector: 'app-el-espiritu-de-la-tormenta',
   templateUrl: './el-espiritu-de-la-tormenta.component.html',
-  styleUrls: ['./el-espiritu-de-la-tormenta.component.css']
+  styleUrl: './el-espiritu-de-la-tormenta.component.css'
 })
 export class ElEspirituDeLaTormentaComponent implements OnInit {
 
-  // 0: Primer texto (Imagen 4), 1: Segundo texto (Imagen 5), 2: Juego/Mochila (Imagen 6)
+  // --- MÁQUINA DE ESTADOS DE ESCENAS ---
+  // 0: Intro Pag 1
+  // 1: Intro Pag 2
+  // 2: Intro Pag 3
+  // 3: Interfaz Mochila/Juego
+  // 4: Texto Éxito Amuleto - PARTE 1 (Flecha)
+  // 5: Texto Éxito Amuleto - PARTE 2 (Cerrar)
+  // 6: Pantalla Negra Final con animación
   escena: number = 0;
 
   inventarioUsuario: any[] = [];
@@ -18,11 +26,9 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
   mostrarMiniMenu: boolean = false;
   mostrarErrorRanura: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService
-) { }
+  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
 
   ngOnInit(): void {
-    // Cargamos la mochila del usuario 1
     this.apiService.getInventario(1).subscribe(datos => {
       this.inventarioUsuario = datos;
     });
@@ -30,9 +36,11 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
 
   avanzarEscena() {
     this.escena++;
+    this.cerrarMiniMenu();
   }
 
   abrirMiniMenu(item: any) {
+    if (this.mostrarErrorRanura) return;
     this.itemSeleccionado = item;
     this.mostrarMiniMenu = true;
   }
@@ -45,22 +53,12 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
   usarObjeto() {
     this.mostrarMiniMenu = false;
     this.eventosService.sumarAccion();
-    // Verificamos si es el Amuleto
+
     if (this.itemSeleccionado.id === 1015 || this.itemSeleccionado.Id === 1015) {
-      this.escena = 3; // Pasamos a la escena de éxito del amuleto
+      this.escena = 4; // Éxito Parte 1
     } else {
-      this.mostrarErrorRanura = true;
+      this.mostrarErrorRanura = true; // Error modal
     }
-  }
-
-  // Nueva función para cuando tocás "CERRAR" en el texto de éxito
-  cerrarExitoAmuleto() {
-    this.escena = 4;
-  }
-
-  // Nueva función para ir a las catacumbas
-  irACatacumbas() {
-    this.router.navigate(['/catacumbas']); // Asegurate de que esta ruta exista en app-routing.module.ts
   }
 
   cerrarError() {
@@ -68,15 +66,20 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
     this.itemSeleccionado = null;
   }
 
+  cerrarExitoAmuleto() {
+    this.escena = 6; // Pantalla final animada
+  }
+
+  irACatacumbas() {
+    this.router.navigate(['/catacumbas'], { replaceUrl: true });
+  }
+
   volverAtras() {
     this.eventosService.sumarAccion();
-
-    this.router.navigate(['/sotano']);
+    this.router.navigate(['/sotano'], { replaceUrl: true });
   }
 
-  // Nueva función para volver a la puerta desde la pantalla negra
   volverDePantallaNegra() {
-    this.escena = 2; // Vuelve a la escena de la mochila
+    this.escena = 3; // Regresa a la interfaz normal
   }
-
 }

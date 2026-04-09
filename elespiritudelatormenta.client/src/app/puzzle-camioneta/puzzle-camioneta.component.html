@@ -1,10 +1,10 @@
 <div class="modal-puzzle-container">
 
-  <img src="/assets/Cerrar.png" class="boton-cerrar-global efecto-hover" (click)="clickCerrarGlobal()" alt="Cerrar">
+  <img *ngIf="estado !== 'resultado' && estado !== 'roto'" src="/assets/Cerrar.png" class="boton-cerrar-global efecto-hover" (click)="clickCerrarGlobal()" alt="Cerrar">
 
   <img src="/assets/Camioneta.png" class="imagen-camioneta" alt="Camioneta">
 
-  <div class="pantalla-lectura">
+  <div *ngIf="estado === 'intro' || estado === 'confirmacion' || estado === 'errorItem'" class="pantalla-lectura">
     <div class="contenedor-lectura-central">
       <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
 
@@ -16,7 +16,12 @@
         </div>
 
         <div *ngIf="estado === 'confirmacion'" class="contenedor-botones-centro fila-botones-separados">
-          <span class="btn-texto-arreglar efecto-hover" (click)="confirmarArreglo()">ARREGLARLO</span>
+          <span class="btn-texto-arreglar efecto-hover"
+                (click)="confirmarArreglo()"
+                style="color: #5CC4A6;">
+            ARREGLARLO
+          </span>
+
           <img src="/assets/Volver.png" class="btn-imagen-chica efecto-hover" (click)="volverAIntro()" alt="Volver">
         </div>
 
@@ -24,7 +29,7 @@
     </div>
   </div>
 
-  <div *ngIf="estado === 'intro' || estado === 'roto'" class="panel-inferior">
+  <div *ngIf="estado === 'intro'" class="panel-inferior">
     <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-marco">
 
     <div class="contenido-panel">
@@ -44,6 +49,16 @@
       <div class="contenido-mini">
         <img src="/assets/x.png" class="cerrar-mini-esquina efecto-hover" (click)="cerrarMiniMenu()" alt="Cerrar">
         <span class="opcion-usar efecto-hover" (click)="usarItem()">- Usar</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="estado === 'resultado' || estado === 'roto'" class="modal-aviso-overlay">
+    <div class="modal-aviso-caja">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-absoluto">
+      <div class="contenido-aviso">
+        <p class="texto-aviso">{{ textoCentral }}</p>
+        <img src="/assets/Cerrar.png" class="cerrar-aviso-img efecto-hover" (click)="clickCerrarGlobal()" alt="Cerrar">
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@
 /* --- BOTÓN VOLVER (SOLO LA IMAGEN) --- */
 .contenedor-volver {
   position: absolute;
-  bottom: 33%;
+  bottom: 31.2%;
   right: 5%;
   z-index: 150;
 }

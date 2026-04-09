@@ -196,6 +196,6 @@ export class DormitorioComponent implements OnInit {
 
   volver() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 }

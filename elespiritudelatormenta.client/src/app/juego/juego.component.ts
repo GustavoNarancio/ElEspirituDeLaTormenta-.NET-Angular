@@ -15,6 +15,7 @@ export class JuegoComponent implements OnInit {
   mostrarDescripcion: boolean = false;
 
   // 2. Variables para textos/ítems (Estructura base, vacía por ahora)
+  // 2. Variables para textos/ítems (Estructura base, vacía por ahora)
   textoLectura: string = '';
   itemSeleccionado: any = null;
   listaDeObjetosDB: any[] = []; // Si el pasillo tiene objetos, los cargaremos luego

@@ -9,7 +9,7 @@ public partial class Usuarios
 
     public string Nombre { get; set; } = null!;
 
-    public string Contrasenia { get; set; } = null!;
+   
 
     public int Movimientos { get; set; } // Agregamos esta línea
 

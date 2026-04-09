@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service'; // Importamos el ApiService
 
 @Component({
   selector: 'app-agradecimiento',
@@ -18,7 +19,7 @@ export class AgradecimientoComponent implements OnInit {
     "También espero que hayas cuidado bien de Arlen Tolder, es solo un aventurero en busca de respuestas, como todos.\n\n" +
     "Gustavo \"Huesos\" Narancio.";
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
     // Iniciamos la secuencia de agradecimiento
@@ -39,7 +40,23 @@ export class AgradecimientoComponent implements OnInit {
     }, 30); // Un poquito más lento que la intro para darle peso emocional
   }
 
-  volverAlMenu() {
-    this.router.navigate(['/']); // O la ruta de tu menú principal
+  // --- NUEVA LÓGICA DE DESTRUCCIÓN DE PARTIDA ---
+  reiniciarJuego() {
+    // 1. Le pedimos a C# que borre todo nuestro progreso en la Base de Datos
+    this.apiService.borrarPartidaActual().subscribe({
+      next: () => {
+        // 2. Borramos el "DNI" de la memoria del navegador
+        localStorage.removeItem('idUsuarioActual');
+
+        // 3. Lo mandamos al Login de nuevo, limpiando el historial
+        this.router.navigate(['/login'], { replaceUrl: true });
+      },
+      error: (err) => {
+        console.error("Error al borrar la partida en la DB", err);
+        // Fallback: Si falla el backend, igual borramos la sesión local para que el jugador no quede atrapado
+        localStorage.removeItem('idUsuarioActual');
+        this.router.navigate(['/login'], { replaceUrl: true });
+      }
+    });
   }
 }

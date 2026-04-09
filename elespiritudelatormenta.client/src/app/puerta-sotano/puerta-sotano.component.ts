@@ -93,11 +93,11 @@ export class PuertaSotanoComponent implements OnInit {
 
   entrarAlSotano() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/sotano']);
+    this.router.navigate(['/sotano'], { replaceUrl: true });
   }
 
   volverAlPasillo() {
     this.eventosService.sumarAccion();
-    this.router.navigate(['/pasillo']);
+    this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 }
