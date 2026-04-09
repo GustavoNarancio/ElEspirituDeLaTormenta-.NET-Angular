@@ -170,13 +170,13 @@ export class SotanoComponent implements OnInit {
     this.mostrarPuzzleModal = true;
   }
 
-  manejarPuzzleRoto(mensaje: string) {
+  manejarPuzzleRoto(mensaje: any) {
     this.mostrarPuzzleModal = false;
     this.itemSeleccionado = null;
     this.verificarLuzYCargarDatos();
   }
 
-  manejarPuzzleResuelto(mensaje: string) {
+  manejarPuzzleResuelto(mensaje: any) {
     this.mostrarPuzzleModal = false;
     this.itemSeleccionado = null;
     this.verificarLuzYCargarDatos();
