@@ -360,9 +360,9 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                 estado.Roto = true;
                 mensajeResultado = request.IdObjeto switch
                 {
-                    1012 => "Desconectás la batería y colocás la nueva, pero algo no se siente bien.\r\nAl ajustar los bornes, una chispa salta de forma inesperada.\r\nCuando intentás arrancar, no hay respuesta… ni siquiera un intento.\r\nEl sistema eléctrico parece haber quedado completamente muerto\r\n",
-                    1013 => "Revisás la caja de fusibles y encontrás uno dañado.\r\nComparás con otro similar y colocás uno que parece coincidir… aunque el amperaje no es exactamente el mismo.\r\nEl tablero parpadea una vez… y se apaga por completo.\r\nAlgo se dañó en el circuito\r\n",
-                    1014 => "Manipulás el motor con la llave de tubo. Sentís que algo cede... demasiado. Al intentar arrancar, el motor ya no responde en absoluto.",
+                    25 => "Desconectás la batería y colocás la nueva, pero algo no se siente bien.\r\nAl ajustar los bornes, una chispa salta de forma inesperada.\r\nCuando intentás arrancar, no hay respuesta… ni siquiera un intento.\r\nEl sistema eléctrico parece haber quedado completamente muerto\r\n",
+                    26 => "Revisás la caja de fusibles y encontrás uno dañado.\r\nComparás con otro similar y colocás uno que parece coincidir… aunque el amperaje no es exactamente el mismo.\r\nEl tablero parpadea una vez… y se apaga por completo.\r\nAlgo se dañó en el circuito\r\n",
+                    27 => "Manipulás el motor con la llave de tubo. Sentís que algo cede... demasiado. Al intentar arrancar, el motor ya no responde en absoluto.",
                     _ => "Hiciste algo mal y la camioneta se terminó de romper."
                 };
             }

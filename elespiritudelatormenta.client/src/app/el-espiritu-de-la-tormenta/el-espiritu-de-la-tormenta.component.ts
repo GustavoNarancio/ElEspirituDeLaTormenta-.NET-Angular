@@ -57,7 +57,7 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
     this.mostrarMiniMenu = false;
     this.eventosService.sumarAccion();
 
-    if (this.itemSeleccionado.id === 1015 || this.itemSeleccionado.Id === 1015) {
+    if (this.itemSeleccionado.id === 20 || this.itemSeleccionado.Id === 20) {
       this.escena = 4; // Éxito Parte 1
     } else {
       this.mostrarErrorRanura = true; // Error modal
