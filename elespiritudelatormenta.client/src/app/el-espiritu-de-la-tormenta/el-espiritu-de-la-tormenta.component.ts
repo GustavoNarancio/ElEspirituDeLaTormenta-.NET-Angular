@@ -27,9 +27,12 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
   mostrarErrorRanura: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
-
   ngOnInit(): void {
-    this.apiService.getInventario(1).subscribe(datos => {
+    // --- LEYENDO EL ID EXACTO DE TU LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
+    this.apiService.getInventario(idUsuarioActual).subscribe(datos => {
       this.inventarioUsuario = datos;
     });
   }

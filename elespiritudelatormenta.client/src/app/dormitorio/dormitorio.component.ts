@@ -39,7 +39,10 @@ export class DormitorioComponent implements OnInit {
 
   cargarDatosDelDormitorio() {
     const idHabitacion = 4;
-    const idUsuarioActual = 1;
+
+    // --- LEYENDO EL ID EXACTO DE TU LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
     this.apiService.getObjetos(idHabitacion).subscribe(datos => this.listaDeObjetosDB = datos);
     this.apiService.getPuzzles(idHabitacion).subscribe(datos => this.listaDePuzzlesDB = datos);

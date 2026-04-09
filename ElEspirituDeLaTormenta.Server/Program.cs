@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
         {
             // Aca pones la URL exacta que te dio Vercel (sin la barra / al final)
             // Tambien dejamos el localhost por si queres seguir probando en tu PC
-            policy.WithOrigins("http://localhost:4200", "https://tu-juego-real.vercel.app")
+            policy.WithOrigins("http://localhost:4200", "https://el-espiritu-de-la-tormenta-net-angu-seven.vercel.app/")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });

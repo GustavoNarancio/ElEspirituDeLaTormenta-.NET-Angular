@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { EventosGlobalesService } from '../services/eventos-globales.service';
+
 @Component({
   selector: 'app-mochila',
   templateUrl: './mochila.component.html',
@@ -15,8 +16,7 @@ export class MochilaComponent {
   mostrarMiniMenu: boolean = false;
   mostrarLectura: boolean = false;
 
-  constructor(private apiService: ApiService, private eventosService: EventosGlobalesService
- ) { }
+  constructor(private apiService: ApiService, private eventosService: EventosGlobalesService) { }
 
   abrirMochila() {
     this.mostrarMochila = true;
@@ -30,7 +30,10 @@ export class MochilaComponent {
   }
 
   cargarObjetosDeLaMochila() {
-    const idUsuarioActual = 1;
+    // --- LEYENDO EL ID EXACTO DEL LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
     this.apiService.getInventario(idUsuarioActual).subscribe({
       next: (datos) => this.itemsMochila = datos,
       error: (err) => console.error('Error:', err)
@@ -58,7 +61,10 @@ export class MochilaComponent {
 
   devolverItem() {
     if (!this.itemSeleccionado) return;
-    const idUsuarioActual = 1;
+
+    // --- LEYENDO EL ID EXACTO DEL LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
     this.apiService.devolverObjeto(idUsuarioActual, this.itemSeleccionado.id).subscribe({
       next: () => {
