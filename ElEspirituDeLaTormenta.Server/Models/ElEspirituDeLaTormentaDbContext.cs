@@ -31,8 +31,8 @@ public partial class ElEspirituDeLaTormentaDbContext : DbContext
 
     public virtual DbSet<PuzzleCamioneta> PuzzleCamioneta { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql("Name=ConnectionStrings:DefaultConnection");
+  
+  
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
