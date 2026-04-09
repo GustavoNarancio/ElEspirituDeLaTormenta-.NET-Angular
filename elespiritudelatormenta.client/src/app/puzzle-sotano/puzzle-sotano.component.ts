@@ -1,101 +1,107 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ApiService } from '../services/api.service';
-import { EventosGlobalesService } from '../services/eventos-globales.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ApiService } from '../services/api.service'; // Ajustá la ruta de tu servicio
 
 @Component({
-  selector: 'app-puerta-sotano',
-  templateUrl: './puerta-sotano.component.html',
-  styleUrls: ['./puerta-sotano.component.css']
+  selector: 'app-puzzle-sotano',
+  templateUrl: './puzzle-sotano.component.html',
+  styleUrls: ['./puzzle-sotano.component.css']
 })
-export class PuertaSotanoComponent implements OnInit {
-  mostrarMiniMenu: boolean = false;
-  mostrarDescripcion: boolean = true;
-  puzzleResuelto: boolean = false;
+export class PuzzleSotanoComponent {
 
-  paginasTexto: string[] = ['La puerta es maciza. El candado es enorme y no tengo la llave, pero parece que la traba que lo sostiene está muy oxidada y gastada'];
-  paginaActual: number = 0;
-  textoLectura: string = this.paginasTexto[0];
+  // ---> LA ÚNICA MODIFICACIÓN: Le puse 'any' para que Vercel no rompa
+  @Input() puzzleId: any;
 
-  itemSeleccionado: any = null;
-  inventarioUsuario: any[] = [];
+  @Output() cerrar = new EventEmitter<void>();
+  @Output() resuelto = new EventEmitter<string>();
+  @Output() roto = new EventEmitter<string>();
 
-  readonly ID_HACHA = 1;
-  readonly ID_PUZZLE_SOTANO = 5;
+  // Estados: 0 = Intro, 1 = Puzzle UI, 2 = Mensaje Final
+  estadoPantalla: number = 0;
+  mensajeFinal: string = "";
 
-  constructor(
-    private router: Router,
-    private apiService: ApiService,
-    private eventosService: EventosGlobalesService
-  ) { }
+  // Datos de las piezas
+  piezasDisponibles = [
+    { nombre: 'Lucas', img: '/assets/Lucas.png' },
+    { nombre: 'Carla', img: '/assets/Carla.png' },
+    { nombre: 'Nico', img: '/assets/Nico.png' },
+    { nombre: 'Matias', img: '/assets/Matias.png' }
+  ];
 
-  ngOnInit(): void {
-    this.cargarInventario();
+  // Las 4 ranuras (null significa vacía)
+  ranuras: any[] = [null, null, null, null];
+
+  mostrarMiniMenuNombres: boolean = false;
+  ranuraSeleccionadaIndex: number = -1;
+
+  constructor(private apiService: ApiService) { }
+
+  comenzarPuzzle() {
+    this.estadoPantalla = 1;
   }
 
-  cargarInventario() {
-    // --- NUEVO: Leemos el ID exacto de tu login ---
-    const usuarioStorage = localStorage.getItem('idUsuarioActual');
-    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
-
-    this.apiService.getInventario(idUsuarioActual).subscribe(datos => {
-      this.inventarioUsuario = datos;
-    });
+  abrirOpcionesRanura(index: number) {
+    // Si ya hay una pieza en la ranura, la devolvemos a disponibles
+    if (this.ranuras[index] != null) {
+      this.piezasDisponibles.push(this.ranuras[index]);
+      this.ranuras[index] = null;
+    }
+    this.ranuraSeleccionadaIndex = index;
+    this.mostrarMiniMenuNombres = true;
   }
 
-  abrirAcciones(item: any) {
-    this.itemSeleccionado = item;
-    this.mostrarMiniMenu = true;
+  seleccionarPieza(pieza: any) {
+    // Ponemos la pieza en la ranura
+    this.ranuras[this.ranuraSeleccionadaIndex] = pieza;
+    // La sacamos de la lista de disponibles
+    this.piezasDisponibles = this.piezasDisponibles.filter(p => p.nombre !== pieza.nombre);
+    this.mostrarMiniMenuNombres = false;
+
+    // ELIMINAMOS el código que llamaba a enviarCombinacionAlBackend() automáticamente
   }
 
-  cerrarMiniMenu() {
-    this.mostrarMiniMenu = false;
-    this.itemSeleccionado = null;
+  // --- NUEVAS FUNCIONES PARA EL BOTÓN ---
+
+  estanTodasLlenas(): boolean {
+    // Devuelve true solo si no hay ningún null en el arreglo
+    return this.ranuras.every(r => r !== null);
   }
 
-  cerrarLectura() {
-    this.mostrarDescripcion = false;
-  }
-
-  procesarTextoLectura(textoRaw: string) {
-    this.paginasTexto = textoRaw.split('||');
-    this.paginaActual = 0;
-    this.textoLectura = this.paginasTexto[this.paginaActual];
-    this.mostrarDescripcion = true;
-  }
-
-  avanzarPagina() {
-    if (this.paginaActual < this.paginasTexto.length - 1) {
-      this.paginaActual++;
-      this.textoLectura = this.paginasTexto[this.paginaActual];
+  probarCombinacion() {
+    if (this.estanTodasLlenas()) {
+      this.enviarCombinacionAlBackend();
     }
   }
 
-  usarItem() {
-    if (!this.itemSeleccionado) return;
-    this.eventosService.sumarAccion();
+  cerrarMiniMenu() {
+    this.mostrarMiniMenuNombres = false;
+  }
 
-    this.apiService.intentarLlave(this.ID_PUZZLE_SOTANO, this.itemSeleccionado.id).subscribe({
-      next: (res) => {
-        this.puzzleResuelto = true;
-        this.procesarTextoLectura(res.mensaje);
-        this.mostrarMiniMenu = false;
+  enviarCombinacionAlBackend() {
+    const nombresSeleccionados = this.ranuras.map(r => r.nombre);
+
+    // Llamada al endpoint que creamos en el Paso 1
+    // (Asegurate de tener este método postIntentoSotano en tu apiService)
+    this.apiService.postIntentoSotano(this.puzzleId, nombresSeleccionados).subscribe({
+      next: (res: any) => {
+        this.mensajeFinal = res.mensaje;
+        this.estadoPantalla = 2; // Éxito (Imagen 4)
       },
-      error: (err) => {
-        const msjError = err.error.mensaje || "No puedo abrir la puerta con eso.";
-        this.procesarTextoLectura(msjError);
-        this.mostrarMiniMenu = false;
+      error: (err: any) => {
+        this.mensajeFinal = err.error.mensaje || "El mecanismo se rompió.";
+        this.estadoPantalla = 3; // Roto
       }
     });
   }
 
-  entrarAlSotano() {
-    this.eventosService.sumarAccion();
-    this.router.navigate(['/sotano'], { replaceUrl: true });
+  continuarFinal() {
+    if (this.estadoPantalla === 2) {
+      this.resuelto.emit(this.mensajeFinal);
+    } else {
+      this.roto.emit(this.mensajeFinal);
+    }
   }
 
-  volverAlPasillo() {
-    this.eventosService.sumarAccion();
-    this.router.navigate(['/pasillo'], { replaceUrl: true });
+  cancelar() {
+    this.cerrar.emit();
   }
 }
