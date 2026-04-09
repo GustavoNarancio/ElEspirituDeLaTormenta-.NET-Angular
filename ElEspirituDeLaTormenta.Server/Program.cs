@@ -17,14 +17,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // Configuración de CORS
+// Configuración de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("PermitirVercel",
         policy =>
         {
-            // Aca pones la URL exacta que te dio Vercel (sin la barra / al final)
-            // Tambien dejamos el localhost por si queres seguir probando en tu PC
-            policy.WithOrigins("http://localhost:4200", "https://el-espiritu-de-la-tormenta-net-angu-seven.vercel.app")
+            policy.AllowAnyOrigin()  // <-- ESTA ES LA MAGIA: Deja entrar a cualquier URL
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
