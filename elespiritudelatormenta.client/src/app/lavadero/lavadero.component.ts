@@ -88,6 +88,7 @@ export class LavaderoComponent implements OnInit {
 
   // --- LÓGICA DE LA NOTA PAGINADA ---
   abrirNotaEspecial() {
+    this.eventosService.sumarAccion();
     this.mostrarNotaEspecial = true;
     this.mostrarMenuInspeccion = false;
     this.cerrarMiniMenu();

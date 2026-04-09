@@ -408,8 +408,13 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             if (estadoPuzzle.EstaResuelto)
                 return Ok(new { mensaje = "La puerta ya está abierta." });
 
-            var combinacionCorrecta = new List<string> { "Matias", "Carla", "Nico", "Lucas" };
-            bool esCorrecto = request.Nombres.SequenceEqual(combinacionCorrecta);
+            // --- ACÁ EMPIEZAN LOS CAMBIOS ---
+            var combinacion1 = new List<string> { "Matias", "Carla", "Nico", "Lucas" };
+            var combinacion2 = new List<string> { "Nico", "Lucas", "Matias", "Carla" }; // La combinación nueva
+
+            // Evaluamos si coincide con la 1 O (||) con la 2
+            bool esCorrecto = request.Nombres.SequenceEqual(combinacion1) || request.Nombres.SequenceEqual(combinacion2);
+            // --- ACÁ TERMINAN LOS CAMBIOS ---
 
             if (esCorrecto)
             {

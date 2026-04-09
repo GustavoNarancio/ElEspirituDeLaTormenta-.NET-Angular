@@ -34,7 +34,6 @@ export class SotanoComponent implements OnInit {
       this.verificarLuzYCargarDatos();
     });
   }
-
   verificarLuzYCargarDatos() {
     const idHabitacionSotano = 7;
     const idHabitacionFusibles = 1;
@@ -65,10 +64,12 @@ export class SotanoComponent implements OnInit {
           return p;
         });
 
-        const mecanismo = this.listaDePuzzlesDB.find(p => p.id === 7 || p.Id === 7);
+        // --- FIX: AHORA SÍ BUSCA EL 6 ---
+        const mecanismo = this.listaDePuzzlesDB.find(p => p.id === 6 || p.Id === 6);
 
         if (mecanismo && (mecanismo.resuelto || mecanismo.Resuelto)) {
-          this.listaDePuzzlesDB = this.listaDePuzzlesDB.filter(p => p.id !== 7 && p.Id !== 7);
+          // --- FIX: AHORA SÍ BORRA EL 6 ---
+          this.listaDePuzzlesDB = this.listaDePuzzlesDB.filter(p => p.id !== 6 && p.Id !== 6);
 
           const yaTieneEntrar = this.listaDeObjetosDB.find(o => o.EsNavegacion === true);
 
@@ -88,6 +89,7 @@ export class SotanoComponent implements OnInit {
 
     this.apiService.getInventario(idUsuarioActual).subscribe(datos => this.inventarioUsuario = datos);
   }
+  
 
   abrirAcciones(item: any, tipo: 'objeto' | 'puzzle') {
     if (item.EsNavegacion) {
