@@ -1,13 +1,7 @@
 using ElEspirituDeLaTormenta.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
-
-
-
-
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddDbContext<ElEspirituDeLaTormentaDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
