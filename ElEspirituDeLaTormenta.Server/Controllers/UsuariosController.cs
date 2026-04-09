@@ -47,7 +47,7 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             var amuletoInicial = new Inventario
             {
                 Idusuario = nuevoUsuario.Id,
-                Idobjeto = 1015
+                Idobjeto = 20
             };
             _context.Inventario.Add(amuletoInicial);
             await _context.SaveChangesAsync();
