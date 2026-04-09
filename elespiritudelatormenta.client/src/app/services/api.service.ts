@@ -8,7 +8,7 @@ import { Observable, of, Subject } from 'rxjs';
 export class ApiService {
 
   // URL base para tu servidor .NET
-  private baseUrl = '/api';
+  private baseUrl = 'https://elespiritudelatormenta-net-angular-production.up.railway.app/api';
 
   private inventarioCambioSource = new Subject<void>();
   inventarioCambio$ = this.inventarioCambioSource.asObservable();
