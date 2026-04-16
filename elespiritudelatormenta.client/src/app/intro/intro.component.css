@@ -1,5 +1,3 @@
-/* intro.component.css */
-
 /* --- 1. ESTRUCTURA BASE (La clásica del contenedor cuadrado) --- */
 .contenedor-juego {
   height: 100vh;
@@ -131,4 +129,70 @@
   to {
     opacity: 1;
   }
+}
+
+/* --- 6. PREGUNTA INICIAL --- */
+.pantalla-pregunta-inicial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95); /* Negro casi sólido */
+  z-index: 1000; /* Por encima de absolutamente todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cuadro-pregunta {
+  position: relative;
+  width: 450px;
+  height: 300px;
+}
+
+.fondo-marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.contenido-pregunta {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.texto-pregunta {
+  font-family: 'Crimson Pro', Serif;
+  color: #E8DCC2;
+  font-size: 32px;
+  margin-bottom: 40px;
+  text-shadow: 2px 2px 4px black;
+  text-align: center;
+}
+
+.botones-pregunta {
+  display: flex;
+  gap: 60px;
+}
+
+.btn-opcion {
+  font-family: 'Crimson Pro', Serif;
+  color: #F2A840; /* Usamos tu naranja vibrante */
+  font-size: 30px;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px black;
+  font-weight: bold;
 }

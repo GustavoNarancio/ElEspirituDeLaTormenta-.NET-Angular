@@ -1,5 +1,17 @@
 <div class="contenedor-juego">
 
+  <div *ngIf="mostrarPreguntaInicial" class="pantalla-pregunta-inicial">
+    <div class="cuadro-pregunta">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-marco" alt="Marco">
+      <div class="contenido-pregunta">
+        <p class="texto-pregunta">¿Es tu primera partida?</p>
+        <div class="botones-pregunta">
+          <span class="btn-opcion efecto-hover" (click)="responderPrimeraPartida(true)">SÍ</span>
+          <span class="btn-opcion efecto-hover" (click)="responderPrimeraPartida(false)">NO</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="mostrarFondoPrologo" class="area-interactiva fondo-prologo"></div>
 
   <div *ngIf="mostrarNegroAbsoluto" class="pantalla-negra-absoluta"></div>

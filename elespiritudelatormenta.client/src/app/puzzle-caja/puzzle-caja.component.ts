@@ -49,31 +49,31 @@ export class PuzzleCajaComponent implements OnInit {
       return;
     }
 
-    if (!this.puzzleId) {
-      console.error("¡ERROR CRÍTICO! Angular no sabe cuál es el ID del puzzle.");
-      return;
-    }
+    if (!this.puzzleId) return;
 
     const digitos = this.ranuras as number[];
 
-    // ---> NUEVO: Calculamos si ya quemó su primer intento
-    const esElUltimo = this.intentosFallidos >= 1;
+    // 1. Calculamos SI ESTE intento que vamos a hacer es el definivo.
+    // Si ya falló 0 veces, esElUltimo = false.
+    // Si ya falló 1 vez, esElUltimo = true.
+    const esElUltimo = this.intentosFallidos === 1;
 
-    // Viajamos a .NET pasándole la bandera esElUltimo
     this.apiService.intentarCaja(this.puzzleId, digitos, esElUltimo).subscribe({
       next: (respuesta) => {
         this.resuelto.emit(respuesta.mensaje);
       },
       error: (errorHttp) => {
+        // 2. Incrementamos el contador DESPUÉS de recibir el error
         this.intentosFallidos++;
 
+        // 3. Usamos el valor YA INCREMENTADO para decidir qué cartel mostrar
         if (this.intentosFallidos === 1) {
-          // Primer error: Angular maneja la advertencia, .NET no tocó la BD
-          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados, no creo que aguante otra combinación incorrecta antes de trabarse por completo.";
+          // Primer error: Mostramos el cartel de advertencia (el de la imagen que pasaste)
+          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados...";
           this.mostrarAdvertencia = true;
         } else {
-          // Segundo error: .NET rompió la BD y nos mandó el mensaje de la IMAGEN 1
-          const msj = errorHttp.error?.mensaje || "Puse la combinación incorrecta y la perilla quedó completamente trabada.";
+          // Segundo error (o más): El backend ya mandó el mensaje de "perilla trabada"
+          const msj = errorHttp.error?.mensaje || "La perilla quedó completamente trabada.";
           this.roto.emit(msj);
         }
       }
