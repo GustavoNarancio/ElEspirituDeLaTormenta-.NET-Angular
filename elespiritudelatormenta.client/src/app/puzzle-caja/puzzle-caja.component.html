@@ -1,75 +1,75 @@
-<div class="pantalla-puzzle-overlay">
-  <div class="contenedor-puzzle">
+  <div class="pantalla-puzzle-overlay">
+    <div class="contenedor-puzzle">
 
-    <img src="/assets/Cerrar.png" class="cerrar-x-img efecto-hover" (click)="cerrarPuzzle()" alt="Cerrar">
+      <img src="/assets/Cerrar.png" class="cerrar-x-img efecto-hover" (click)="cerrarPuzzle()" alt="Cerrar">
 
-    <div class="seccion-superior">
-      <img src="/assets/cajaFuerte.png" class="imagen-caja">
+      <div class="seccion-superior">
+        <img src="/assets/cajaFuerte.png" class="imagen-caja">
+      </div>
+
+      <div *ngIf="mostrarMiniMenu" class="mini-menu-puzzle">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
+        <div class="contenido-numeros">
+          <span *ngFor="let num of numerosDisponibles"
+                class="numero-hover"
+                (click)="colocarNumero(num)">
+            {{ num }}
+          </span>
+        </div>
+      </div>
+
+      <div class="boton-probar efecto-hover" (click)="probarCombinacion()">
+        <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-absoluto">
+        <span class="texto-boton" style="color: #5CC4A6;">Probar combinacion</span>
+      </div>
+
+      <div class="panel-inferior-puzzle">
+        <img src="/assets/MarcoDeTextoRectangularGrande.png" class="fondo-marco">
+
+        <div class="contenido-panel-puzzle">
+          <h3 class="titulo-columna">
+            COMBINACION
+          </h3>
+
+          <div class="grilla-ranuras">
+            <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(0)">
+              {{ ranuras[0] !== null ? ranuras[0] : 'Primer Digito' }}
+            </span>
+            <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(1)">
+              {{ ranuras[1] !== null ? ranuras[1] : 'Segundo Digito' }}
+            </span>
+            <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(2)">
+              {{ ranuras[2] !== null ? ranuras[2] : 'Tercer Digito' }}
+            </span>
+            <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(3)">
+              {{ ranuras[3] !== null ? ranuras[3] : 'Cuarto Digito' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div *ngIf="mostrarMiniMenu" class="mini-menu-puzzle">
-      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-cuadrado">
-      <div class="contenido-numeros">
-        <span *ngFor="let num of numerosDisponibles"
-              class="numero-hover"
-              (click)="colocarNumero(num)">
-          {{ num }}
-        </span>
+    <div *ngIf="mensajeAviso" class="modal-aviso">
+      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-absoluto">
+      <div class="contenido-aviso">
+        <p class="texto-aviso">{{ mensajeAviso }}</p>
+        <img src="/assets/Cerrar.png" class="boton-cerrar-aviso-img efecto-hover" (click)="cerrarAviso()" alt="Cerrar">
       </div>
     </div>
 
-    <div class="boton-probar efecto-hover" (click)="probarCombinacion()">
-      <img src="/assets/MarcoDeTextoRectangular.png" class="fondo-absoluto">
-      <span class="texto-boton" style="color: #5CC4A6;">Probar combinacion</span>
-    </div>
 
-    <div class="panel-inferior-puzzle">
-      <img src="/assets/MarcoDeTextoRectangularGrande.png" class="fondo-marco">
 
-      <div class="contenido-panel-puzzle">
-        <h3 class="titulo-columna">
-          COMBINACION
-        </h3>
-
-        <div class="grilla-ranuras">
-          <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(0)">
-            {{ ranuras[0] !== null ? ranuras[0] : 'Primer Digito' }}
-          </span>
-          <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(1)">
-            {{ ranuras[1] !== null ? ranuras[1] : 'Segundo Digito' }}
-          </span>
-          <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(2)">
-            {{ ranuras[2] !== null ? ranuras[2] : 'Tercer Digito' }}
-          </span>
-          <span class="item-texto efecto-hover" (click)="abrirSelectorNumeros(3)">
-            {{ ranuras[3] !== null ? ranuras[3] : 'Cuarto Digito' }}
-          </span>
+    <div *ngIf="mostrarAdvertencia" class="pantalla-lectura-puzzle">
+      <div class="contenedor-lectura-central">
+        <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
+        <div class="contenido-texto-lectura">
+          <p class="texto-descripcion-db">{{ textoAdvertencia }}</p>
+          <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarAdvertencia()" alt="Cerrar">
         </div>
       </div>
     </div>
 
+
+
   </div>
-
-  <div *ngIf="mensajeAviso" class="modal-aviso">
-    <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-absoluto">
-    <div class="contenido-aviso">
-      <p class="texto-aviso">{{ mensajeAviso }}</p>
-      <img src="/assets/Cerrar.png" class="boton-cerrar-aviso-img efecto-hover" (click)="cerrarAviso()" alt="Cerrar">
-    </div>
-  </div>
-
-
-
-  <div *ngIf="mostrarAdvertencia" class="pantalla-lectura-puzzle">
-    <div class="contenedor-lectura-central">
-      <img src="/assets/MarcoDeTextoCuadrado.png" class="fondo-lectura-transparente">
-      <div class="contenido-texto-lectura">
-        <p class="texto-descripcion-db">{{ textoAdvertencia }}</p>
-        <img src="/assets/Cerrar.png" class="boton-volver-lectura efecto-hover" (click)="cerrarAdvertencia()" alt="Cerrar">
-      </div>
-    </div>
-  </div>
-
-
-
-</div>

@@ -48,37 +48,39 @@ export class PuzzleCajaComponent implements OnInit {
       this.mensajeAviso = "Necesito completar los 4 dígitos para probar abrirla.";
       return;
     }
-
     if (!this.puzzleId) return;
 
-    const digitos = this.ranuras as number[];
+    // PRUEBA 1: Vemos con qué valor arranca el click
+    console.log("1. Click Probar. intentosFallidos vale:", this.intentosFallidos);
 
-    // 1. Calculamos SI ESTE intento que vamos a hacer es el definivo.
-    // Si ya falló 0 veces, esElUltimo = false.
-    // Si ya falló 1 vez, esElUltimo = true.
+    const digitos = this.ranuras as number[];
     const esElUltimo = this.intentosFallidos === 1;
+
+    // PRUEBA 2: Vemos qué va a mandar a .NET
+    console.log("2. Se envía esUltimoIntento como:", esElUltimo);
 
     this.apiService.intentarCaja(this.puzzleId, digitos, esElUltimo).subscribe({
       next: (respuesta) => {
         this.resuelto.emit(respuesta.mensaje);
       },
       error: (errorHttp) => {
-        // 2. Incrementamos el contador DESPUÉS de recibir el error
         this.intentosFallidos++;
 
-        // 3. Usamos el valor YA INCREMENTADO para decidir qué cartel mostrar
+        // PRUEBA 3: Vemos si logró sumar
+        console.log("3. Entró al error. intentosFallidos AHORA vale:", this.intentosFallidos);
+
         if (this.intentosFallidos === 1) {
-          // Primer error: Mostramos el cartel de advertencia (el de la imagen que pasaste)
-          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados...";
+          this.textoAdvertencia = "Esa no era la combinación correcta...";
           this.mostrarAdvertencia = true;
         } else {
-          // Segundo error (o más): El backend ya mandó el mensaje de "perilla trabada"
           const msj = errorHttp.error?.mensaje || "La perilla quedó completamente trabada.";
           this.roto.emit(msj);
         }
       }
     });
   }
+
+
   cerrarPuzzle() {
     this.cerrar.emit();
   }
