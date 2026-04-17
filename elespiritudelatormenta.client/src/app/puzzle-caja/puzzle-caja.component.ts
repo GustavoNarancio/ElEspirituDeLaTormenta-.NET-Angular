@@ -7,6 +7,7 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['./puzzle-caja.component.css']
 })
 export class PuzzleCajaComponent implements OnInit {
+  \
 
   @Input() puzzleId: number | undefined;
   @Output() cerrar = new EventEmitter<void>();
