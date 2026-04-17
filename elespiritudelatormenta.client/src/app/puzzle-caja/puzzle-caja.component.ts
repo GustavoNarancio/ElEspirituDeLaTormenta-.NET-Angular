@@ -70,10 +70,9 @@ export class PuzzleCajaComponent implements OnInit {
         console.log("3. Entró al error. intentosFallidos AHORA vale:", this.intentosFallidos);
 
         if (this.intentosFallidos === 1) {
-          this.textoAdvertencia = "Esa no era la combinación correcta...";
-          this.mostrarAdvertencia = true;
+          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados, no creo que aguante otra combinación incorrecta antes de trabarse por completo.";          this.mostrarAdvertencia = true;
         } else {
-          const msj = errorHttp.error?.mensaje || "La perilla quedó completamente trabada.";
+          const msj = errorHttp.error?.mensaje || "Puse la combinación incorrecta y la perilla quedó completamente trabada.";
           this.roto.emit(msj);
         }
       }
