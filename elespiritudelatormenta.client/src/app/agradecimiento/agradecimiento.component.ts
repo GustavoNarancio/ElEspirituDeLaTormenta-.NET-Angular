@@ -51,7 +51,7 @@ export class AgradecimientoComponent implements OnInit {
 
     if (idParaBorrar) {
       // 2. Le pedimos a C# que borre (no nos importa tanto la respuesta si ya lo borramos local)
-      this.apiService.borrarPartidaActual().subscribe({
+      this.apiService.borrarPartidaActual(parseInt(idParaBorrar, 10)).subscribe({
         next: () => {
           this.router.navigate(['/login'], { replaceUrl: true });
         },

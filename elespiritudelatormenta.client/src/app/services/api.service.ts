@@ -108,8 +108,8 @@
     }
 
     // NUEVA FUNCIÓN: Borrar la partida completa
-    borrarPartidaActual(): Observable<any> {
-      const id = this.obtenerIdUsuario();
+    borrarPartidaActual(idUsuario?: number): Observable<any> {
+      const id = idUsuario || this.obtenerIdUsuario();
       return this.http.delete(`${this.baseUrl}/usuarios/borrar-partida/${id}`);
     }
 
