@@ -8,7 +8,7 @@
   export class ApiService {
 
     // URL base para tu servidor .NET
-    private baseUrl = 'https://elespiritudelatormentaserver20260911203659-bkgfgzhqgkh6czbk.brazilsouth-01.azurewebsites.net';
+    private baseUrl = 'https://elespiritudelatormentaserver20260911203659-bkgfgzhqgkh6czbk.brazilsouth-01.azurewebsites.net/api';
 
     private inventarioCambioSource = new Subject<void>();
     inventarioCambio$ = this.inventarioCambioSource.asObservable();
