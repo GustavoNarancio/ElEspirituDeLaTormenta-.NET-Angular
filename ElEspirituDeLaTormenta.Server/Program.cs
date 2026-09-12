@@ -1,36 +1,51 @@
-using ElEspirituDeLaTormenta.Server.Models;
-using Microsoft.EntityFrameworkCore;
+        using ElEspirituDeLaTormenta.Server.Models;
+        using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+        builder.Services.AddDbContext<ElEspirituDeLaTormentaDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDbContext<ElEspirituDeLaTormentaDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+        builder.Services.AddControllers();
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+        // Configuración de CORS
+        // Configuración de CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("PermitirVercel",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()  // <-- ESTA ES LA MAGIA: Deja entrar a cualquier URL
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+        });
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
+        var app = builder.Build();
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
+        app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
 
-app.UseHttpsRedirection();
+        app.UseHttpsRedirection();
 
-app.UseAuthorization();
+        app.UseCors("PermitirVercel");
+        app.UseAuthorization();
 
-app.MapControllers();
+        app.MapControllers();
 
-app.MapFallbackToFile("/index.html");
+        app.MapFallbackToFile("/index.html");
 
-app.Run();
+        app.Run();

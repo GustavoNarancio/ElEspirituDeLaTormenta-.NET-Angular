@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { EventosGlobalesService } from '../services/eventos-globales.service'; 
+import { EventosGlobalesService } from '../services/eventos-globales.service';
 
 @Component({
   selector: 'app-garaje',
@@ -10,8 +10,8 @@ import { EventosGlobalesService } from '../services/eventos-globales.service';
 })
 export class GarajeComponent implements OnInit {
 
-  idHabitacion: number = 6; 
-  idUsuario: number = 1;    // ID del usuario jugando
+  idHabitacion: number = 6;
+  idUsuario: number = 1;    // Se usa como fallback por si no hay sesión
 
   // Variables de control de UI
   mostrarMenuInspeccion: boolean = false;
@@ -30,10 +30,18 @@ export class GarajeComponent implements OnInit {
   // --- VARIABLE DE ESTADO FINAL ---
   escenaFinal: number = 0;
 
-  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService
-) { }
+  constructor(
+    private router: Router,
+    private apiService: ApiService,
+    private eventosService: EventosGlobalesService
+  ) { }
 
   ngOnInit(): void {
+    // Leemos el ID exacto de tu login
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    this.idUsuario = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
+    // Recién ahora que sabemos quién es el usuario, cargamos sus datos
     this.cargarDatos();
   }
 
@@ -110,12 +118,13 @@ export class GarajeComponent implements OnInit {
     if (this.itemSeleccionado.EsAgarrable === false) {
       this.eventosService.sumarAccion();
     }
-
   }
+
   cerrarLectura() {
     this.mostrarDescripcion = false;
     this.mostrarMenuInspeccion = true; // ¡Esto es lo que hace que vuelva el panel de abajo!
   }
+
   guardarItem() {
     if (!this.itemSeleccionado) return;
 
@@ -183,7 +192,6 @@ export class GarajeComponent implements OnInit {
 
   volverAtras() {
     this.eventosService.sumarAccion();
-
     this.router.navigate(['/pasillo'], { replaceUrl: true });
   }
 

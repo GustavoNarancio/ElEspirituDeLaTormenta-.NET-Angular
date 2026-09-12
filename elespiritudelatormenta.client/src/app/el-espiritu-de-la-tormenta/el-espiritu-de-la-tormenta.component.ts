@@ -27,9 +27,12 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
   mostrarErrorRanura: boolean = false;
 
   constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
-
   ngOnInit(): void {
-    this.apiService.getInventario(1).subscribe(datos => {
+    // --- LEYENDO EL ID EXACTO DE TU LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
+    this.apiService.getInventario(idUsuarioActual).subscribe(datos => {
       this.inventarioUsuario = datos;
     });
   }
@@ -54,7 +57,7 @@ export class ElEspirituDeLaTormentaComponent implements OnInit {
     this.mostrarMiniMenu = false;
     this.eventosService.sumarAccion();
 
-    if (this.itemSeleccionado.id === 1015 || this.itemSeleccionado.Id === 1015) {
+    if (this.itemSeleccionado.id === 20 || this.itemSeleccionado.Id === 20) {
       this.escena = 4; // Éxito Parte 1
     } else {
       this.mostrarErrorRanura = true; // Error modal

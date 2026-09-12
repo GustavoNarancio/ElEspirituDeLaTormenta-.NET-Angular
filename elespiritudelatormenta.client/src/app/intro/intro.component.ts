@@ -8,14 +8,13 @@ import { Router } from '@angular/router';
 })
 export class IntroComponent implements OnInit {
 
+  // --- NUEVA VARIABLE PREGUNTA INICIAL ---
+  mostrarPreguntaInicial: boolean = true;
+
   // Variables de control de fase y UI
-  // P1: Prólogo (Texto Thaddeus en Intro.png)
-  // P2: Presentación del Logo (Presentacion.jpg fade-in lento)
-  // P3: Transición Persecución (Black screen -> Bosque.png fade-in lento)
-  // P4: Persecución (Texto Bosque/Cabaña)
   faseIntro: number = 1;
-  subFasePrologo: number = 1; // 1, 2, 3 para Thaddeus Paginas
-  subFasePersecucion: number = 1; // 1: Bosque, 2: Cabaña
+  subFasePrologo: number = 1;
+  subFasePersecucion: number = 1;
 
   mostrarMarco: boolean = false;
   mostrarFlecha: boolean = false;
@@ -23,7 +22,7 @@ export class IntroComponent implements OnInit {
 
   // Variables para los fondos dinámicos y transiciones
   mostrarFondoPrologo: boolean = true;
-  mostrarFondoLogo: boolean = false; // Nueva variable para la fase 2
+  mostrarFondoLogo: boolean = false;
   mostrarNegroAbsoluto: boolean = false;
   mostrarFondoPersecucionBosque: boolean = false;
 
@@ -63,10 +62,6 @@ export class IntroComponent implements OnInit {
     "Soy un hombre  ahora y si las autoridades no quieren buscarlo, yo puedo encontrarlo solo…" +
     "y si mi abuelo tenía razón, puede que no sea lo único que encuentre.";
 
-
-
-
-
   // --- TEXTO PERSECUCIÓN (Bosque/Cabaña) ---
   private textoBosque: string = "El viento aúlla entre los árboles, y la lluvia cae en torrentes, empapándote hasta los huesos. \n" +
     "Cada relámpago ilumina el paisaje sombrío, revelando sombras inquietantes que parecen moverse con vida propia.  De repente, a través del velo de la lluvia, ves a la criatura que ha estado viviendo en tus sueños desde que eras un niño. \n" +
@@ -81,7 +76,21 @@ export class IntroComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.iniciarSecuenciaPrologo();
+    // El juego arranca pausado esperando la respuesta del jugador.
+    // No llamamos a iniciarSecuenciaPrologo() acá.
+  }
+
+  // --- NUEVA FUNCIÓN PARA EL BOTÓN DE PREGUNTA ---
+  responderPrimeraPartida(esPrimera: boolean) {
+    this.mostrarPreguntaInicial = false; // Ocultamos el cartel
+
+    if (esPrimera) {
+      // Si es su primera vez, arrancamos el prólogo normalmente
+      this.iniciarSecuenciaPrologo();
+    } else {
+      // Si pone que NO, lo mandamos directo al juego
+      this.router.navigate(['/juego'], { replaceUrl: true });
+    }
   }
 
   // --- FASE 1: PRÓLOGO (Thaddeus) ---
@@ -89,8 +98,6 @@ export class IntroComponent implements OnInit {
     this.faseIntro = 1;
     this.subFasePrologo = 1;
 
-
-    // Mostramos solo el fondo Intro.png (pág 1) durante 2 segundos
     setTimeout(() => {
       this.mostrarMarco = true;
       setTimeout(() => {
@@ -99,14 +106,13 @@ export class IntroComponent implements OnInit {
     }, 2000);
   }
 
-  // --- FUNCIÓN DE AVANCE SECUENCIAL ---
   avanzar() {
     this.mostrarFlecha = false;
     this.textoMostrado = "";
 
     if (this.faseIntro === 1) {
       this.avanzarPrologo();
-    } else if (this.faseIntro === 4) { // Lógica para Persecución Texto
+    } else if (this.faseIntro === 4) {
       this.irACabania();
     }
   }
@@ -119,56 +125,52 @@ export class IntroComponent implements OnInit {
     } else if (this.subFasePrologo === 3) {
       this.efectoEscritura(this.textoPrologoPag3);
     } else {
-      // Fin del prólogo (Texto 3) -> Arrancamos Presentación del Logo
       this.iniciarSecuenciaLogo();
     }
   }
 
-  // --- FASE 2: PRESENTACIÓN DEL LOGO (Presentacion.jpg - ESTO FALTAA) ---
+  // --- FASE 2: PRESENTACIÓN DEL LOGO ---
   iniciarSecuenciaLogo() {
-    this.faseIntro = 2; // Nueva Fase 2: Logo
+    this.faseIntro = 2;
     this.mostrarMarco = false;
-    this.mostrarNegroAbsoluto = true; // Empieza en negro absoluto
+    this.mostrarNegroAbsoluto = true;
 
     setTimeout(() => {
-      this.mostrarFondoPrologo = false; // Sacamos el fondo map style
+      this.mostrarFondoPrologo = false;
 
       setTimeout(() => {
-        this.mostrarNegroAbsoluto = false; // Quitamos el negro
-        this.mostrarFondoLogo = true; // Ponemos el logo (CSS maneja fade-in lento de 4s)
+        this.mostrarNegroAbsoluto = false;
+        this.mostrarFondoLogo = true;
 
-        // Esperamos el fade-in (4s) + hold (1s) = 5s total
         setTimeout(() => {
           this.iniciarTransicionHaciaBosque();
         }, 6000);
-      }, 500); // 0.5s en negro puro antes del logo
-    }, 100); // Un frame en negro
+      }, 500);
+    }, 100);
   }
 
-  // --- FASE 3: TRANSICIÓN HACIA EL BOSQUE (Bosque fade-in lento) ---
+  // --- FASE 3: TRANSICIÓN HACIA EL BOSQUE ---
   iniciarTransicionHaciaBosque() {
-    this.faseIntro = 3; // Nueva Fase 3: Transición Bosque
-    this.mostrarFondoLogo = false; // Sacamos el logo
-    this.mostrarNegroAbsoluto = true; // Pantalla negra absoluto de nuevo
+    this.faseIntro = 3;
+    this.mostrarFondoLogo = false;
+    this.mostrarNegroAbsoluto = true;
 
     setTimeout(() => {
-      this.mostrarNegroAbsoluto = false; // Quitamos el negro absoluto
-      this.mostrarFondoPersecucionBosque = true; // Empezamos fade-in lento del bosque (4s)
+      this.mostrarNegroAbsoluto = false;
+      this.mostrarFondoPersecucionBosque = true;
 
-      // Dejamos la imagen un ratito después del fade-in (4s + hold 1s)
       setTimeout(() => {
         this.iniciarSecuenciaPersecucion();
       }, 3000);
-    }, 2000); // 2 segundos en negro absoluto
+    }, 2000);
   }
 
-  // --- FASE 4: PERSECUCIÓN (Bosque/Cabaña Texto) ---
+  // --- FASE 4: PERSECUCIÓN ---
   iniciarSecuenciaPersecucion() {
-    this.faseIntro = 4; // Nueva Fase 4: Persecución Texto
+    this.faseIntro = 4;
     this.subFasePersecucion = 1;
     this.textoMostrado = "";
 
-    // Arranca tu intro armada vieja
     setTimeout(() => { this.mostrarMarco = true; }, 200);
     setTimeout(() => { this.efectoEscritura(this.textoBosque); }, 400);
   }
@@ -195,7 +197,7 @@ export class IntroComponent implements OnInit {
         clearInterval(intervalo);
         if (this.faseIntro === 1) {
           this.mostrarFlecha = true;
-        } else if (this.faseIntro === 4) { // Comparación para Persecución Texto
+        } else if (this.faseIntro === 4) {
           if (this.subFasePersecucion === 1) {
             this.mostrarFlecha = true;
           } else {

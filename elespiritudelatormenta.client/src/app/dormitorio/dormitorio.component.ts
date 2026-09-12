@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { EventosGlobalesService } from '../services/eventos-globales.service';
+
 @Component({
   selector: 'app-dormitorio',
   templateUrl: './dormitorio.component.html',
@@ -27,8 +28,7 @@ export class DormitorioComponent implements OnInit {
   // --- NUEVA VARIABLE DE ESTADO (Fix para el flujo de éxito) ---
   esperandoVerInteriorCaja: boolean = false;
 
-  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService
-) { }
+  constructor(private router: Router, private apiService: ApiService, private eventosService: EventosGlobalesService) { }
 
   ngOnInit(): void {
     this.cargarDatosDelDormitorio();
@@ -39,7 +39,10 @@ export class DormitorioComponent implements OnInit {
 
   cargarDatosDelDormitorio() {
     const idHabitacion = 4;
-    const idUsuarioActual = 1;
+
+    // --- LEYENDO EL ID EXACTO DE TU LOGIN ---
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
 
     this.apiService.getObjetos(idHabitacion).subscribe(datos => this.listaDeObjetosDB = datos);
     this.apiService.getPuzzles(idHabitacion).subscribe(datos => this.listaDePuzzlesDB = datos);
@@ -47,8 +50,8 @@ export class DormitorioComponent implements OnInit {
   }
 
   elUsuarioTieneLaLlave(): boolean {
-    // Validamos contra la mochila real de la base de datos
-    return this.inventarioUsuario.some(item => item.id === 1011);
+    // Validamos contra la mochila real de la base de datos (ID 19)
+    return this.inventarioUsuario.some(item => item.id === 19);
   }
 
   abrirAcciones(item: any, tipo: 'objeto' | 'puzzle') {
@@ -75,7 +78,6 @@ export class DormitorioComponent implements OnInit {
     if (this.itemSeleccionado.EsAgarrable === false) {
       this.eventosService.sumarAccion();
     }
-
   }
 
   // --- FIX FLUJO ÉXITO (Paso 1): Modificada función general ---
@@ -106,7 +108,8 @@ export class DormitorioComponent implements OnInit {
         this.eventosService.sumarAccion();
 
         this.cerrarMiniMenu();
-        if (this.mostrarInteriorCaja && this.itemSeleccionado.id === 1011) {
+        // Cierra el interior de la caja si justo agarraste la llave ID 19
+        if (this.mostrarInteriorCaja && this.itemSeleccionado.id === 19) {
           this.mostrarInteriorCaja = false;
           this.mostrarMenuInspeccion = true;
         }
@@ -137,7 +140,7 @@ export class DormitorioComponent implements OnInit {
 
     if (this.itemSeleccionado.resuelto) {
       this.llaveSecreta = {
-        id: 1011,
+        id: 19, // ID real de la llave
         nombre: "Llave",
         descripcion: "Una llave antigua y robusta. Seguramente abre algo importante.",
         esAgarrable: true,
@@ -173,7 +176,7 @@ export class DormitorioComponent implements OnInit {
 
     // Preparamos el item de la llave internamente
     this.llaveSecreta = {
-      id: 1011,
+      id: 19, // ID real de la llave
       nombre: "Llave",
       descripcion: "Una llave antigua y robusta. Seguramente abre algo importante.",
       esAgarrable: true,
@@ -192,6 +195,7 @@ export class DormitorioComponent implements OnInit {
   cerrarInteriorCaja() {
     this.mostrarInteriorCaja = false;
     this.mostrarMenuInspeccion = true;
+    this.cerrarMiniMenu(); // Evita que quede el minimenú flotando
   }
 
   volver() {

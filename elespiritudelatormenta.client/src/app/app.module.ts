@@ -21,7 +21,7 @@ import { PuzzleCajaComponent } from './puzzle-caja/puzzle-caja.component';
 import { PuzzleCamionetaComponent } from './puzzle-camioneta/puzzle-camioneta.component';
 import { EscapeFinalComponent } from './escape-final/escape-final.component';
 import { AgradecimientoComponent } from './agradecimiento/agradecimiento.component';
-import { PuzzleSotanoComponent } from './puzzle-sotano/puzzle-sotano.component';
+import { PuzzleSotanoComponent } from './puzzle-sotano/puzzle-sotano.component'; 
 import { ElEspirituDeLaTormentaComponent } from './el-espiritu-de-la-tormenta/el-espiritu-de-la-tormenta.component';
 import { CatacumbasComponent } from './catacumbas/catacumbas.component';
 import { FinalSalidaPorLaPuertaComponent } from './final-salida-por-la-puerta/final-salida-por-la-puerta.component';

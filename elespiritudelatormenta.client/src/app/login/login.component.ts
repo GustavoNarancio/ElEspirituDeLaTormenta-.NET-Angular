@@ -1,54 +1,55 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-import { AudioService } from "../services/audio.service"; 
+import { AudioService } from "../services/audio.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-
 export class LoginComponent {
   nombreJugador: string = '';
   mensajeError: string = '';
+  cargando: boolean = false; // Agregamos un flag de carga
 
   constructor(private apiService: ApiService, private router: Router, private audioService: AudioService) {
-    // El Patovica interno: si el usuario ya tiene un ID guardado, lo mandamos directo al juego.
+    // Si llegó hasta acá por voluntad propia (ej: recargó la URL /login), 
+    // nos aseguramos de que no tenga un ID viejo escondido.
     if (localStorage.getItem('idUsuarioActual')) {
-      this.router.navigate(['/intro'], { replaceUrl: true });
+      // Opcional: Podrías mandarlo al juego, o forzar la limpieza.
+      // Como queremos evitar bugs, si llega a la ruta /login explicitamente, limpiamos.
+      localStorage.removeItem('idUsuarioActual');
     }
   }
 
   ingresar() {
-    // 1. Validamos que no esté vacío
+    this.mensajeError = '';
+
     if (this.nombreJugador.trim() === '') {
       this.mensajeError = 'El nombre no puede estar vacío.';
       return;
     }
 
-    // 2. Llamamos a nuestro ApiService (que habla con C#)
+    this.cargando = true;
+
     this.apiService.iniciarSesion(this.nombreJugador).subscribe({
       next: (res) => {
-        // 3. ¡LA MAGIA! Guardamos el ID que nos devolvió C# en la memoria del navegador
+        this.cargando = false;
+        // Limpiamos todo antes de setear el nuevo para evitar solapamientos
+        localStorage.clear();
         localStorage.setItem('idUsuarioActual', res.id.toString());
         this.audioService.reproducirMusica();
-        // 4. Lo mandamos al juego y borramos el historial (replaceUrl: true)
         this.router.navigate(['/intro'], { replaceUrl: true });
       },
-
-      // --- ACÁ ESTÁ EL CAMBIO ---
       error: (err) => {
-        // Nos fijamos si el error viene con un mensaje desde C# (ej: "Ese nombre ya está en uso")
+        this.cargando = false;
         if (err.error && err.error.mensaje) {
           this.mensajeError = err.error.mensaje;
         } else {
-          // Si es un error raro o se cayó internet, mostramos el genérico
           this.mensajeError = 'Hubo un error de conexión con el servidor.';
         }
       }
-      // ---------------------------
-
     });
   }
 }

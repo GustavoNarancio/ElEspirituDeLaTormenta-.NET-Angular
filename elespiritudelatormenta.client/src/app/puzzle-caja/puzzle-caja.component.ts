@@ -8,6 +8,7 @@ import { ApiService } from '../services/api.service';
 })
 export class PuzzleCajaComponent implements OnInit {
 
+
   @Input() puzzleId: number | undefined;
   @Output() cerrar = new EventEmitter<void>();
   @Output() resuelto = new EventEmitter<string>();
@@ -48,18 +49,17 @@ export class PuzzleCajaComponent implements OnInit {
       this.mensajeAviso = "Necesito completar los 4 dígitos para probar abrirla.";
       return;
     }
+    if (!this.puzzleId) return;
 
-    if (!this.puzzleId) {
-      console.error("¡ERROR CRÍTICO! Angular no sabe cuál es el ID del puzzle.");
-      return;
-    }
+    // PRUEBA 1: Vemos con qué valor arranca el click
+    console.log("1. Click Probar. intentosFallidos vale:", this.intentosFallidos);
 
     const digitos = this.ranuras as number[];
+    const esElUltimo = this.intentosFallidos === 1;
 
-    // ---> NUEVO: Calculamos si ya quemó su primer intento
-    const esElUltimo = this.intentosFallidos >= 1;
+    // PRUEBA 2: Vemos qué va a mandar a .NET
+    console.log("2. Se envía esUltimoIntento como:", esElUltimo);
 
-    // Viajamos a .NET pasándole la bandera esElUltimo
     this.apiService.intentarCaja(this.puzzleId, digitos, esElUltimo).subscribe({
       next: (respuesta) => {
         this.resuelto.emit(respuesta.mensaje);
@@ -67,18 +67,20 @@ export class PuzzleCajaComponent implements OnInit {
       error: (errorHttp) => {
         this.intentosFallidos++;
 
+        // PRUEBA 3: Vemos si logró sumar
+        console.log("3. Entró al error. intentosFallidos AHORA vale:", this.intentosFallidos);
+
         if (this.intentosFallidos === 1) {
-          // Primer error: Angular maneja la advertencia, .NET no tocó la BD
-          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados, no creo que aguante otra combinación incorrecta antes de trabarse por completo.";
-          this.mostrarAdvertencia = true;
+          this.textoAdvertencia = "Esa no era la combinación correcta. Al tratar de forzarla me doy cuenta de que es una caja muy antigua y los engranajes están gastados, no creo que aguante otra combinación incorrecta antes de trabarse por completo.";          this.mostrarAdvertencia = true;
         } else {
-          // Segundo error: .NET rompió la BD y nos mandó el mensaje de la IMAGEN 1
           const msj = errorHttp.error?.mensaje || "Puse la combinación incorrecta y la perilla quedó completamente trabada.";
           this.roto.emit(msj);
         }
       }
     });
   }
+
+
   cerrarPuzzle() {
     this.cerrar.emit();
   }

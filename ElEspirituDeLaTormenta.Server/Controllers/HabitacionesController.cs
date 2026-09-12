@@ -255,15 +255,15 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
 
             switch (idPuzzle)
             {
-                case 4:
-                    if (request.IdObjeto == 1011)
+                case 3:
+                    if (request.IdObjeto == 19)
                     {
                         esCorrecto = true;
                         mensajeExito = "Deslizo la vieja llave en la cerradura. Encaja a la perfección. Giro con firmeza y el pestillo se destraba con un golpe seco. La puerta se abre lentamente.";
                     }
                     break;
 
-                case 5:
+                case 4:
                     if (request.IdObjeto == 1)
                     {
                         esCorrecto = true;
@@ -337,12 +337,13 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             if (estado == null) return NotFound("No se encontró un estado inicial para esta camioneta.");
             if (estado.Resuelto || estado.Roto) return BadRequest(new { mensaje = "Ya no podés interactuar con este vehículo." });
 
+
             bool esCorrecto = false;
             string mensajeResultado = "";
 
-            if (estado.TipoFalla == 1 && request.IdObjeto == 1012) esCorrecto = true;
-            else if (estado.TipoFalla == 2 && request.IdObjeto == 1013) esCorrecto = true;
-            else if (estado.TipoFalla == 3 && request.IdObjeto == 1014) esCorrecto = true;
+            if (estado.TipoFalla == 1 && request.IdObjeto == 25) esCorrecto = true;
+            else if (estado.TipoFalla == 2 && request.IdObjeto == 26) esCorrecto = true;
+            else if (estado.TipoFalla == 3 && request.IdObjeto == 27) esCorrecto = true;
 
             if (esCorrecto)
             {
@@ -360,9 +361,9 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                 estado.Roto = true;
                 mensajeResultado = request.IdObjeto switch
                 {
-                    1012 => "Desconectás la batería y colocás la nueva, pero algo no se siente bien.\r\nAl ajustar los bornes, una chispa salta de forma inesperada.\r\nCuando intentás arrancar, no hay respuesta… ni siquiera un intento.\r\nEl sistema eléctrico parece haber quedado completamente muerto\r\n",
-                    1013 => "Revisás la caja de fusibles y encontrás uno dañado.\r\nComparás con otro similar y colocás uno que parece coincidir… aunque el amperaje no es exactamente el mismo.\r\nEl tablero parpadea una vez… y se apaga por completo.\r\nAlgo se dañó en el circuito\r\n",
-                    1014 => "Manipulás el motor con la llave de tubo. Sentís que algo cede... demasiado. Al intentar arrancar, el motor ya no responde en absoluto.",
+                    25 => "Desconectás la batería y colocás la nueva, pero algo no se siente bien.\r\nAl ajustar los bornes, una chispa salta de forma inesperada.\r\nCuando intentás arrancar, no hay respuesta… ni siquiera un intento.\r\nEl sistema eléctrico parece haber quedado completamente muerto\r\n",
+                    26 => "Revisás la caja de fusibles y encontrás uno dañado.\r\nComparás con otro similar y colocás uno que parece coincidir… aunque el amperaje no es exactamente el mismo.\r\nEl tablero parpadea una vez… y se apaga por completo.\r\nAlgo se dañó en el circuito\r\n",
+                    27 => "Manipulás el motor con la llave de tubo. Sentís que algo cede... demasiado. Al intentar arrancar, el motor ya no responde en absoluto.",
                     _ => "Hiciste algo mal y la camioneta se terminó de romper."
                 };
             }
@@ -407,8 +408,13 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             if (estadoPuzzle.EstaResuelto)
                 return Ok(new { mensaje = "La puerta ya está abierta." });
 
-            var combinacionCorrecta = new List<string> { "Matias", "Carla", "Nico", "Lucas" };
-            bool esCorrecto = request.Nombres.SequenceEqual(combinacionCorrecta);
+            // --- ACÁ EMPIEZAN LOS CAMBIOS ---
+            var combinacion1 = new List<string> { "Matias", "Carla", "Nico", "Lucas" };
+            var combinacion2 = new List<string> { "Nico", "Lucas", "Matias", "Carla" }; // La combinación nueva
+
+            // Evaluamos si coincide con la 1 O (||) con la 2
+            bool esCorrecto = request.Nombres.SequenceEqual(combinacion1) || request.Nombres.SequenceEqual(combinacion2);
+            // --- ACÁ TERMINAN LOS CAMBIOS ---
 
             if (esCorrecto)
             {
@@ -420,7 +426,7 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
             {
                 estadoPuzzle.EstaRoto = true;
                 await _context.SaveChangesAsync();
-                return BadRequest(new { mensaje = "Las piezas crujen y el mecanismo se traba por completo. La cerradura mágica se bloqueó para siempre." });
+                return BadRequest(new { mensaje = "Las placas de piedra crujen entre si, se escucha como el mecanismo se traba por completo. La cerradura mágica se bloqueó para siempre." });
             }
         }
 

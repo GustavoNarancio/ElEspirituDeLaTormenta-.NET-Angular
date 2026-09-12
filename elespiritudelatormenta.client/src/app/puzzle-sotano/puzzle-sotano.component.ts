@@ -7,7 +7,10 @@ import { ApiService } from '../services/api.service'; // Ajustá la ruta de tu s
   styleUrls: ['./puzzle-sotano.component.css']
 })
 export class PuzzleSotanoComponent {
-  @Input() puzzleId!: number;
+
+  // ---> LA ÚNICA MODIFICACIÓN: Le puse 'any' para que Vercel no rompa
+  @Input() puzzleId: any;
+
   @Output() cerrar = new EventEmitter<void>();
   @Output() resuelto = new EventEmitter<string>();
   @Output() roto = new EventEmitter<string>();
@@ -21,7 +24,7 @@ export class PuzzleSotanoComponent {
     { nombre: 'Lucas', img: '/assets/Lucas.png' },
     { nombre: 'Carla', img: '/assets/Carla.png' },
     { nombre: 'Nico', img: '/assets/Nico.png' },
-    { nombre: 'Matias', img: '/assets/Matias.png' } 
+    { nombre: 'Matias', img: '/assets/Matias.png' }
   ];
 
   // Las 4 ranuras (null significa vacía)

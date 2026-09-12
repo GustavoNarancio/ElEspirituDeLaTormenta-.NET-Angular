@@ -22,16 +22,17 @@ export class MapaComponent {
     this.cerrarMapa.emit();
   }
 
-  // NUEVA LÓGICA PARA EL GARAJE
   viajarGaraje() {
     const idHabitacionFalsa = 5;
-    const idPuzzlePuerta = 4;
+    const idPuzzlePuerta = 3;
 
     this.apiService.getPuzzles(idHabitacionFalsa).subscribe({
       next: (puzzles) => {
-        const puzzlePuerta = puzzles.find(p => p.id === idPuzzlePuerta);
+        // Blindaje de Id
+        const puzzlePuerta = puzzles.find(p => p.id === idPuzzlePuerta || p.Id === idPuzzlePuerta);
 
-        if (puzzlePuerta && puzzlePuerta.resuelto) {
+        // Blindaje de Resuelto
+        if (puzzlePuerta && (puzzlePuerta.resuelto || puzzlePuerta.Resuelto)) {
           this.viajarHacia('/garaje');
         } else {
           this.viajarHacia('/puerta-garaje');
@@ -46,12 +47,15 @@ export class MapaComponent {
 
   viajarSotano() {
     const idHabitacionFalsa = 5;
-    const idPuzzlePuertaSotano = 5;
+    const idPuzzlePuertaSotano = 4;
 
     this.apiService.getPuzzles(idHabitacionFalsa).subscribe({
       next: (puzzles) => {
-        const puzzleSotano = puzzles.find(p => p.id === idPuzzlePuertaSotano);
-        if (puzzleSotano && puzzleSotano.resuelto) {
+        // Blindaje de Id
+        const puzzleSotano = puzzles.find(p => p.id === idPuzzlePuertaSotano || p.Id === idPuzzlePuertaSotano);
+
+        // Blindaje de Resuelto
+        if (puzzleSotano && (puzzleSotano.resuelto || puzzleSotano.Resuelto)) {
           this.viajarHacia('/sotano');
         } else {
           this.viajarHacia('/puerta-sotano');

@@ -42,21 +42,27 @@ export class AgradecimientoComponent implements OnInit {
 
   // --- NUEVA LÓGICA DE DESTRUCCIÓN DE PARTIDA ---
   reiniciarJuego() {
-    // 1. Le pedimos a C# que borre todo nuestro progreso en la Base de Datos
-    this.apiService.borrarPartidaActual().subscribe({
-      next: () => {
-        // 2. Borramos el "DNI" de la memoria del navegador
-        localStorage.removeItem('idUsuarioActual');
+    // Leemos el ID ANTES de borrarlo para pasarlo a la API
+    const idParaBorrar = localStorage.getItem('idUsuarioActual');
 
-        // 3. Lo mandamos al Login de nuevo, limpiando el historial
-        this.router.navigate(['/login'], { replaceUrl: true });
-      },
-      error: (err) => {
-        console.error("Error al borrar la partida en la DB", err);
-        // Fallback: Si falla el backend, igual borramos la sesión local para que el jugador no quede atrapado
-        localStorage.removeItem('idUsuarioActual');
-        this.router.navigate(['/login'], { replaceUrl: true });
-      }
-    });
+    // 1. Borramos el "DNI" de la memoria INMEDIATAMENTE de forma síncrona
+    localStorage.removeItem('idUsuarioActual');
+    localStorage.clear(); // Limpieza nuclear por las dudas
+
+    if (idParaBorrar) {
+      // 2. Le pedimos a C# que borre (no nos importa tanto la respuesta si ya lo borramos local)
+      this.apiService.borrarPartidaActual().subscribe({
+        next: () => {
+          this.router.navigate(['/login'], { replaceUrl: true });
+        },
+        error: (err) => {
+          console.error("Error al borrar en DB", err);
+          // Viajamos igual
+          this.router.navigate(['/login'], { replaceUrl: true });
+        }
+      });
+    } else {
+      this.router.navigate(['/login'], { replaceUrl: true });
+    }
   }
 }

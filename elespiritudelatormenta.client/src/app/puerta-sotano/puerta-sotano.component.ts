@@ -9,12 +9,10 @@ import { EventosGlobalesService } from '../services/eventos-globales.service';
   styleUrls: ['./puerta-sotano.component.css']
 })
 export class PuertaSotanoComponent implements OnInit {
-  // Estados de UI
   mostrarMiniMenu: boolean = false;
   mostrarDescripcion: boolean = true;
   puzzleResuelto: boolean = false;
 
-  // Paginación de lectura
   paginasTexto: string[] = ['La puerta es maciza. El candado es enorme y no tengo la llave, pero parece que la traba que lo sostiene está muy oxidada y gastada'];
   paginaActual: number = 0;
   textoLectura: string = this.paginasTexto[0];
@@ -23,7 +21,7 @@ export class PuertaSotanoComponent implements OnInit {
   inventarioUsuario: any[] = [];
 
   readonly ID_HACHA = 1;
-  readonly ID_PUZZLE_SOTANO = 5;
+  readonly ID_PUZZLE_SOTANO = 4;
 
   constructor(
     private router: Router,
@@ -36,7 +34,9 @@ export class PuertaSotanoComponent implements OnInit {
   }
 
   cargarInventario() {
-    const idUsuarioActual = 1;
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    const idUsuarioActual = usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+
     this.apiService.getInventario(idUsuarioActual).subscribe(datos => {
       this.inventarioUsuario = datos;
     });
@@ -56,9 +56,7 @@ export class PuertaSotanoComponent implements OnInit {
     this.mostrarDescripcion = false;
   }
 
-  // --- LÓGICA NUEVA DE PAGINACIÓN ---
   procesarTextoLectura(textoRaw: string) {
-    // Corta el texto donde encuentre "||" y arma las páginas
     this.paginasTexto = textoRaw.split('||');
     this.paginaActual = 0;
     this.textoLectura = this.paginasTexto[this.paginaActual];
@@ -71,21 +69,23 @@ export class PuertaSotanoComponent implements OnInit {
       this.textoLectura = this.paginasTexto[this.paginaActual];
     }
   }
-  // ----------------------------------
 
   usarItem() {
     if (!this.itemSeleccionado) return;
     this.eventosService.sumarAccion();
 
-    this.apiService.intentarLlave(this.ID_PUZZLE_SOTANO, this.itemSeleccionado.id).subscribe({
+    // --- EL FIX ESTÁ ACÁ --- Atajamos tanto 'id' como 'Id'
+    const idObj = this.itemSeleccionado.id || this.itemSeleccionado.Id;
+
+    this.apiService.intentarLlave(this.ID_PUZZLE_SOTANO, idObj).subscribe({
       next: (res) => {
         this.puzzleResuelto = true;
-        this.procesarTextoLectura(res.mensaje); // Procesamos el mensaje con éxito
+        this.procesarTextoLectura(res.mensaje);
         this.mostrarMiniMenu = false;
       },
       error: (err) => {
         const msjError = err.error.mensaje || "No puedo abrir la puerta con eso.";
-        this.procesarTextoLectura(msjError); // Procesamos el mensaje con error
+        this.procesarTextoLectura(msjError);
         this.mostrarMiniMenu = false;
       }
     });

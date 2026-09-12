@@ -18,27 +18,31 @@ export class EventosGlobalesService {
   // NUEVO: Subject para la alerta de la mochila
   public alertaMochila = new Subject<string>();
 
-  // Por ahora dejamos clavado el usuario 1, igual que en tu backend
-  private idUsuarioActual: number = 1;
-
   private umbralesEventos: { [key: number]: string } = {
     50: "Te detienes en seco. Escuchas una fuerte pisada alrededor de la cabaña.",
     60: "Definitivamente, la bestia está merodeando cada vez más cerca.",
-    100: "El estallido de un vidrio roto resuena en el aire... y sabes muy bien que no fue por la tormenta.",
-    120: "Las paredes empiezan a temblar. Un rugido ensordecedor te aturde; es evidente que quiere entrar.",
-    140: "Los rugidos y los golpes contra la madera ya son insoportables. No sabes cuánto tiempo te queda antes de que logre entrar.",
-    160: "Su presencia es abrumadora. Sea lo que sea que la mantenía afuera, ya no funciona. Estás en grave peligro.",
-    180: "Tienes que encontrar una salida YA. El tiempo se acaba.",
-    220: "LO INEVITABLE SUCEDE... LA BESTIA ESTÁ EN LA CABAÑA"
+    80: "El estallido de un vidrio roto resuena en el aire... y sabes muy bien que no fue por la tormenta.",
+    100: "Las paredes empiezan a temblar. Un rugido ensordecedor te aturde; es evidente que quiere entrar.",
+    120: "Los rugidos y los golpes contra la madera ya son insoportables. No sabes cuánto tiempo te queda antes de que logre entrar.",
+    140: "Su presencia es abrumadora. Sea lo que sea que la mantenía afuera, ya no funciona. Estás en grave peligro.",
+    160: "Tienes que encontrar una salida YA. El tiempo se acaba.",
+    180: "LO INEVITABLE SUCEDE... LA BESTIA ESTÁ EN LA CABAÑA"
   };
 
-  private limiteFinal: number = 200;
+  // FIX: Ajustamos el límite final para que coincida con tu último texto
+  private limiteFinal: number = 180;
 
   constructor(private apiService: ApiService) { }
 
+  // FIX: Función para obtener el ID real (evitamos que quede en 1)
+  private getUsuarioActual(): number {
+    const usuarioStorage = localStorage.getItem('idUsuarioActual');
+    return usuarioStorage ? parseInt(usuarioStorage, 10) : 1;
+  }
+
   // 1. Carga inicial
   inicializarContador() {
-    this.apiService.getMovimientos(this.idUsuarioActual).subscribe({
+    this.apiService.getMovimientos(this.getUsuarioActual()).subscribe({
       next: (movimientos) => {
         this.contadorAcciones = movimientos;
       },
@@ -50,7 +54,7 @@ export class EventosGlobalesService {
   sumarAccion() {
     this.contadorAcciones++;
 
-    this.apiService.actualizarMovimientos(this.idUsuarioActual, this.contadorAcciones).subscribe({
+    this.apiService.actualizarMovimientos(this.getUsuarioActual(), this.contadorAcciones).subscribe({
       next: () => {
         this.chequearEventos();
       },
@@ -67,6 +71,7 @@ export class EventosGlobalesService {
     const textoEvento = this.umbralesEventos[this.contadorAcciones];
 
     if (textoEvento) {
+      // Si llega al límite o lo pasa, marcamos que es el final
       const esElFinal = this.contadorAcciones >= this.limiteFinal;
 
       this.eventoDisparado.next({

@@ -106,7 +106,7 @@
 /* --- 4. BOTÓN DE ACCIÓN (Imagen asset) --- */
 .boton-iniciar-img {
   margin-top: 15px;
-  height: 35px; /* Compacto, igual que Flecha3 */
+  height: 60px; /* Compacto, igual que Flecha3 */
   width: auto;
   cursor: pointer;
   z-index: 630;
