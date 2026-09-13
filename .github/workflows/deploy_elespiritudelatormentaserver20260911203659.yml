@@ -62,4 +62,3 @@ jobs:
           app-name: 'ElEspirituDeLaTormentaServer20260911203659'
           slot-name: 'Production'
           package: .
-          
