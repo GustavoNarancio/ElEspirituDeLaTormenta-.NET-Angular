@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ElEspirituDeLaTormenta.Server.Models;
 
@@ -157,6 +157,16 @@ namespace ElEspirituDeLaTormenta.Server.Controllers
                 obj2 != null && obj2.Nombre.ToLower().Contains("verde") &&
                 obj3 != null && obj3.Nombre.ToLower().Contains("rojo") &&
                 obj4 != null && obj4.Nombre.ToLower().Contains("azul");
+
+            // Eliminar los fusibles de la mochila, independientemente de si es correcto o no
+            var itemsAEliminar = await _context.Inventario
+                .Where(i => i.Idusuario == request.IdUsuario && request.IdsFusibles.Contains(i.Idobjeto))
+                .ToListAsync();
+
+            if (itemsAEliminar.Any())
+            {
+                _context.Inventario.RemoveRange(itemsAEliminar);
+            }
 
             if (esCorrecto)
             {

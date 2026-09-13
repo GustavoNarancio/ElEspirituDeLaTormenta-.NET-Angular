@@ -42,27 +42,11 @@ export class AgradecimientoComponent implements OnInit {
 
   // --- NUEVA LÓGICA DE DESTRUCCIÓN DE PARTIDA ---
   reiniciarJuego() {
-    // Leemos el ID ANTES de borrarlo para pasarlo a la API
-    const idParaBorrar = localStorage.getItem('idUsuarioActual');
-
     // 1. Borramos el "DNI" de la memoria INMEDIATAMENTE de forma síncrona
     localStorage.removeItem('idUsuarioActual');
     localStorage.clear(); // Limpieza nuclear por las dudas
 
-    if (idParaBorrar) {
-      // 2. Le pedimos a C# que borre (no nos importa tanto la respuesta si ya lo borramos local)
-      this.apiService.borrarPartidaActual(parseInt(idParaBorrar, 10)).subscribe({
-        next: () => {
-          this.router.navigate(['/login'], { replaceUrl: true });
-        },
-        error: (err) => {
-          console.error("Error al borrar en DB", err);
-          // Viajamos igual
-          this.router.navigate(['/login'], { replaceUrl: true });
-        }
-      });
-    } else {
-      this.router.navigate(['/login'], { replaceUrl: true });
-    }
+    // 2. Ya no se llama al backend para borrar la partida, así se mantienen los datos
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }
